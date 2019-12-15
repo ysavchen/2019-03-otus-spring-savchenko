@@ -2,7 +2,6 @@ package com.mycompany.hw_l01_spring_introduction;
 
 import lombok.Cleanup;
 import lombok.SneakyThrows;
-import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -10,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class TestingApp {
@@ -31,38 +29,38 @@ public class TestingApp {
         System.out.println("Please, enter your name:");
         String name = in.nextLine();
 
-        System.out.println("Please, enter your surname:");
+        System.out.println("\nPlease, enter your surname:");
         String surname = in.nextLine();
-
-        System.out.println("Your name is " + name + " " + surname);
 
         @Cleanup InputStream is = this.getClass().getResourceAsStream("/questions.csv");
         Reader reader = new InputStreamReader(is);
-        Iterable<CSVRecord> records = CSVFormat.INFORMIX_UNLOAD
+        List<CSVRecord> records = CSVFormat.INFORMIX_UNLOAD
                 .withHeader(headers)
                 .withFirstRecordAsHeader()
-                .parse(reader);
+                .parse(reader)
+                .getRecords();
 
         for (var record : records) {
-            var question = List.of(
-                    record.get("question"),
+            var question = record.get("question");
+            var options = List.of(
                     record.get("option1"),
                     record.get("option2"),
                     record.get("option3"),
                     record.get("option4")
             );
-            question.forEach(System.out::println);
+            System.out.println("\n" + question);
+            options.forEach(System.out::println);
 
             String answer = in.nextLine();
             String correctAnswer = record.get("correct_answer");
-            if (Objects.equals(answer, correctAnswer)) {
+            if (answer.compareToIgnoreCase(correctAnswer) == 0) {
                 numCorrectAnswers++;
             }
         }
 
-        int numQuestions = IterableUtils.size(records);
-        System.out.println("Number of questions: " + numQuestions);
+        System.out.println("\nTest result for " + name + " " + surname);
+        System.out.println("Number of questions: " + records.size());
         System.out.println("Correct answers: " + numCorrectAnswers);
-        System.out.println("Incorrect answers: " + (numQuestions - numCorrectAnswers));
+        System.out.println("Incorrect answers: " + (records.size() - numCorrectAnswers));
     }
 }
