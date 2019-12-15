@@ -14,10 +14,6 @@ import java.util.Scanner;
 public class TestingApp {
 
     private int numCorrectAnswers;
-    private String[] headers = {
-            "question", "option1", "option2",
-            "option3", "option4", "correct_answer"
-    };
 
     public static void main(String[] args) {
         new TestingApp().go();
@@ -35,7 +31,6 @@ public class TestingApp {
         @Cleanup InputStream is = this.getClass().getResourceAsStream("/questions.csv");
         Reader reader = new InputStreamReader(is);
         List<CSVRecord> records = CSVFormat.INFORMIX_UNLOAD
-                .withHeader(headers)
                 .withFirstRecordAsHeader()
                 .parse(reader)
                 .getRecords();
