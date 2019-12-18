@@ -1,61 +1,32 @@
 package com.mycompany.hw_l01_spring_introduction;
 
-import lombok.Cleanup;
-import lombok.SneakyThrows;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import com.mycompany.hw_l01_spring_introduction.dao.Storage;
+import com.mycompany.hw_l01_spring_introduction.domain.Person;
+import com.mycompany.hw_l01_spring_introduction.service.PrintService;
+import com.mycompany.hw_l01_spring_introduction.service.ReadService;
+import com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerService;
+import lombok.RequiredArgsConstructor;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.List;
-import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class TestingApp {
 
-    private int numCorrectAnswers;
+    private final PrintService printService;
+    private final ReadService readService;
+    private final Storage storage;
+    private final ResultAnalyzerService resultAnalyzer;
 
-    public static void main(String[] args) {
-        new TestingApp().go();
-    }
+    public void go() {
+        printService.print("Please, enter your name:");
+        String name = readService.read();
 
-    @SneakyThrows
-    private void go() {
-        @Cleanup Scanner in = new Scanner(System.in);
-        System.out.println("Please, enter your name:");
-        String name = in.nextLine();
+        printService.print("\nPlease, enter your surname:");
+        String surname = readService.read();
 
-        System.out.println("\nPlease, enter your surname:");
-        String surname = in.nextLine();
+        resultAnalyzer.setPerson(new Person(name, surname));
+        storage.getQuestions().forEach(question -> {
 
-        @Cleanup InputStream is = this.getClass().getResourceAsStream("/questions.csv");
-        Reader reader = new InputStreamReader(is);
-        List<CSVRecord> records = CSVFormat.INFORMIX_UNLOAD
-                .withFirstRecordAsHeader()
-                .parse(reader)
-                .getRecords();
+        });
 
-        for (var record : records) {
-            var question = record.get("question");
-            var options = List.of(
-                    record.get("option1"),
-                    record.get("option2"),
-                    record.get("option3"),
-                    record.get("option4")
-            );
-            System.out.println("\n" + question);
-            options.forEach(System.out::println);
-
-            String answer = in.nextLine();
-            String correctAnswer = record.get("correct_answer");
-            if (answer.compareToIgnoreCase(correctAnswer) == 0) {
-                numCorrectAnswers++;
-            }
-        }
-
-        System.out.println("\nTest result for " + name + " " + surname);
-        System.out.println("Number of questions: " + records.size());
-        System.out.println("Correct answers: " + numCorrectAnswers);
-        System.out.println("Incorrect answers: " + (records.size() - numCorrectAnswers));
+        resultAnalyzer.printResults();
     }
 }

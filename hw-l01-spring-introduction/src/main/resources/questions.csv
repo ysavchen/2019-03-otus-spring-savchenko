@@ -1,6 +1,6 @@
-question|option1|option2|option3|option4|correct_answer
-How many continents are there?|4|5|6|7|7
-What is the largest continent by land area?|Antarctica|Asia|Africa|Europe|Asia
-How many oceans are there?|3|5|7|9|5
-Which is the largest country in the world by land area?|China|Brazil|United States|Russia|Russia
-Which is the largest country in the world by population?|India|Great Britain|China|United States|China
+id|question
+1|How many continents are there?
+2|What is the largest continent by land area?
+3|How many oceans are there?
+4|Which is the largest country in the world by land area?
+5|Which is the largest country in the world by population?
