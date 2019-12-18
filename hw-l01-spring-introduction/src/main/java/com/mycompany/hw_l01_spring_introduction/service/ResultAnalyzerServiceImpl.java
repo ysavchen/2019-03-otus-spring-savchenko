@@ -26,13 +26,12 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
                 .findFirst()
                 .ifPresentOrElse(
                         correctAnswer -> {
-                            if (Objects.equals(correctAnswer.getText(), answer.getText())) {
-                                numCorrectAnswers++;
-                            }
+                            if (Objects.equals(correctAnswer.getText(), answer.getText())) numCorrectAnswers++;
                         },
                         () -> {
                             throw new IllegalArgumentException("No question with id = " + answer.getQuestionId());
-                        });
+                        }
+                );
     }
 
     @Override
