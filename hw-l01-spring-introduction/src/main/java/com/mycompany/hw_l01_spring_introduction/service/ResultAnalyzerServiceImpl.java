@@ -2,6 +2,7 @@ package com.mycompany.hw_l01_spring_introduction.service;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
 import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
+import com.mycompany.hw_l01_spring_introduction.exceptions.QuestionMismatchException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -18,10 +19,10 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
                 .findFirst()
                 .ifPresentOrElse(
                         correctAnswer -> {
-                            if (answer.getText().compareToIgnoreCase(correctAnswer.getText()) == 0) numCorrectAnswers++;
+                            if (correctAnswer.getText().compareToIgnoreCase(answer.getText()) == 0) numCorrectAnswers++;
                         },
                         () -> {
-                            throw new IllegalArgumentException("No question with id = " + answer.getQuestionId());
+                            throw new QuestionMismatchException("No question with id = " + answer.getQuestionId());
                         }
                 );
     }

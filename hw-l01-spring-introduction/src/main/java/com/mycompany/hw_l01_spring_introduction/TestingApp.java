@@ -3,6 +3,7 @@ package com.mycompany.hw_l01_spring_introduction;
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
 import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
 import com.mycompany.hw_l01_spring_introduction.domain.Person;
+import com.mycompany.hw_l01_spring_introduction.exceptions.QuestionMismatchException;
 import com.mycompany.hw_l01_spring_introduction.service.PrintService;
 import com.mycompany.hw_l01_spring_introduction.service.ReadService;
 import com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerService;
@@ -35,12 +36,12 @@ public class TestingApp {
                                 opts.getValues().forEach(System.out::println);
                             },
                             () -> {
-                                throw new IllegalArgumentException(
+                                throw new QuestionMismatchException(
                                         "No relevant options found for question (id = " + question.getId() + ")");
                             });
 
-            var givenAnswer = new GivenAnswer(question.getId(), readService.read());
-            resultAnalyzer.checkAnswer(givenAnswer);
+            var answer = new GivenAnswer(question.getId(), readService.read());
+            resultAnalyzer.checkAnswer(answer);
         });
 
         printResults(person);
