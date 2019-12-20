@@ -2,21 +2,13 @@ package com.mycompany.hw_l01_spring_introduction.service;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
 import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
-import com.mycompany.hw_l01_spring_introduction.domain.Person;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
 
     private final Storage storage;
-    private final PrintService printService;
-    private Person person;
     private int numCorrectAnswers;
-
-    @Override
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 
     @Override
     public void checkAnswer(GivenAnswer answer) {
@@ -25,8 +17,7 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
                 .findFirst()
                 .ifPresentOrElse(
                         correctAnswer -> {
-                            if (answer.getText().compareToIgnoreCase(correctAnswer.getText()) == 0)
-                                numCorrectAnswers++;
+                            if (answer.getText().compareToIgnoreCase(correctAnswer.getText()) == 0) numCorrectAnswers++;
                         },
                         () -> {
                             throw new IllegalArgumentException("No question with id = " + answer.getQuestionId());
@@ -35,11 +26,7 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
     }
 
     @Override
-    public void printResults() {
-        int numQuestions = storage.getQuestions().size();
-        printService.print("\nTest result for " + person.getName() + " " + person.getSurname());
-        printService.print("Number of questions: " + numQuestions);
-        printService.print("Correct answers: " + numCorrectAnswers);
-        printService.print("Incorrect answers: " + (numQuestions - numCorrectAnswers));
+    public int getNumCorrectAnswers() {
+        return numCorrectAnswers;
     }
 }

@@ -18,7 +18,6 @@
 
     <bean id="resultAnalyzer" class="com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl">
         <constructor-arg name="storage" ref="storage"/>
-        <constructor-arg name="printService" ref="printService"/>
     </bean>
 
     <bean id="testingApp" class="com.mycompany.hw_l01_spring_introduction.TestingApp">

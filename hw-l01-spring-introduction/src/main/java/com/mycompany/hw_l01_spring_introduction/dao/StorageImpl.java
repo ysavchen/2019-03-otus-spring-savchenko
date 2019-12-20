@@ -54,7 +54,7 @@ public class StorageImpl implements Storage {
     }
 
     @SneakyThrows
-    public List<CSVRecord> getRecords(String path) {
+    private List<CSVRecord> getRecords(String path) {
         @Cleanup InputStream is = this.getClass().getResourceAsStream(path);
         Reader reader = new InputStreamReader(is);
         return CSVFormat.INFORMIX_UNLOAD

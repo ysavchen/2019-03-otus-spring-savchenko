@@ -4,12 +4,7 @@ import java.util.Scanner;
 
 public class ReadServiceImpl implements ReadService {
 
-    private final Scanner scanner;
-
-    public ReadServiceImpl() {
-
-        this.scanner = new Scanner(System.in);
-    }
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public String read() {

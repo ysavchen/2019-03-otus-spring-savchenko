@@ -23,7 +23,7 @@ public class TestingApp {
         printService.print("\nPlease, enter your surname:");
         String surname = readService.read();
 
-        resultAnalyzer.setPerson(new Person(name, surname));
+        Person person = new Person(name, surname);
         storage.getQuestions().forEach(question -> {
             storage.getOptions()
                     .stream()
@@ -43,6 +43,15 @@ public class TestingApp {
             resultAnalyzer.checkAnswer(givenAnswer);
         });
 
-        resultAnalyzer.printResults();
+        printResults(person);
+    }
+
+    private void printResults(Person person) {
+        int numQuestions = storage.getQuestions().size();
+        int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
+        printService.print("\nTest result for " + person.getName() + " " + person.getSurname());
+        printService.print("Number of questions: " + numQuestions);
+        printService.print("Correct answers: " + numCorrectAnswers);
+        printService.print("Incorrect answers: " + (numQuestions - numCorrectAnswers));
     }
 }
