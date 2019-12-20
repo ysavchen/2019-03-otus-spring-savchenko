@@ -6,8 +6,9 @@ public class ReadServiceImpl implements ReadService {
 
     private final Scanner scanner;
 
-    public ReadServiceImpl(Scanner scanner) {
-        this.scanner = scanner;
+    public ReadServiceImpl() {
+
+        this.scanner = new Scanner(System.in);
     }
 
     @Override

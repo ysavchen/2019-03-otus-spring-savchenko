@@ -9,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Options {
 
-    private final int id;
-    private final List<String> options;
+    private final int questionId;
+    private final List<String> values;
 
 }

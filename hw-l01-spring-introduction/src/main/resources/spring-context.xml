@@ -7,11 +7,25 @@
     <bean id="storage" class="com.mycompany.hw_l01_spring_introduction.dao.StorageImpl">
         <constructor-arg name="questionsPath" value="/questions.csv"/>
         <constructor-arg name="optionsPath" value="/options.csv"/>
-        <constructor-arg name="answersPath" value="/answers.csv"/>
+        <constructor-arg name="answersPath" value="/correctAnswers.csv"/>
     </bean>
 
-    <bean id="personService" class="ru.otus.spring.service.PersonServiceImpl">
-        <property name="dao" ref="personDao"/>
+    <bean id="printService" class="com.mycompany.hw_l01_spring_introduction.service.PrintServiceImpl">
+    </bean>
+
+    <bean id="readService" class="com.mycompany.hw_l01_spring_introduction.service.ReadServiceImpl">
+    </bean>
+
+    <bean id="resultAnalyzer" class="com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl">
+        <constructor-arg name="storage" ref="storage"/>
+        <constructor-arg name="printService" ref="printService"/>
+    </bean>
+
+    <bean id="testingApp" class="com.mycompany.hw_l01_spring_introduction.TestingApp">
+        <constructor-arg name="storage" ref="storage"/>
+        <constructor-arg name="printService" ref="printService"/>
+        <constructor-arg name="readService" ref="readService"/>
+        <constructor-arg name="resultAnalyzer" ref="resultAnalyzer"/>
     </bean>
 
 </beans>

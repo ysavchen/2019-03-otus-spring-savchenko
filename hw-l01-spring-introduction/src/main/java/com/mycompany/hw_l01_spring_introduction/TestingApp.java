@@ -1,6 +1,7 @@
 package com.mycompany.hw_l01_spring_introduction;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
+import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
 import com.mycompany.hw_l01_spring_introduction.domain.Person;
 import com.mycompany.hw_l01_spring_introduction.service.PrintService;
 import com.mycompany.hw_l01_spring_introduction.service.ReadService;
@@ -24,7 +25,22 @@ public class TestingApp {
 
         resultAnalyzer.setPerson(new Person(name, surname));
         storage.getQuestions().forEach(question -> {
+            storage.getOptions()
+                    .stream()
+                    .filter(opts -> opts.getQuestionId() == question.getId())
+                    .findFirst()
+                    .ifPresentOrElse(
+                            opts -> {
+                                System.out.println("\n" + question.getText());
+                                opts.getValues().forEach(System.out::println);
+                            },
+                            () -> {
+                                throw new IllegalArgumentException(
+                                        "No relevant options found for question (id = " + question.getId() + ")");
+                            });
 
+            var givenAnswer = new GivenAnswer(question.getId(), readService.read());
+            resultAnalyzer.checkAnswer(givenAnswer);
         });
 
         resultAnalyzer.printResults();

@@ -49,7 +49,7 @@ public class StorageImpl implements Storage {
     @Override
     public List<CorrectAnswer> getCorrectAnswers() {
         return getRecords(answersPath).stream()
-                .map(record -> new CorrectAnswer(parseInt(record.get("id")), record.get("answer")))
+                .map(record -> new CorrectAnswer(parseInt(record.get("id")), record.get("correctAnswer")))
                 .collect(toList());
     }
 

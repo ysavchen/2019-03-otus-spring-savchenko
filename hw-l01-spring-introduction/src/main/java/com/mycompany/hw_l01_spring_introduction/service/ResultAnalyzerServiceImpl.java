@@ -5,8 +5,6 @@ import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
 import com.mycompany.hw_l01_spring_introduction.domain.Person;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Objects;
-
 @RequiredArgsConstructor
 public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
 
@@ -15,6 +13,7 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
     private Person person;
     private int numCorrectAnswers;
 
+    @Override
     public void setPerson(Person person) {
         this.person = person;
     }
@@ -22,11 +21,12 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
     @Override
     public void checkAnswer(GivenAnswer answer) {
         storage.getCorrectAnswers().stream()
-                .filter(correctAnswer -> answer.getQuestionId() == correctAnswer.getId())
+                .filter(correctAnswer -> answer.getQuestionId() == correctAnswer.getQuestionId())
                 .findFirst()
                 .ifPresentOrElse(
                         correctAnswer -> {
-                            if (Objects.equals(correctAnswer.getText(), answer.getText())) numCorrectAnswers++;
+                            if (answer.getText().compareToIgnoreCase(correctAnswer.getText()) == 0)
+                                numCorrectAnswers++;
                         },
                         () -> {
                             throw new IllegalArgumentException("No question with id = " + answer.getQuestionId());
