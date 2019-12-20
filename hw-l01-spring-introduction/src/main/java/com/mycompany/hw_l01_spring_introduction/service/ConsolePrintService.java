@@ -1,6 +1,6 @@
 package com.mycompany.hw_l01_spring_introduction.service;
 
-public class ConsolePrintServiceImpl implements PrintService {
+public class ConsolePrintService implements PrintService {
 
     @Override
     public void print(String text) {
