@@ -32,8 +32,8 @@ public class TestingApp {
                     .findFirst()
                     .ifPresentOrElse(
                             opts -> {
-                                System.out.println("\n" + question.getText());
-                                opts.getValues().forEach(System.out::println);
+                                printService.print("\n" + question.getText());
+                                opts.getValues().forEach(printService::print);
                             },
                             () -> {
                                 throw new QuestionMismatchException(
