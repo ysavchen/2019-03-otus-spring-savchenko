@@ -10,10 +10,10 @@
         <constructor-arg name="answersPath" value="/correctAnswers.csv"/>
     </bean>
 
-    <bean id="printService" class="com.mycompany.hw_l01_spring_introduction.service.PrintServiceImpl">
+    <bean id="printService" class="com.mycompany.hw_l01_spring_introduction.service.ConsolePrintServiceImpl">
     </bean>
 
-    <bean id="readService" class="com.mycompany.hw_l01_spring_introduction.service.ReadServiceImpl">
+    <bean id="readService" class="com.mycompany.hw_l01_spring_introduction.service.ConsoleReadServiceImpl">
     </bean>
 
     <bean id="resultAnalyzer" class="com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl">
