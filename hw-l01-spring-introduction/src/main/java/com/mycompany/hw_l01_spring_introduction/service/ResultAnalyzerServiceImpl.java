@@ -21,7 +21,7 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
                 .findFirst()
                 .ifPresentOrElse(
                         correctAnswer -> {
-                            if (correctAnswer.getText().compareToIgnoreCase(answer.getText()) == 0) numCorrectAnswers++;
+                            if (correctAnswer.getText().equalsIgnoreCase(answer.getText())) numCorrectAnswers++;
                         },
                         () -> {
                             throw new QuestionMismatchException("No question with id = " + answer.getQuestionId());
