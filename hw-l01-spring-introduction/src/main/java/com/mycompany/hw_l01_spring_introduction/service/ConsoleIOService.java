@@ -9,12 +9,12 @@ public class ConsoleIOService implements IOService {
 
     @Override
     public void out(String text) {
-        console.out.println(text);
+        console.out().println(text);
     }
 
     @Override
     public String readString() {
-        return console.scanner.nextLine();
+        return console.scanner().nextLine();
     }
 
 }

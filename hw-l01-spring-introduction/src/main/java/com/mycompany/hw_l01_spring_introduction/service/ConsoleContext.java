@@ -5,7 +5,14 @@ import java.util.Scanner;
 
 public class ConsoleContext {
 
-    public final PrintStream out = System.out;
-    public final Scanner scanner = new Scanner(System.in);
+    private final PrintStream out = System.out;
+    private final Scanner scanner = new Scanner(System.in);
 
+    public PrintStream out() {
+        return out;
+    }
+
+    public Scanner scanner() {
+        return scanner;
+    }
 }
