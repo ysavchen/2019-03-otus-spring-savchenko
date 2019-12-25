@@ -2,6 +2,7 @@ package com.mycompany.hw_l01_spring_introduction.service;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
 import com.mycompany.hw_l01_spring_introduction.domain.Answer;
+import com.mycompany.hw_l01_spring_introduction.domain.Question;
 import com.mycompany.hw_l01_spring_introduction.exceptions.QuestionMismatchException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,8 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
 
     @Override
     public void checkAnswer(@NonNull Answer answer) {
-        storage.getCorrectAnswers().stream()
+        storage.getQuestions().stream()
+                .map(Question::getCorrectAnswer)
                 .filter(correctAnswer -> answer.getQuestionId() == correctAnswer.getQuestionId())
                 .findFirst()
                 .ifPresentOrElse(

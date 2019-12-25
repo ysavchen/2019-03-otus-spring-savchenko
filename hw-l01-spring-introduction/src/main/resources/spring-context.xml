@@ -6,8 +6,6 @@
 
     <bean id="storage" class="com.mycompany.hw_l01_spring_introduction.dao.StorageImpl">
         <constructor-arg name="questionsPath" value="/questions.csv"/>
-        <constructor-arg name="optionsPath" value="/options.csv"/>
-        <constructor-arg name="answersPath" value="/correctAnswers.csv"/>
     </bean>
 
     <bean id="printService" class="com.mycompany.hw_l01_spring_introduction.service.ConsolePrintService">

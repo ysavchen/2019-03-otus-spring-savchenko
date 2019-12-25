@@ -2,6 +2,7 @@ package com.mycompany.hw_l01_spring_introduction;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
 import com.mycompany.hw_l01_spring_introduction.domain.Answer;
+import com.mycompany.hw_l01_spring_introduction.domain.Question;
 import com.mycompany.hw_l01_spring_introduction.exceptions.QuestionMismatchException;
 import com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerService;
 import com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl;
@@ -23,6 +24,9 @@ public class ResultAnalyzerServiceTests {
     @Mock
     private Storage storage;
 
+    @Mock
+    private Question question;
+
     private ResultAnalyzerService resultAnalyzerService;
 
     @BeforeEach
@@ -33,7 +37,8 @@ public class ResultAnalyzerServiceTests {
     @Test
     void checkCorrectAnswer() {
         var correctAnswer = new Answer(1, "correct");
-        when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
+        when(question.getCorrectAnswer()).thenReturn(correctAnswer);
+        when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(1, "correct");
         resultAnalyzerService.checkAnswer(answer);
@@ -43,7 +48,8 @@ public class ResultAnalyzerServiceTests {
     @Test
     void checkIncorrectAnswer() {
         var correctAnswer = new Answer(1, "correct");
-        when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
+        when(question.getCorrectAnswer()).thenReturn(correctAnswer);
+        when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(1, "incorrect");
         resultAnalyzerService.checkAnswer(answer);
@@ -53,7 +59,8 @@ public class ResultAnalyzerServiceTests {
     @Test
     void checkAnswerCaseIgnored() {
         var correctAnswer = new Answer(1, "CORRECT");
-        when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
+        when(question.getCorrectAnswer()).thenReturn(correctAnswer);
+        when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(1, "correct");
         resultAnalyzerService.checkAnswer(answer);
@@ -63,7 +70,8 @@ public class ResultAnalyzerServiceTests {
     @Test
     void checkQuestionMismatch() {
         var correctAnswer = new Answer(1, "mismatch");
-        when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
+        when(question.getCorrectAnswer()).thenReturn(correctAnswer);
+        when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(2, "mismatch");
         assertThrows(QuestionMismatchException.class,
