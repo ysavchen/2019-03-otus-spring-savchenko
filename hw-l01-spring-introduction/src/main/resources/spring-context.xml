@@ -8,10 +8,7 @@
         <constructor-arg name="questionsPath" value="/questions.csv"/>
     </bean>
 
-    <bean id="printService" class="com.mycompany.hw_l01_spring_introduction.service.ConsolePrintService">
-    </bean>
-
-    <bean id="readService" class="com.mycompany.hw_l01_spring_introduction.service.ConsoleReadService">
+    <bean id="ioService" class="com.mycompany.hw_l01_spring_introduction.service.ConsoleIOService">
     </bean>
 
     <bean id="resultAnalyzer" class="com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl">
@@ -19,15 +16,13 @@
     </bean>
 
     <bean id="userDataService" class="com.mycompany.hw_l01_spring_introduction.service.UserDataServiceImpl">
-        <constructor-arg name="printService" ref="printService"/>
-        <constructor-arg name="readService" ref="readService"/>
+        <constructor-arg name="ioService" ref="ioService"/>
     </bean>
 
     <bean id="testingApp" class="com.mycompany.hw_l01_spring_introduction.app.TestingApp">
         <constructor-arg name="userDataService" ref="userDataService"/>
         <constructor-arg name="storage" ref="storage"/>
-        <constructor-arg name="printService" ref="printService"/>
-        <constructor-arg name="readService" ref="readService"/>
+        <constructor-arg name="ioService" ref="ioService"/>
         <constructor-arg name="resultAnalyzer" ref="resultAnalyzer"/>
     </bean>
 

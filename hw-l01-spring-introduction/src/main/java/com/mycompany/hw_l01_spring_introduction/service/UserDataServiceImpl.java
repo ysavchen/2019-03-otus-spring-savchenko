@@ -6,16 +6,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDataServiceImpl implements UserDataService {
 
-    private final PrintService printService;
-    private final ReadService readService;
+    private final IOService ioService;
 
     @Override
     public User getUser() {
-        printService.print("Please, enter your name:");
-        String name = readService.read();
+        ioService.out("Please, enter your name:");
+        String name = ioService.readString();
 
-        printService.print("\nPlease, enter your surname:");
-        String surname = readService.read();
+        ioService.out("\nPlease, enter your surname:");
+        String surname = ioService.readString();
 
         return new User(name, surname);
     }
