@@ -20,7 +20,13 @@
         <constructor-arg name="storage" ref="storage"/>
     </bean>
 
+    <bean id="userDataService" class="com.mycompany.hw_l01_spring_introduction.service.UserDataServiceImpl">
+        <constructor-arg name="printService" ref="printService"/>
+        <constructor-arg name="readService" ref="readService"/>
+    </bean>
+
     <bean id="testingApp" class="com.mycompany.hw_l01_spring_introduction.TestingApp">
+        <constructor-arg name="userDataService" ref="userDataService"/>
         <constructor-arg name="storage" ref="storage"/>
         <constructor-arg name="printService" ref="printService"/>
         <constructor-arg name="readService" ref="readService"/>
