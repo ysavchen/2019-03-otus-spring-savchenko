@@ -5,8 +5,13 @@ import java.util.Scanner;
 
 public class ConsoleIOService implements IOService {
 
-    private final PrintStream out = System.out;
-    private final Scanner scanner = new Scanner(System.in);
+    private final PrintStream out;
+    private final Scanner scanner;
+
+    public ConsoleIOService() {
+        this.out = System.out;
+        this.scanner = new Scanner(System.in);
+    }
 
     @Override
     public void out(String text) {
