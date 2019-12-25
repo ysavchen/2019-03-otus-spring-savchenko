@@ -1,5 +1,6 @@
 package com.mycompany.hw_l01_spring_introduction;
 
+import com.mycompany.hw_l01_spring_introduction.app.TestingApp;
 import lombok.val;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

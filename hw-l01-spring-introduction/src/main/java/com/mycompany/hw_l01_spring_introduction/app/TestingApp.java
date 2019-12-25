@@ -1,4 +1,4 @@
-package com.mycompany.hw_l01_spring_introduction;
+package com.mycompany.hw_l01_spring_introduction.app;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
 import com.mycompany.hw_l01_spring_introduction.domain.Answer;
