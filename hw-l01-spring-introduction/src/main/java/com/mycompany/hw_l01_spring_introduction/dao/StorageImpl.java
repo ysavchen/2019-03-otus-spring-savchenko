@@ -1,6 +1,6 @@
 package com.mycompany.hw_l01_spring_introduction.dao;
 
-import com.mycompany.hw_l01_spring_introduction.domain.CorrectAnswer;
+import com.mycompany.hw_l01_spring_introduction.domain.Answer;
 import com.mycompany.hw_l01_spring_introduction.domain.Options;
 import com.mycompany.hw_l01_spring_introduction.domain.Question;
 import lombok.Cleanup;
@@ -47,9 +47,9 @@ public class StorageImpl implements Storage {
     }
 
     @Override
-    public List<CorrectAnswer> getCorrectAnswers() {
+    public List<Answer> getCorrectAnswers() {
         return getRecords(answersPath).stream()
-                .map(record -> new CorrectAnswer(parseInt(record.get("id")), record.get("correctAnswer")))
+                .map(record -> new Answer(parseInt(record.get("id")), record.get("correctAnswer")))
                 .collect(toList());
     }
 

@@ -1,10 +1,10 @@
 package com.mycompany.hw_l01_spring_introduction.service;
 
-import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
+import com.mycompany.hw_l01_spring_introduction.domain.Answer;
 
 public interface ResultAnalyzerService {
 
-    void checkAnswer(GivenAnswer correctAnswer);
+    void checkAnswer(Answer correctAnswer);
 
     int getNumCorrectAnswers();
 }

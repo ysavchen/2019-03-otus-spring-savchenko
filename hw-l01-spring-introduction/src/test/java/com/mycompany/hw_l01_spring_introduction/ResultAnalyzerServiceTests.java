@@ -1,8 +1,7 @@
 package com.mycompany.hw_l01_spring_introduction;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
-import com.mycompany.hw_l01_spring_introduction.domain.CorrectAnswer;
-import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
+import com.mycompany.hw_l01_spring_introduction.domain.Answer;
 import com.mycompany.hw_l01_spring_introduction.exceptions.QuestionMismatchException;
 import com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerService;
 import com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl;
@@ -33,40 +32,40 @@ public class ResultAnalyzerServiceTests {
 
     @Test
     void checkCorrectAnswer() {
-        var correctAnswer = new CorrectAnswer(1, "correct");
+        var correctAnswer = new Answer(1, "correct");
         when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
 
-        var answer = new GivenAnswer(1, "correct");
+        var answer = new Answer(1, "correct");
         resultAnalyzerService.checkAnswer(answer);
         assertEquals(1, resultAnalyzerService.getNumCorrectAnswers());
     }
 
     @Test
     void checkIncorrectAnswer() {
-        var correctAnswer = new CorrectAnswer(1, "correct");
+        var correctAnswer = new Answer(1, "correct");
         when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
 
-        var answer = new GivenAnswer(1, "incorrect");
+        var answer = new Answer(1, "incorrect");
         resultAnalyzerService.checkAnswer(answer);
         assertEquals(0, resultAnalyzerService.getNumCorrectAnswers());
     }
 
     @Test
     void checkAnswerCaseIgnored() {
-        var correctAnswer = new CorrectAnswer(1, "CORRECT");
+        var correctAnswer = new Answer(1, "CORRECT");
         when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
 
-        var answer = new GivenAnswer(1, "correct");
+        var answer = new Answer(1, "correct");
         resultAnalyzerService.checkAnswer(answer);
         assertEquals(1, resultAnalyzerService.getNumCorrectAnswers());
     }
 
     @Test
     void checkQuestionMismatch() {
-        var correctAnswer = new CorrectAnswer(1, "mismatch");
+        var correctAnswer = new Answer(1, "mismatch");
         when(storage.getCorrectAnswers()).thenReturn(List.of(correctAnswer));
 
-        var answer = new GivenAnswer(2, "mismatch");
+        var answer = new Answer(2, "mismatch");
         assertThrows(QuestionMismatchException.class,
                 () -> resultAnalyzerService.checkAnswer(answer));
     }

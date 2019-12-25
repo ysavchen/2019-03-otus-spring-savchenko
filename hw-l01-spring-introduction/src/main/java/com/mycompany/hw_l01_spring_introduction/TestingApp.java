@@ -1,7 +1,7 @@
 package com.mycompany.hw_l01_spring_introduction;
 
 import com.mycompany.hw_l01_spring_introduction.dao.Storage;
-import com.mycompany.hw_l01_spring_introduction.domain.GivenAnswer;
+import com.mycompany.hw_l01_spring_introduction.domain.Answer;
 import com.mycompany.hw_l01_spring_introduction.domain.Person;
 import com.mycompany.hw_l01_spring_introduction.exceptions.QuestionMismatchException;
 import com.mycompany.hw_l01_spring_introduction.service.PrintService;
@@ -40,7 +40,7 @@ public class TestingApp {
                                         "No relevant options found for question (id = " + question.getId() + ")");
                             });
 
-            var answer = new GivenAnswer(question.getId(), readService.read());
+            var answer = new Answer(question.getId(), readService.read());
             resultAnalyzer.checkAnswer(answer);
         });
 

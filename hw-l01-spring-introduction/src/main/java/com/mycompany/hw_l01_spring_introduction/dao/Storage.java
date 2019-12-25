@@ -1,6 +1,6 @@
 package com.mycompany.hw_l01_spring_introduction.dao;
 
-import com.mycompany.hw_l01_spring_introduction.domain.CorrectAnswer;
+import com.mycompany.hw_l01_spring_introduction.domain.Answer;
 import com.mycompany.hw_l01_spring_introduction.domain.Options;
 import com.mycompany.hw_l01_spring_introduction.domain.Question;
 
@@ -12,6 +12,6 @@ public interface Storage {
 
     List<Options> getOptions();
 
-    List<CorrectAnswer> getCorrectAnswers();
+    List<Answer> getCorrectAnswers();
 
 }

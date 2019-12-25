@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CorrectAnswer {
+public class Answer {
 
     private final int questionId;
     private final String text;
