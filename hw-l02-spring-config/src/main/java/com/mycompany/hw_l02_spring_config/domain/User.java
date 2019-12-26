@@ -1,9 +1,9 @@
 package com.mycompany.hw_l02_spring_config.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@Getter
+@Data
 @RequiredArgsConstructor
 public class User {
 
