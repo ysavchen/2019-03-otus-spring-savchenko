@@ -1,7 +1,9 @@
 package com.mycompany.hw_l02_spring_config.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class ConsoleIOService implements IOService {
 

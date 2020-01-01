@@ -6,7 +6,9 @@ import com.mycompany.hw_l02_spring_config.domain.Question;
 import com.mycompany.hw_l02_spring_config.exceptions.QuestionMismatchException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
 

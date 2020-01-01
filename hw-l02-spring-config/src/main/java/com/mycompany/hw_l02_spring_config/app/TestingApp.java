@@ -7,7 +7,9 @@ import com.mycompany.hw_l02_spring_config.service.IOService;
 import com.mycompany.hw_l02_spring_config.service.ResultAnalyzerService;
 import com.mycompany.hw_l02_spring_config.service.UserDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class TestingApp {
 

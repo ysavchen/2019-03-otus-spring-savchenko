@@ -3,10 +3,11 @@ package com.mycompany.hw_l02_spring_config.dao;
 import com.mycompany.hw_l02_spring_config.domain.Answer;
 import com.mycompany.hw_l02_spring_config.domain.Question;
 import lombok.Cleanup;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,10 +17,14 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toList;
 
-@RequiredArgsConstructor
+@Repository
 public class StorageImpl implements Storage {
 
     private final String questionsPath;
+
+    StorageImpl(@Value("${questionsPath}") String questionsPath) {
+        this.questionsPath = questionsPath;
+    }
 
     @Override
     public List<Question> getQuestions() {
