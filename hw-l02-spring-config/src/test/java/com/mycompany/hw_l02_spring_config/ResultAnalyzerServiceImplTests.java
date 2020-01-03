@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ResultAnalyzerServiceTests {
+public class ResultAnalyzerServiceImplTests {
 
     @Mock
     private Storage storage;
