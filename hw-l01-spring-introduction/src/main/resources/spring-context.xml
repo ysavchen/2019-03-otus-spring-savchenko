@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="storage" class="com.mycompany.hw_l01_spring_introduction.dao.StorageImpl">
+        <constructor-arg name="questionsPath" value="/questions.csv"/>
+    </bean>
+
+    <bean id="consoleContext" class="com.mycompany.hw_l01_spring_introduction.service.ConsoleContext">
+    </bean>
+
+    <bean id="ioService" class="com.mycompany.hw_l01_spring_introduction.service.ConsoleIOService">
+        <constructor-arg name="console" ref="consoleContext"/>
+    </bean>
+
+    <bean id="resultAnalyzer" class="com.mycompany.hw_l01_spring_introduction.service.ResultAnalyzerServiceImpl">
+        <constructor-arg name="storage" ref="storage"/>
+    </bean>
+
+    <bean id="userDataService" class="com.mycompany.hw_l01_spring_introduction.service.UserDataServiceImpl">
+        <constructor-arg name="ioService" ref="ioService"/>
+    </bean>
+
+    <bean id="testingApp" class="com.mycompany.hw_l01_spring_introduction.app.TestingApp">
+        <constructor-arg name="userDataService" ref="userDataService"/>
+        <constructor-arg name="storage" ref="storage"/>
+        <constructor-arg name="ioService" ref="ioService"/>
+        <constructor-arg name="resultAnalyzer" ref="resultAnalyzer"/>
+    </bean>
+
+</beans>
