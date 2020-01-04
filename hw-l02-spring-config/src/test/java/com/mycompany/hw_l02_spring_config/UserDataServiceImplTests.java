@@ -1,5 +1,6 @@
 package com.mycompany.hw_l02_spring_config;
 
+import com.mycompany.hw_l02_spring_config.app.AppLocale;
 import com.mycompany.hw_l02_spring_config.domain.User;
 import com.mycompany.hw_l02_spring_config.service.IOService;
 import com.mycompany.hw_l02_spring_config.service.UserDataService;
@@ -20,18 +21,24 @@ public class UserDataServiceImplTests {
     @Mock
     private IOService ioService;
 
+    @Mock
+    private AppLocale locale;
+
     private UserDataService userDataService;
 
     @BeforeEach
     void setUp() {
-      //  userDataService = new UserDataServiceImpl(ioService);
+        userDataService = new UserDataServiceImpl(ioService, locale);
     }
 
     @Test
     void getUserTest() {
+        when(locale.getValue("user.name")).thenReturn("");
+        when(locale.getValue("user.surname")).thenReturn("");
+        doNothing().when(ioService).out("");
+        doNothing().when(ioService).out("\n");
+
         var user = new User("John", "Smith");
-        doNothing().when(ioService).out("Please, enter your name:");
-        doNothing().when(ioService).out("\nPlease, enter your surname:");
         when(ioService.readString())
                 .thenReturn("John")
                 .thenReturn("Smith");
