@@ -24,7 +24,7 @@ public class UserDataServiceImplTests {
 
     @BeforeEach
     void setUp() {
-        userDataService = new UserDataServiceImpl(ioService);
+      //  userDataService = new UserDataServiceImpl(ioService);
     }
 
     @Test

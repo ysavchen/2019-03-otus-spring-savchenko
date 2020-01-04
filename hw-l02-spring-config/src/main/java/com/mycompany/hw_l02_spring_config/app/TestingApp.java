@@ -17,6 +17,7 @@ public class TestingApp {
     private final IOService ioService;
     private final Storage storage;
     private final ResultAnalyzerService resultAnalyzer;
+    private final AppLocale locale;
 
     public void go() {
         User user = userDataService.getUser();
@@ -33,9 +34,10 @@ public class TestingApp {
     private void printResults(User user) {
         int numQuestions = storage.getQuestions().size();
         int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
-        ioService.out("\nTest result for " + user.getName() + " " + user.getSurname());
-        ioService.out("Number of questions: " + numQuestions);
-        ioService.out("Correct answers: " + numCorrectAnswers);
-        ioService.out("Incorrect answers: " + (numQuestions - numCorrectAnswers));
+        ioService.out("\n" + locale.getValue("result.info") +
+                " " + user.getName() + " " + user.getSurname());
+        ioService.out(locale.getValue("result.numQuestions") + " " + numQuestions);
+        ioService.out(locale.getValue("result.correctAnswers") + " " + numCorrectAnswers);
+        ioService.out(locale.getValue("result.incorrectAnswers") + " " + (numQuestions - numCorrectAnswers));
     }
 }
