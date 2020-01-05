@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 public class UserDataServiceImpl implements UserDataService {
 
     private final IOService ioService;
-    private final AppLocale locale;
+    private final MessageSourceService msService;
 
     @Override
     public User getUser() {
-        ioService.out(locale.getValue("user.name"));
+        ioService.out(msService.getMessage("user.name"));
         String name = ioService.readString();
 
-        ioService.out("\n" + locale.getValue("user.surname"));
+        ioService.out("\n" + msService.getMessage("user.surname"));
         String surname = ioService.readString();
 
         return new User(name, surname);

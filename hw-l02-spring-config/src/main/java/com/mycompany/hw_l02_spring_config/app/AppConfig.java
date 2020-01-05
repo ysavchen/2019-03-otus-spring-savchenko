@@ -1,21 +1,17 @@
-package com.mycompany.hw_l02_spring_config;
+package com.mycompany.hw_l02_spring_config.app;
 
-import com.mycompany.hw_l02_spring_config.app.TestingApp;
 import lombok.val;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @PropertySource("classpath:application.properties")
-@ComponentScan
+@ComponentScan("com.mycompany")
 @Configuration
 public class AppConfig {
-
-    public static void main(String[] args) {
-        val context = new AnnotationConfigApplicationContext(AppConfig.class);
-        TestingApp app = context.getBean(TestingApp.class);
-        app.go();
-    }
 
     @Bean
     public MessageSource messageSource() {

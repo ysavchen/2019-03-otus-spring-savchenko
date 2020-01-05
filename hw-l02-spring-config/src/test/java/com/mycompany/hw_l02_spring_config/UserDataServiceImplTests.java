@@ -3,6 +3,7 @@ package com.mycompany.hw_l02_spring_config;
 import com.mycompany.hw_l02_spring_config.app.AppLocale;
 import com.mycompany.hw_l02_spring_config.domain.User;
 import com.mycompany.hw_l02_spring_config.service.IOService;
+import com.mycompany.hw_l02_spring_config.service.MessageSourceService;
 import com.mycompany.hw_l02_spring_config.service.UserDataService;
 import com.mycompany.hw_l02_spring_config.service.UserDataServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,19 +23,19 @@ public class UserDataServiceImplTests {
     private IOService ioService;
 
     @Mock
-    private AppLocale locale;
+    private MessageSourceService msService;
 
     private UserDataService userDataService;
 
     @BeforeEach
     void setUp() {
-        userDataService = new UserDataServiceImpl(ioService, locale);
+        userDataService = new UserDataServiceImpl(ioService, msService);
     }
 
     @Test
     void getUserTest() {
-        when(locale.getValue("user.name")).thenReturn("");
-        when(locale.getValue("user.surname")).thenReturn("");
+        when(msService.getMessage("user.name")).thenReturn("");
+        when(msService.getMessage("user.surname")).thenReturn("");
         doNothing().when(ioService).out("");
         doNothing().when(ioService).out("\n");
 

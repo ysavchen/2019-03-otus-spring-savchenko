@@ -4,6 +4,7 @@ import com.mycompany.hw_l02_spring_config.dao.Storage;
 import com.mycompany.hw_l02_spring_config.domain.Answer;
 import com.mycompany.hw_l02_spring_config.domain.User;
 import com.mycompany.hw_l02_spring_config.service.IOService;
+import com.mycompany.hw_l02_spring_config.service.MessageSourceService;
 import com.mycompany.hw_l02_spring_config.service.ResultAnalyzerService;
 import com.mycompany.hw_l02_spring_config.service.UserDataService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class TestingApp {
     private final IOService ioService;
     private final Storage storage;
     private final ResultAnalyzerService resultAnalyzer;
-    private final AppLocale locale;
+    private final MessageSourceService msService;
 
     public void go() {
         User user = userDataService.getUser();
@@ -34,10 +35,10 @@ public class TestingApp {
     private void printResults(User user) {
         int numQuestions = storage.getQuestions().size();
         int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
-        ioService.out("\n" + locale.getValue("result.info") +
+        ioService.out("\n" + msService.getMessage("result.info") +
                 " " + user.getName() + " " + user.getSurname());
-        ioService.out(locale.getValue("result.numQuestions") + " " + numQuestions);
-        ioService.out(locale.getValue("result.correctAnswers") + " " + numCorrectAnswers);
-        ioService.out(locale.getValue("result.incorrectAnswers") + " " + (numQuestions - numCorrectAnswers));
+        ioService.out(msService.getMessage("result.numQuestions") + " " + numQuestions);
+        ioService.out(msService.getMessage("result.correctAnswers") + " " + numCorrectAnswers);
+        ioService.out(msService.getMessage("result.incorrectAnswers") + " " + (numQuestions - numCorrectAnswers));
     }
 }

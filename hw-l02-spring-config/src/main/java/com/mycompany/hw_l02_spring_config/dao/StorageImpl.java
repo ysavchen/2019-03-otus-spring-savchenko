@@ -22,11 +22,11 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class StorageImpl implements Storage {
 
-    private final AppLocale locale;
+    private final AppLocale appLocale;
 
     @Override
     public List<Question> getQuestions() {
-        String questionsPath = locale.getValue("questionsPath");
+        String questionsPath = "/questions_" + appLocale.getLocale() + ".csv";
 
         return getRecords(questionsPath).stream()
                 .map(record -> {
