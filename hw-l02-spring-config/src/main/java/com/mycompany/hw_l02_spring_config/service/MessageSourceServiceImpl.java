@@ -13,7 +13,7 @@ public class MessageSourceServiceImpl implements MessageSourceService {
     private final MessageSource messageSource;
 
     @Override
-    public String getMessage(String key) {
-        return messageSource.getMessage(key, null, appLocale.getLocale());
+    public String getMessage(String key, Object... args) {
+        return messageSource.getMessage(key, args, appLocale.getLocale());
     }
 }

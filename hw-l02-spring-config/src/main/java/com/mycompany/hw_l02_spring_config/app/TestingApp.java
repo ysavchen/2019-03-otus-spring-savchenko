@@ -35,10 +35,9 @@ public class TestingApp {
     private void printResults(User user) {
         int numQuestions = storage.getQuestions().size();
         int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
-        ioService.out("\n" + msService.getMessage("result.info") +
-                " " + user.getName() + " " + user.getSurname());
-        ioService.out(msService.getMessage("result.numQuestions") + " " + numQuestions);
-        ioService.out(msService.getMessage("result.correctAnswers") + " " + numCorrectAnswers);
-        ioService.out(msService.getMessage("result.incorrectAnswers") + " " + (numQuestions - numCorrectAnswers));
+        ioService.out("\n" + msService.getMessage("result.info", user.getName(), user.getSurname()));
+        ioService.out(msService.getMessage("result.numQuestions", numQuestions));
+        ioService.out(msService.getMessage("result.correctAnswers", numCorrectAnswers));
+        ioService.out(msService.getMessage("result.incorrectAnswers", (numQuestions - numCorrectAnswers)));
     }
 }
