@@ -1,6 +1,5 @@
 package com.mycompany.hw_l02_spring_config;
 
-import com.mycompany.hw_l02_spring_config.app.AppLocale;
 import com.mycompany.hw_l02_spring_config.domain.User;
 import com.mycompany.hw_l02_spring_config.service.IOService;
 import com.mycompany.hw_l02_spring_config.service.MessageSourceService;
