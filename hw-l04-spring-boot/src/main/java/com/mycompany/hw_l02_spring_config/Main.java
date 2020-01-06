@@ -1,5 +1,7 @@
 package com.mycompany.hw_l02_spring_config;
 
+import com.mycompany.hw_l02_spring_config.app.TestingApp;
+import lombok.val;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        val context = SpringApplication.run(Main.class);
+        TestingApp app = context.getBean(TestingApp.class);
+        app.go();
     }
 }
