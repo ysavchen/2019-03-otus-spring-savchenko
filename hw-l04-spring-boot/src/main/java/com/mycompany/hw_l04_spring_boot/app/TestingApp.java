@@ -1,12 +1,12 @@
-package com.mycompany.hw_l02_spring_config.app;
+package com.mycompany.hw_l04_spring_boot.app;
 
-import com.mycompany.hw_l02_spring_config.dao.Storage;
-import com.mycompany.hw_l02_spring_config.domain.Answer;
-import com.mycompany.hw_l02_spring_config.domain.User;
-import com.mycompany.hw_l02_spring_config.service.IOService;
-import com.mycompany.hw_l02_spring_config.service.MessageSourceService;
-import com.mycompany.hw_l02_spring_config.service.ResultAnalyzerService;
-import com.mycompany.hw_l02_spring_config.service.UserDataService;
+import com.mycompany.hw_l04_spring_boot.dao.Storage;
+import com.mycompany.hw_l04_spring_boot.domain.Answer;
+import com.mycompany.hw_l04_spring_boot.domain.User;
+import com.mycompany.hw_l04_spring_boot.service.IOService;
+import com.mycompany.hw_l04_spring_boot.service.MessageSourceService;
+import com.mycompany.hw_l04_spring_boot.service.ResultAnalyzerService;
+import com.mycompany.hw_l04_spring_boot.service.UserDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

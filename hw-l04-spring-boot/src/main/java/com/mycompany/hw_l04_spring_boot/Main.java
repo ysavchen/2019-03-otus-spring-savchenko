@@ -1,6 +1,6 @@
-package com.mycompany.hw_l02_spring_config;
+package com.mycompany.hw_l04_spring_boot;
 
-import com.mycompany.hw_l02_spring_config.app.TestingApp;
+import com.mycompany.hw_l04_spring_boot.app.TestingApp;
 import lombok.val;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,11 +1,11 @@
-package com.mycompany.hw_l02_spring_config;
+package com.mycompany.hw_l04_spring_boot;
 
-import com.mycompany.hw_l02_spring_config.dao.Storage;
-import com.mycompany.hw_l02_spring_config.domain.Answer;
-import com.mycompany.hw_l02_spring_config.domain.Question;
-import com.mycompany.hw_l02_spring_config.exceptions.QuestionMismatchException;
-import com.mycompany.hw_l02_spring_config.service.ResultAnalyzerService;
-import com.mycompany.hw_l02_spring_config.service.ResultAnalyzerServiceImpl;
+import com.mycompany.hw_l04_spring_boot.dao.Storage;
+import com.mycompany.hw_l04_spring_boot.domain.Answer;
+import com.mycompany.hw_l04_spring_boot.domain.Question;
+import com.mycompany.hw_l04_spring_boot.exceptions.QuestionMismatchException;
+import com.mycompany.hw_l04_spring_boot.service.ResultAnalyzerService;
+import com.mycompany.hw_l04_spring_boot.service.ResultAnalyzerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

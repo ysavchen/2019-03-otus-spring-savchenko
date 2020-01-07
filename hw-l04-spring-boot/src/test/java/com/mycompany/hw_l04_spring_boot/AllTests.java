@@ -1,4 +1,4 @@
-package com.mycompany.hw_l02_spring_config;
+package com.mycompany.hw_l04_spring_boot;
 
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;

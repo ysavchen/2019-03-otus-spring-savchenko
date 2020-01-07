@@ -1,10 +1,10 @@
-package com.mycompany.hw_l02_spring_config;
+package com.mycompany.hw_l04_spring_boot;
 
-import com.mycompany.hw_l02_spring_config.domain.User;
-import com.mycompany.hw_l02_spring_config.service.IOService;
-import com.mycompany.hw_l02_spring_config.service.MessageSourceService;
-import com.mycompany.hw_l02_spring_config.service.UserDataService;
-import com.mycompany.hw_l02_spring_config.service.UserDataServiceImpl;
+import com.mycompany.hw_l04_spring_boot.domain.User;
+import com.mycompany.hw_l04_spring_boot.service.IOService;
+import com.mycompany.hw_l04_spring_boot.service.MessageSourceService;
+import com.mycompany.hw_l04_spring_boot.service.UserDataService;
+import com.mycompany.hw_l04_spring_boot.service.UserDataServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

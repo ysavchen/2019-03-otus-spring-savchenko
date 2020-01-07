@@ -1,4 +1,4 @@
-package com.mycompany.hw_l02_spring_config.service;
+package com.mycompany.hw_l04_spring_boot.service;
 
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.mycompany.hw_l02_spring_config.domain;
+package com.mycompany.hw_l04_spring_boot.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

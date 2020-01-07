@@ -1,6 +1,6 @@
-package com.mycompany.hw_l02_spring_config.service;
+package com.mycompany.hw_l04_spring_boot.service;
 
-import com.mycompany.hw_l02_spring_config.app.AppLocale;
+import com.mycompany.hw_l04_spring_boot.app.AppLocale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.mycompany.hw_l02_spring_config.app;
+package com.mycompany.hw_l04_spring_boot.app;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,8 +1,8 @@
-package com.mycompany.hw_l02_spring_config.dao;
+package com.mycompany.hw_l04_spring_boot.dao;
 
-import com.mycompany.hw_l02_spring_config.app.AppLocale;
-import com.mycompany.hw_l02_spring_config.domain.Answer;
-import com.mycompany.hw_l02_spring_config.domain.Question;
+import com.mycompany.hw_l04_spring_boot.app.AppLocale;
+import com.mycompany.hw_l04_spring_boot.domain.Answer;
+import com.mycompany.hw_l04_spring_boot.domain.Question;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

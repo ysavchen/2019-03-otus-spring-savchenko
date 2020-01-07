@@ -1,9 +1,9 @@
-package com.mycompany.hw_l02_spring_config.service;
+package com.mycompany.hw_l04_spring_boot.service;
 
-import com.mycompany.hw_l02_spring_config.dao.Storage;
-import com.mycompany.hw_l02_spring_config.domain.Answer;
-import com.mycompany.hw_l02_spring_config.domain.Question;
-import com.mycompany.hw_l02_spring_config.exceptions.QuestionMismatchException;
+import com.mycompany.hw_l04_spring_boot.dao.Storage;
+import com.mycompany.hw_l04_spring_boot.domain.Answer;
+import com.mycompany.hw_l04_spring_boot.domain.Question;
+import com.mycompany.hw_l04_spring_boot.exceptions.QuestionMismatchException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.mycompany.hw_l02_spring_config.exceptions;
+package com.mycompany.hw_l04_spring_boot.exceptions;
 
 /**
  * Thrown to indicate a mismatch between question and answer id

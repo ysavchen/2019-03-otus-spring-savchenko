@@ -1,8 +1,8 @@
-package com.mycompany.hw_l02_spring_config;
+package com.mycompany.hw_l04_spring_boot;
 
-import com.mycompany.hw_l02_spring_config.service.ConsoleContext;
-import com.mycompany.hw_l02_spring_config.service.ConsoleIOService;
-import com.mycompany.hw_l02_spring_config.service.IOService;
+import com.mycompany.hw_l04_spring_boot.service.ConsoleContext;
+import com.mycompany.hw_l04_spring_boot.service.ConsoleIOService;
+import com.mycompany.hw_l04_spring_boot.service.IOService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
