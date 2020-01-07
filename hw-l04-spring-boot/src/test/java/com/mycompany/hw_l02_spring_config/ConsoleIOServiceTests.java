@@ -26,13 +26,10 @@ public class ConsoleIOServiceTests {
     @Mock
     private PrintStream printStream;
 
-    private Scanner scanner;
-
     private IOService ioService;
 
     @BeforeEach
     void setUp() {
-        scanner = new Scanner("test");
         ioService = new ConsoleIOService(consoleContext);
     }
 
@@ -48,6 +45,7 @@ public class ConsoleIOServiceTests {
 
     @Test
     void testReadString() {
+        var scanner = new Scanner("test");
         when(consoleContext.scanner()).thenReturn(scanner);
         assertEquals("test", ioService.readString());
     }
