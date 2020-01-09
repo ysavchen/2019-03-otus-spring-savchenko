@@ -8,11 +8,15 @@ import com.mycompany.hw_l04_spring_boot.service.ResultAnalyzerService;
 import com.mycompany.hw_l04_spring_boot.service.ResultAnalyzerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import java.util.List;
 
@@ -21,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ResultAnalyzerServiceImplTests {
 
     @MockBean
@@ -29,12 +34,8 @@ public class ResultAnalyzerServiceImplTests {
     @MockBean
     private Question question;
 
+    @Autowired
     private ResultAnalyzerService resultAnalyzerService;
-
-    @BeforeEach
-    void setUp() {
-        resultAnalyzerService = new ResultAnalyzerServiceImpl(storage);
-    }
 
     @Test
     void checkCorrectAnswer() {
