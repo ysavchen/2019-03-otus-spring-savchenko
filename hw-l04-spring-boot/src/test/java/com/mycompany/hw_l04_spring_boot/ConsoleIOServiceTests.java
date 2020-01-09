@@ -1,14 +1,12 @@
 package com.mycompany.hw_l04_spring_boot;
 
 import com.mycompany.hw_l04_spring_boot.service.ConsoleContext;
-import com.mycompany.hw_l04_spring_boot.service.ConsoleIOService;
 import com.mycompany.hw_l04_spring_boot.service.IOService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -17,21 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class ConsoleIOServiceTests {
 
-    @Mock
+    @MockBean
     private ConsoleContext consoleContext;
 
-    @Mock
+    @MockBean
     private PrintStream printStream;
 
+    @Autowired
     private IOService ioService;
-
-    @BeforeEach
-    void setUp() {
-        ioService = new ConsoleIOService(consoleContext);
-    }
 
     @Test
     void testOut() {

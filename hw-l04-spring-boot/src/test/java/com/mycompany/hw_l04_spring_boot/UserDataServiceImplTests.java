@@ -10,26 +10,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class UserDataServiceImplTests {
 
-    @Mock
+    @MockBean
     private IOService ioService;
 
-    @Mock
+    @MockBean
     private MessageSourceService msService;
 
+    @Autowired
     private UserDataService userDataService;
-
-    @BeforeEach
-    void setUp() {
-        userDataService = new UserDataServiceImpl(ioService, msService);
-    }
 
     @Test
     void getUserTest() {
