@@ -10,7 +10,12 @@ public class AppLocale {
     private final Locale locale;
 
     public AppLocale(AppProperties props) {
-        this.locale = new Locale(props.getLanguage(), props.getCountry());
+
+        if (props.getLanguage() != null && props.getCountry() != null) {
+            locale = new Locale(props.getLanguage(), props.getCountry());
+        } else {
+            locale = Locale.US;
+        }
     }
 
     public Locale getLocale() {
