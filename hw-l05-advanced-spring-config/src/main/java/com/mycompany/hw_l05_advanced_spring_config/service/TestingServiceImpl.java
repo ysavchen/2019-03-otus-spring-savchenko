@@ -40,9 +40,9 @@ public class TestingServiceImpl implements TestingService {
         var isCorrect = resultAnalyzer.checkAnswer(new Answer(question.getId(), answer));
         answerToQuestion++;
         if (isCorrect) {
-            return "Answer is correct";
+            return msService.getMessage("answer.correct");
         }
-        return "Answer is incorrect. The right option is " + question.getCorrectAnswer().getText();
+        return msService.getMessage("answer.incorrect", question.getCorrectAnswer().getText());
     }
 
     private String getResults() {
@@ -50,7 +50,7 @@ public class TestingServiceImpl implements TestingService {
         int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
 
         if (user == null) {
-            user = new User("Not defined", "Not defined");
+            user = new User(msService.getMessage("user.undefined"), msService.getMessage("user.undefined"));
         }
         return msService.getMessage("result.info", user.getName(), user.getSurname()) + "\n" +
                 msService.getMessage("result.numQuestions", numQuestions) + "\n" +
