@@ -79,4 +79,10 @@ public class ResultAnalyzerServiceImplTests {
                 () -> resultAnalyzerService.checkAnswer(answer),
                 "Invalid logic for a question/ answer mismatch");
     }
+
+    @Test
+    void checkNullAnswer() {
+        assertFalse(resultAnalyzerService.checkAnswer(null),
+                "Invalid check for null answer");
+    }
 }
