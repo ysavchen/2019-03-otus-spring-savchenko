@@ -4,7 +4,6 @@ import com.mycompany.hw_l05_advanced_spring_config.dao.Storage;
 import com.mycompany.hw_l05_advanced_spring_config.domain.Answer;
 import com.mycompany.hw_l05_advanced_spring_config.domain.Question;
 import com.mycompany.hw_l05_advanced_spring_config.exceptions.QuestionMismatchException;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +15,19 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
     private int numCorrectAnswers;
 
     @Override
-    public boolean checkAnswer(@NonNull Answer answer) {
-        var correctText = storage.getQuestions().stream()
-                .map(Question::getCorrectAnswer)
-                .filter(correctAnswer -> answer.getQuestionId() == correctAnswer.getQuestionId())
-                .findFirst()
-                .orElseThrow(() -> new QuestionMismatchException("No question with id = " + answer.getQuestionId()))
-                .getText();
+    public boolean checkAnswer(Answer answer) {
+        if (answer != null) {
+            var correctText = storage.getQuestions().stream()
+                    .map(Question::getCorrectAnswer)
+                    .filter(correctAnswer -> answer.getQuestionId() == correctAnswer.getQuestionId())
+                    .findFirst()
+                    .orElseThrow(() -> new QuestionMismatchException("No question with id = " + answer.getQuestionId()))
+                    .getText();
 
-        if (correctText.equalsIgnoreCase(answer.getText())) {
-            numCorrectAnswers++;
-            return true;
+            if (correctText.equalsIgnoreCase(answer.getText())) {
+                numCorrectAnswers++;
+                return true;
+            }
         }
         return false;
     }
