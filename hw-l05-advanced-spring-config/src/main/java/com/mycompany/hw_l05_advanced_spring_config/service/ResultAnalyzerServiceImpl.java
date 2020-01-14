@@ -16,19 +16,19 @@ public class ResultAnalyzerServiceImpl implements ResultAnalyzerService {
     private int numCorrectAnswers;
 
     @Override
-    public void checkAnswer(@NonNull Answer answer) {
-        storage.getQuestions().stream()
+    public boolean checkAnswer(@NonNull Answer answer) {
+        var correctText = storage.getQuestions().stream()
                 .map(Question::getCorrectAnswer)
                 .filter(correctAnswer -> answer.getQuestionId() == correctAnswer.getQuestionId())
                 .findFirst()
-                .ifPresentOrElse(
-                        correctAnswer -> {
-                            if (correctAnswer.getText().equalsIgnoreCase(answer.getText())) numCorrectAnswers++;
-                        },
-                        () -> {
-                            throw new QuestionMismatchException("No question with id = " + answer.getQuestionId());
-                        }
-                );
+                .orElseThrow(() -> new QuestionMismatchException("No question with id = " + answer.getQuestionId()))
+                .getText();
+
+        if (correctText.equalsIgnoreCase(answer.getText())) {
+            numCorrectAnswers++;
+            return true;
+        }
+        return false;
     }
 
     @Override

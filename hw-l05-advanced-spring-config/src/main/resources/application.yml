@@ -1,7 +1,7 @@
 spring:
     shell:
         interactive:
-            enabled: false
+            enabled: true
     messages:
         basename: i18n/bundle
 
