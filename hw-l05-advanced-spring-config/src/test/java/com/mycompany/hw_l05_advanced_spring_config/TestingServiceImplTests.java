@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.shell.jline.InteractiveShellApplicationRunner;
+import org.springframework.shell.jline.ScriptShellApplicationRunner;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
@@ -18,7 +20,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false",
+        ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false"
+})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TestingServiceImplTests {
 
@@ -52,16 +57,5 @@ public class TestingServiceImplTests {
         String results = testingService.next();
         String expResults = "data\ndata\ndata\ndata";
         assertEquals(expResults, results);
-    }
-
-    @Test
-    void acceptCorrectAnswer() {
-        assertEquals("Answer is correct", testingService.acceptAnswer("15"));
-    }
-
-    @Test
-    void acceptIncorrectAnswer() {
-        assertEquals("Answer is incorrect. The right option is " + question1.getCorrectAnswer().getText(),
-                testingService.acceptAnswer("20"));
     }
 }
