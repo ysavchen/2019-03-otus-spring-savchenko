@@ -48,6 +48,10 @@ public class TestingServiceImpl implements TestingService {
     private String getResults() {
         int numQuestions = storage.getQuestions().size();
         int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
+
+        if (user == null) {
+            user = new User("Not defined", "Not defined");
+        }
         return msService.getMessage("result.info", user.getName(), user.getSurname()) + "\n" +
                 msService.getMessage("result.numQuestions", numQuestions) + "\n" +
                 msService.getMessage("result.correctAnswers", numCorrectAnswers) + "\n" +
