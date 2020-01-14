@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellMethodAvailability;
 
 @ShellComponent
 @RequiredArgsConstructor
@@ -25,25 +24,23 @@ public class AppCommands {
     }
 
     @ShellMethod(value = "Answer to a question", key = {"a", "answer"})
-    @ShellMethodAvailability("isAnswerAvailable")
     public String answer(String answer) {
         isAnswerExpected = false;
         return testingService.acceptAnswer(answer);
     }
 
     @ShellMethod(value = "Go to the next step", key = {"n", "next"})
-    @ShellMethodAvailability("isNextAvailable")
     public String next() {
         isAnswerExpected = true;
         return testingService.next();
     }
 
-    private Availability isNextAvailable() {
+    private Availability nextAvailability() {
         return isStarted ? Availability.available() :
                 Availability.unavailable("a test is not started");
     }
 
-    private Availability isAnswerAvailable() {
+    private Availability answerAvailability() {
         return isAnswerExpected ? Availability.available() :
                 Availability.unavailable("there is no question to answer");
     }
