@@ -1,6 +1,5 @@
 package com.mycompany.hw_l05_advanced_spring_config;
 
-import com.mycompany.hw_l05_advanced_spring_config.dao.Storage;
 import com.mycompany.hw_l05_advanced_spring_config.domain.Answer;
 import com.mycompany.hw_l05_advanced_spring_config.domain.Question;
 import com.mycompany.hw_l05_advanced_spring_config.service.MessageSourceService;
@@ -24,16 +23,12 @@ import static org.mockito.Mockito.when;
 public class TestingServiceImplTests {
 
     @MockBean
-    private Storage storage;
-
-    @MockBean
     private MessageSourceService msService;
 
     @Autowired
     private TestingService testingService;
 
     private Question question1;
-    private Question question2;
 
     @BeforeEach
     void setUp() {
@@ -41,17 +36,11 @@ public class TestingServiceImplTests {
                 1, "question one?",
                 List.of("1", "15", "6", "37"), new Answer(1, "15")
         );
-        question2 = new Question(
-                2, "question two?",
-                List.of("answerOne", "answerOne"), new Answer(2, "answerOne")
-        );
-        when(storage.getQuestions()).thenReturn(List.of(question1, question2));
     }
 
     @Test
     void nextQuestion() {
         String nextQuestion = testingService.next();
-        System.out.println(nextQuestion);
         assertEquals(question1.getText() + "\n" + question1.getOptions(), nextQuestion);
     }
 
