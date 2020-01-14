@@ -6,46 +6,45 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class AppCommands {
 
     private final TestingService testingService;
+    private boolean isStarted = false;
+    private boolean isAnswerExpected = false;
 
     @ShellMethod(value = "Start test for a user", key = {"stf", "start-test-for"})
     public String startTestFor(String name, String surname) {
         testingService.setUser(new User(name, surname));
-        return testingService.nextQuestion();
+        isStarted = true;
+        isAnswerExpected = true;
+        return testingService.next();
     }
 
     @ShellMethod(value = "Answer to a question", key = {"a", "answer"})
-    //@ShellMethodAvailability("isAnswerAvailable")
+    @ShellMethodAvailability("isAnswerAvailable")
     public String answer(String answer) {
+        isAnswerExpected = false;
         return testingService.acceptAnswer(answer);
     }
 
-    @ShellMethod(value = "Get next question", key = {"n", "next"})
-    //@ShellMethodAvailability("isNextAvailable")
+    @ShellMethod(value = "Go to the next step", key = {"n", "next"})
+    @ShellMethodAvailability("isNextAvailable")
     public String next() {
-        return testingService.nextQuestion();
-    }
-
-    @ShellMethod(value = "Get test results", key = {"r", "results"})
-    //@ShellMethodAvailability("resultsAvailable")
-    public String results() {
-        return testingService.getResults();
+        isAnswerExpected = true;
+        return testingService.next();
     }
 
     private Availability isNextAvailable() {
-        return null;
+        return isStarted ? Availability.available() :
+                Availability.unavailable("a test is not started");
     }
 
     private Availability isAnswerAvailable() {
-        return null;
-    }
-
-    private Availability resultsAvailable() {
-        return null;
+        return isAnswerExpected ? Availability.available() :
+                Availability.unavailable("there is no question to answer");
     }
 }

@@ -18,20 +18,23 @@ public class TestingServiceImpl implements TestingService {
     private int nextQuestion = 0;
     private int answerToQuestion = 0;
 
+    @Override
     public void setUser(User user) {
         this.user = user;
     }
 
-    public String nextQuestion() {
+    @Override
+    public String next() {
         var questions = storage.getQuestions();
         if (nextQuestion < questions.size()) {
             var question = storage.getQuestions().get(nextQuestion);
             nextQuestion++;
             return question.getText() + "\n" + question.getOptions();
         }
-        return "No more questions available. Enter 'results' to see test results";
+        return getResults();
     }
 
+    @Override
     public String acceptAnswer(String answer) {
         var question = storage.getQuestions().get(answerToQuestion);
         var isCorrect = resultAnalyzer.checkAnswer(new Answer(question.getId(), answer));
@@ -42,7 +45,7 @@ public class TestingServiceImpl implements TestingService {
         return "Answer is incorrect. The right option is " + question.getCorrectAnswer().getText();
     }
 
-    public String getResults() {
+    private String getResults() {
         int numQuestions = storage.getQuestions().size();
         int numCorrectAnswers = resultAnalyzer.getNumCorrectAnswers();
         return msService.getMessage("result.info", user.getName(), user.getSurname()) + "\n" +

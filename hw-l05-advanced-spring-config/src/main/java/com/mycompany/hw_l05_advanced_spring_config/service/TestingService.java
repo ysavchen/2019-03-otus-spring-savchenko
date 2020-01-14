@@ -6,9 +6,7 @@ public interface TestingService {
 
     void setUser(User user);
 
-    String nextQuestion();
+    String next();
 
     String acceptAnswer(String answer);
-
-    String getResults();
 }
