@@ -5,12 +5,7 @@ import com.mycompany.hw_l05_advanced_spring_config.domain.Answer;
 import com.mycompany.hw_l05_advanced_spring_config.domain.Question;
 import com.mycompany.hw_l05_advanced_spring_config.exceptions.QuestionMismatchException;
 import com.mycompany.hw_l05_advanced_spring_config.service.ResultAnalyzerService;
-import com.mycompany.hw_l05_advanced_spring_config.service.ResultAnalyzerServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,8 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -42,8 +36,10 @@ public class ResultAnalyzerServiceImplTests {
         when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(1, "correct");
-        resultAnalyzerService.checkAnswer(answer);
-        assertEquals(1, resultAnalyzerService.getNumCorrectAnswers());
+        assertTrue(resultAnalyzerService.checkAnswer(answer),
+                "Erroneous check of a correct answer: " + answer);
+        assertEquals(1, resultAnalyzerService.getNumCorrectAnswers(),
+                "Erroneous calculation of correct answers");
     }
 
     @Test
@@ -53,8 +49,10 @@ public class ResultAnalyzerServiceImplTests {
         when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(1, "incorrect");
-        resultAnalyzerService.checkAnswer(answer);
-        assertEquals(0, resultAnalyzerService.getNumCorrectAnswers());
+        assertFalse(resultAnalyzerService.checkAnswer(answer),
+                "Erroneous check of an incorrect answer: " + answer);
+        assertEquals(0, resultAnalyzerService.getNumCorrectAnswers(),
+                "Erroneous calculation of incorrect answers");
     }
 
     @Test
@@ -64,8 +62,10 @@ public class ResultAnalyzerServiceImplTests {
         when(storage.getQuestions()).thenReturn(List.of(question));
 
         var answer = new Answer(1, "correct");
-        resultAnalyzerService.checkAnswer(answer);
-        assertEquals(1, resultAnalyzerService.getNumCorrectAnswers());
+        assertTrue(resultAnalyzerService.checkAnswer(answer),
+                "Erroneous check of answers with different case");
+        assertEquals(1, resultAnalyzerService.getNumCorrectAnswers(),
+                "Erroneous calculation of answers with different case");
     }
 
     @Test
@@ -76,6 +76,7 @@ public class ResultAnalyzerServiceImplTests {
 
         var answer = new Answer(2, "mismatch");
         assertThrows(QuestionMismatchException.class,
-                () -> resultAnalyzerService.checkAnswer(answer));
+                () -> resultAnalyzerService.checkAnswer(answer),
+                "Invalid logic for a question/ answer mismatch");
     }
 }
