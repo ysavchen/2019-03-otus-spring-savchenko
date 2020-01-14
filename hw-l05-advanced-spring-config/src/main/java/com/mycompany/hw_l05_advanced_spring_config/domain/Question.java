@@ -1,12 +1,10 @@
 package com.mycompany.hw_l05_advanced_spring_config.domain;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class Question {
 
     private final int id;
