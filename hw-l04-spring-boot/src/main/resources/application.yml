@@ -1,0 +1,7 @@
+spring:
+    messages:
+        basename: i18n/bundle
+
+application:
+    language: en
+    country: US
