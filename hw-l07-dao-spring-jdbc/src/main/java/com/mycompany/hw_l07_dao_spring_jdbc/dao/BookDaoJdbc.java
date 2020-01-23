@@ -1,9 +1,7 @@
 package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 
-import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
