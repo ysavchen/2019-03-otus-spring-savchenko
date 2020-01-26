@@ -11,9 +11,24 @@ import java.sql.SQLException;
 
 @Repository
 @RequiredArgsConstructor
-public class GenreDaoJdbc {
+public class GenreDaoJdbc implements GenreDao {
 
     private final NamedParameterJdbcOperations jdbc;
+
+    @Override
+    public long insert(Genre genre) {
+        return 0;
+    }
+
+    @Override
+    public Genre getById(long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(long id) {
+
+    }
 
     private static class GenreMapper implements RowMapper<Genre> {
 

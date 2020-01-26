@@ -2,19 +2,34 @@ package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class AuthorDaoJdbc implements AuthorDao{
+public class AuthorDaoJdbc implements AuthorDao {
 
     private final NamedParameterJdbcOperations jdbc;
+
+    @Override
+    public long insert(Author author) {
+        return 0;
+    }
+
+    @Override
+    public Author getById(long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(long id) {
+
+    }
 
     private static class AuthorMapper implements RowMapper<Author> {
 
@@ -25,5 +40,4 @@ public class AuthorDaoJdbc implements AuthorDao{
             return new Author(/*id, name*/);
         }
     }
-
 }

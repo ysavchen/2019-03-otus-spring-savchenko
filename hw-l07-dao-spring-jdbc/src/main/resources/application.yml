@@ -1,0 +1,10 @@
+spring:
+  shell:
+    interactive:
+      enabled: true
+  datasource:
+    #    url: blabla
+    #    driver-class-name: blabla
+    #    initialization-mode: always
+    schema: schema.sql
+    data: data.sql

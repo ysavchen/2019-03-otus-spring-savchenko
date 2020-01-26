@@ -10,4 +10,12 @@ public class Book {
     private Author author;
     private Genre genre;
 
+    public Book() {
+    }
+
+    public Book(String title, Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
 }
