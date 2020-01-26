@@ -9,6 +9,5 @@ public class Genre {
 
     private long id;
     private String name;
-    private Set<Book> books;
 
 }
