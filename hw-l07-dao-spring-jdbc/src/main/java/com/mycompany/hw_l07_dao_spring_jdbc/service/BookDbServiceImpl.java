@@ -35,7 +35,7 @@ public class BookDbServiceImpl implements BookDbService {
     }
 
     public void update(Book book) {
-
+        if (book.getTitle() != null) bookDao.update(book);
     }
 
     public void deleteById(long id) {

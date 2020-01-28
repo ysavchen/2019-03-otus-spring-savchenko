@@ -18,9 +18,11 @@ public class BookCommands {
     public String addBook(String title, String authorName,
                           String authorSurname, String genre) {
 
-        var author = new Author(authorName, authorSurname);
-        var book = new Book(title, author, new Genre(genre));
-
+        var book = Book.builder()
+                .title(title)
+                .author(new Author(authorName, authorSurname))
+                .genre(new Genre(genre))
+                .build();
         return "Added book with id = " + bookDbService.insert(book);
     }
 
@@ -40,8 +42,11 @@ public class BookCommands {
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
     public String updateTitle(long id, String newTitle) {
+        var book = Book.builder()
+                .id(id).title(newTitle)
+                .build();
 
-
+        bookDbService.update(book);
         return "Title is changed for a book with id = " + id;
     }
 
@@ -49,10 +54,5 @@ public class BookCommands {
     public String deleteBookById(long id) {
         bookDbService.deleteById(id);
         return "Deleted book with id = " + id;
-    }
-
-    @ShellMethod(value = "Find all books", key = {"fab", "find-all-books"})
-    public String getAllBooks() {
-        return "";
     }
 }

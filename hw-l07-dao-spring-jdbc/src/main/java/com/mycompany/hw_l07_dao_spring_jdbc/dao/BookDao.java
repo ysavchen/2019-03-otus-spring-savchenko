@@ -2,7 +2,6 @@ package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface BookDao {
@@ -21,6 +20,4 @@ public interface BookDao {
     void update(Book book);
 
     void deleteById(long id);
-
-    List<Book> getAll();
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -41,12 +40,14 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public void updateWithAuthorRelation(long bookId, long authorId) {
-
+        Map<String, Object> params = Map.of("bookId", bookId, "authorId", authorId);
+        jdbc.update("update books set author_id = :authorId where id = :bookId", params);
     }
 
     @Override
     public void updateWithGenreRelation(long bookId, long genreId) {
-
+        Map<String, Object> params = Map.of("bookId", bookId, "genreId", genreId);
+        jdbc.update("update books set genreId = :genreId where id = :bookId", params);
     }
 
     @Override
@@ -70,18 +71,14 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public void update(Book book) {
-
+        Map<String, Object> params = Map.of("id", book.getId(), "title", book.getTitle());
+        jdbc.update("update books set title = :title where id = :id", params);
     }
 
     @Override
     public void deleteById(long id) {
         Map<String, Object> params = Map.of("id", id);
         jdbc.update("delete from books where id = :id", params);
-    }
-
-    @Override
-    public List<Book> getAll() {
-        return null;
     }
 
     private static class BookMapper implements RowMapper<Book> {
@@ -95,11 +92,13 @@ public class BookDaoJdbc implements BookDao {
             String authorSurname = resultSet.getString("authorSurname");
             long genreId = resultSet.getLong("genreId");
             String genreName = resultSet.getString("genreName");
-            return new Book(
-                    id, title,
-                    new Author(authorId, authorName, authorSurname),
-                    new Genre(genreId, genreName)
-            );
+
+            return Book.builder()
+                    .id(id)
+                    .title(title)
+                    .author(new Author(authorId, authorName, authorSurname))
+                    .genre(new Genre(genreId, genreName))
+                    .build();
         }
     }
 }
