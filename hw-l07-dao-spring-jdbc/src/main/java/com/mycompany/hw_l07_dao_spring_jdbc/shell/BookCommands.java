@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellMethod;
 @RequiredArgsConstructor
 public class BookCommands {
 
-    private final BookDbService bookDbService;
+    private final BookDbService dbService;
 
     @ShellMethod(value = "Add book", key = {"ab", "add-book"})
     public String addBook(String title, String authorName,
@@ -23,12 +23,12 @@ public class BookCommands {
                 .author(new Author(authorName, authorSurname))
                 .genre(new Genre(genre))
                 .build();
-        return "Added book with id = " + bookDbService.insert(book);
+        return "Added book with id = " + dbService.insert(book);
     }
 
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
     public String findBookById(long id) {
-        var optBook = bookDbService.getById(id);
+        var optBook = dbService.getById(id);
 
         if (optBook.isEmpty()) {
             return "Book with id = " + id + " is not found";
@@ -46,13 +46,13 @@ public class BookCommands {
                 .id(id).title(newTitle)
                 .build();
 
-        bookDbService.update(book);
+        dbService.update(book);
         return "Title is changed for a book with id = " + id;
     }
 
     @ShellMethod(value = "Delete book by id", key = {"dbi", "delete-book-by-id"})
     public String deleteBookById(long id) {
-        bookDbService.deleteById(id);
+        dbService.deleteById(id);
         return "Deleted book with id = " + id;
     }
 }

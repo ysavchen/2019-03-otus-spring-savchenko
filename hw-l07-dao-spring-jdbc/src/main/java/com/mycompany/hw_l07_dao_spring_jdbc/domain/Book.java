@@ -7,9 +7,9 @@ import lombok.Data;
 @Builder
 public class Book {
 
-    private final long id;
-    private final String title;
-    private final Author author;
-    private final Genre genre;
+    private long id;
+    private String title;
+    private Author author;
+    private Genre genre;
 
 }

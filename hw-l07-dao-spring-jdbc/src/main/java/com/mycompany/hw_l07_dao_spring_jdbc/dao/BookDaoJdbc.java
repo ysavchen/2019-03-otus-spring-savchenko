@@ -27,9 +27,12 @@ public class BookDaoJdbc implements BookDao {
     public long insert(Book book) {
         var keyHolder = new GeneratedKeyHolder();
         var params = new MapSqlParameterSource()
-                .addValue("title", book.getTitle());
+                .addValue("title", book.getTitle())
+                .addValue("author_id", book.getAuthor().getId())
+                .addValue("genre_id", book.getGenre().getId());
 
-        jdbc.update("insert into books (title) values (:title)", params, keyHolder);
+        jdbc.update("insert into books (title, author_id, genre_id) " +
+                "values (:title, :author_id, :genre_id)", params, keyHolder);
 
         var number = keyHolder.getKey();
         if (number == null) {
@@ -39,22 +42,10 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public void updateWithAuthorRelation(long bookId, long authorId) {
-        Map<String, Object> params = Map.of("bookId", bookId, "authorId", authorId);
-        jdbc.update("update books set author_id = :authorId where id = :bookId", params);
-    }
-
-    @Override
-    public void updateWithGenreRelation(long bookId, long genreId) {
-        Map<String, Object> params = Map.of("bookId", bookId, "genreId", genreId);
-        jdbc.update("update books set genreId = :genreId where id = :bookId", params);
-    }
-
-    @Override
     public Optional<Book> getById(long id) {
         Map<String, Object> params = Map.of("id", id);
         try {
-            var book = jdbc.queryForObject(
+            Book book = jdbc.queryForObject(
                     "select b.id as bookId, b.title as title, " +
                             "a.id as authorId, a.name as authorName, a.surname as authorSurname, " +
                             "g.id as genreId, g.name as genreName " +

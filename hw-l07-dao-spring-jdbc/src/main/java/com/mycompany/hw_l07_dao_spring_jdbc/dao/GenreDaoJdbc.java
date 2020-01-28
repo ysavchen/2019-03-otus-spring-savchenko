@@ -1,13 +1,12 @@
 package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Genre;
+import com.mycompany.hw_l07_dao_spring_jdbc.exception.NoIdException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,26 +16,16 @@ public class GenreDaoJdbc implements GenreDao {
 
     @Override
     public long insert(Genre genre) {
-        return 0;
-    }
+        var keyHolder = new GeneratedKeyHolder();
+        var params = new MapSqlParameterSource()
+                .addValue("name", genre.getName());
 
-    @Override
-    public Genre getByName(String name) {
-        return null;
-    }
+        jdbc.update("insert into genres (name) values (:name)", params, keyHolder);
 
-    @Override
-    public void deleteById(long id) {
-
-    }
-
-    private static class GenreMapper implements RowMapper<Genre> {
-
-        @Override
-        public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            return new Genre(/*id, name*/);
+        var number = keyHolder.getKey();
+        if (number == null) {
+            throw new NoIdException("No id for genre with name = " + genre.getName());
         }
+        return number.longValue();
     }
 }
