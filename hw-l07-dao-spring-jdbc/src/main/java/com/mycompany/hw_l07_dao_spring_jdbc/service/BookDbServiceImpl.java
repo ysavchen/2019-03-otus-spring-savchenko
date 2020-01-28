@@ -7,6 +7,8 @@ import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BookDbServiceImpl implements BookDbService {
@@ -28,7 +30,7 @@ public class BookDbServiceImpl implements BookDbService {
         return bookId;
     }
 
-    public Book getById(long id) {
+    public Optional<Book> getById(long id) {
         return bookDao.getById(id);
     }
 
@@ -36,7 +38,7 @@ public class BookDbServiceImpl implements BookDbService {
 
     }
 
-    public void delete(Book book) {
-
+    public void deleteById(long id) {
+        bookDao.deleteById(id);
     }
 }

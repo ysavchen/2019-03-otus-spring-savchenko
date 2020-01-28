@@ -26,8 +26,13 @@ public class BookCommands {
 
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
     public String findBookById(long id) {
-        var book = bookDbService.getById(id);
+        var optBook = bookDbService.getById(id);
 
+        if (optBook.isEmpty()) {
+            return "Book with id = " + id + " is not found";
+        }
+
+        var book = optBook.get();
         return "Title: " + book.getTitle() + "\n" +
                 "Author: " + book.getAuthor().getName() + " " + book.getAuthor().getSurname() + "\n" +
                 "Genre: " + book.getGenre().getName();
@@ -42,8 +47,7 @@ public class BookCommands {
 
     @ShellMethod(value = "Delete book by id", key = {"dbi", "delete-book-by-id"})
     public String deleteBookById(long id) {
-
-
+        bookDbService.deleteById(id);
         return "Deleted book with id = " + id;
     }
 

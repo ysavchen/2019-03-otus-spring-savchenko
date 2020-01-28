@@ -3,6 +3,7 @@ package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookDao {
 
@@ -15,7 +16,7 @@ public interface BookDao {
 
     void updateWithGenreRelation(long bookId, long genreId);
 
-    Book getById(long id);
+    Optional<Book> getById(long id);
 
     void update(Book book);
 
