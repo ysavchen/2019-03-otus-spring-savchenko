@@ -22,9 +22,10 @@ public class AuthorDaoJdbc implements AuthorDao {
     }
 
     @Override
-    public Author getById(long id) {
-        return null;
+    public void updateWithBookRelation(long authorId, long bookId) {
+
     }
+
 
     @Override
     public void deleteById(long id) {

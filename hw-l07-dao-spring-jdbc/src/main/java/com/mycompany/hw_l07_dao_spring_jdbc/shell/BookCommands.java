@@ -24,9 +24,13 @@ public class BookCommands {
         return "Added book with id = " + bookDbService.insert(book);
     }
 
-    @ShellMethod(value = "Find book by title", key = {"fbt", "find-book-by-title"})
-    public String findBookByTitle(String title) {
-        return "";
+    @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
+    public String findBookById(long id) {
+        var book = bookDbService.getById(id);
+
+        return "Title: " + book.getTitle() + "\n" +
+                "Author: " + book.getAuthor().getName() + " " + book.getAuthor().getSurname() + "\n" +
+                "Genre: " + book.getGenre().getName();
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
@@ -36,21 +40,8 @@ public class BookCommands {
         return "Title is changed for a book with id = " + id;
     }
 
-    @ShellMethod(value = "Update author for a book", key = {"uab", "update-author-for-book"})
-    public String updateAuthor(long id, String newAuthor) {
-
-        return "Author is changed for a book with id = " + id;
-    }
-
-    @ShellMethod(value = "Update genre for a book", key = {"ugb", "update-genre-for-book"})
-    public String updateGenre(long id, String newGenre) {
-
-
-        return "Genre is changed for a book with id = " + id;
-    }
-
     @ShellMethod(value = "Delete book by id", key = {"dbi", "delete-book-by-id"})
-    public String deleteBookByTitle(long id) {
+    public String deleteBookById(long id) {
 
 
         return "Deleted book with id = " + id;

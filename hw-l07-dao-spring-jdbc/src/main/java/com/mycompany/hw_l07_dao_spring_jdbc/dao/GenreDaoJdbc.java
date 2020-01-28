@@ -21,7 +21,7 @@ public class GenreDaoJdbc implements GenreDao {
     }
 
     @Override
-    public Genre getById(long id) {
+    public Genre getByName(String name) {
         return null;
     }
 

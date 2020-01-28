@@ -6,7 +6,7 @@ public interface AuthorDao {
 
     long insert(Author author);
 
-    Author getById(long id);
+    void updateWithBookRelation(long authorId, long bookId);
 
     void deleteById(long id);
 }

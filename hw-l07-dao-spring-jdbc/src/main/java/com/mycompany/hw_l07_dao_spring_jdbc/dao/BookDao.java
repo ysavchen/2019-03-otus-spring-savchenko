@@ -6,11 +6,16 @@ import java.util.List;
 
 public interface BookDao {
 
+    /**
+     * Inserts a book without relations.
+     */
     long insert(Book book);
 
-    Book getById(long id);
+    void updateWithAuthorRelation(long bookId, long authorId);
 
-    Book getBookByTitle(String title);
+    void updateWithGenreRelation(long bookId, long genreId);
+
+    Book getById(long id);
 
     void update(Book book);
 
