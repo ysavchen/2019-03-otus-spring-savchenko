@@ -4,6 +4,7 @@ import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Genre;
 import com.mycompany.hw_l07_dao_spring_jdbc.exception.NoIdException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,7 +25,7 @@ public class BookDaoJdbc implements BookDao {
     private final NamedParameterJdbcOperations jdbc;
 
     @Override
-    public long insert(Book book) {
+    public long insert(@NonNull Book book) {
         var keyHolder = new GeneratedKeyHolder();
         var params = new MapSqlParameterSource()
                 .addValue("title", book.getTitle())
@@ -61,7 +62,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public void update(Book book) {
+    public void update(@NonNull Book book) {
         Map<String, Object> params = Map.of("id", book.getId(), "title", book.getTitle());
         jdbc.update("update books set title = :title where id = :id", params);
     }

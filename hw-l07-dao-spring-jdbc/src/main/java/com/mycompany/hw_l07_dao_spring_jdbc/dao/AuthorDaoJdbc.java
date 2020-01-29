@@ -3,6 +3,7 @@ package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import com.mycompany.hw_l07_dao_spring_jdbc.exception.NoIdException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,7 +25,7 @@ public class AuthorDaoJdbc implements AuthorDao {
     private final NamedParameterJdbcOperations jdbc;
 
     @Override
-    public long insert(Author author) {
+    public long insert(@NonNull Author author) {
         var keyHolder = new GeneratedKeyHolder();
         var params = new MapSqlParameterSource()
                 .addValue("name", author.getName())
