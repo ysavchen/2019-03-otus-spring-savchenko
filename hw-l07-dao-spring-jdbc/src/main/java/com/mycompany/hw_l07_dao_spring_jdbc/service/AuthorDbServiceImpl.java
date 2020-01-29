@@ -15,9 +15,7 @@ public class AuthorDbServiceImpl implements AuthorDbService {
 
     @Override
     public long insert(Author author) {
-        long authorId = authorDao.insert(author);
-
-        return authorId;
+        return authorDao.insert(author);
     }
 
     @Override
