@@ -16,13 +16,13 @@ public class Author {
     public Author() {
     }
 
-    public Author(long id, String name, String surname) {
-        this.id = id;
+    public Author(String name, String surname) {
         this.name = name;
         this.surname = surname;
     }
 
-    public Author(String name, String surname) {
+    public Author(long id, String name, String surname) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
     }
