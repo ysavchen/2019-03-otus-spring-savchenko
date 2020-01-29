@@ -80,11 +80,14 @@ public class BookDaoJdbcTests {
 
     @Test
     void updateBookTitle() {
-
+        bookDaoJdbc.update(book.title("newTitle"));
+        assertThat(bookDaoJdbc.getById(book.id())).get()
+                .hasFieldOrPropertyWithValue("title", book.title());
     }
 
     @Test
     void deleteById() {
-
+        bookDaoJdbc.deleteById(book.id());
+        assertThat(bookDaoJdbc.getById(book.id())).isEmpty();
     }
 }
