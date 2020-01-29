@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -61,7 +63,19 @@ public class BookDaoJdbcTests {
 
     @Test
     void getBookWithGenreAndAuthor() {
+        var bookWithGenre = new Book("test").genre(genre);
+        var bookWithAuthor = new Book("test").author(author);
+        var bookWithBoth = new Book("test").author(author).genre(genre);
 
+        List.of(bookWithGenre, bookWithAuthor, bookWithBoth)
+                .forEach(testBook -> {
+                    long id = bookDaoJdbc.insert(testBook);
+                    assertThat(bookDaoJdbc.getById(id)).get()
+                            .hasFieldOrPropertyWithValue("id", id)
+                            .hasFieldOrPropertyWithValue("title", testBook.title())
+                            .hasFieldOrPropertyWithValue("author", testBook.author())
+                            .hasFieldOrPropertyWithValue("genre", testBook.genre());
+                });
     }
 
     @Test

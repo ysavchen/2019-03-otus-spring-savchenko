@@ -93,9 +93,15 @@ public class BookDaoJdbc implements BookDao {
             long genreId = resultSet.getLong("genreId");
             String genreName = resultSet.getString("genreName");
 
-            return new Book(id, title)
-                    .author(new Author(authorId, authorName, authorSurname))
-                    .genre(new Genre(genreId, genreName));
+            var book = new Book(id, title);
+            if (authorId != 0 && authorName != null && authorSurname != null) {
+                book.author(new Author(authorId, authorName, authorSurname));
+            }
+            if (genreId != 0 && genreName != null) {
+                book.genre(new Genre(genreId, genreName));
+            }
+
+            return book;
         }
     }
 }

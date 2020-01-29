@@ -43,9 +43,19 @@ public class BookCommands {
         }
 
         var book = optBook.get();
+        String author = "not defined";
+        String genre = "not defined";
+
+        if (book.author() != null) {
+            author = book.author().getName() + " " + book.author().getSurname();
+        }
+        if (book.genre() != null) {
+            genre = book.genre().getName();
+        }
+
         return "Title: " + book.title() + "\n" +
-                "Author: " + book.author().getName() + " " + book.author().getSurname() + "\n" +
-                "Genre: " + book.genre().getName();
+                "Author: " + author + "\n" +
+                "Genre: " + genre;
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
