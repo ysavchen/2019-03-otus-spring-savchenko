@@ -35,11 +35,14 @@ public class BookDbServiceImpl implements BookDbService {
         return bookDao.getById(id);
     }
 
-    public void update(Book book) {
-        if (book.title() != null) bookDao.update(book);
+    public boolean update(Book book) {
+        if (book.title() != null) {
+            return bookDao.update(book);
+        }
+        return false;
     }
 
-    public void deleteById(long id) {
-        bookDao.deleteById(id);
+    public boolean deleteById(long id) {
+        return bookDao.deleteById(id);
     }
 }

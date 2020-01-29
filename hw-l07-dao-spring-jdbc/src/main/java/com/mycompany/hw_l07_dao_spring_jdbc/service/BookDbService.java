@@ -10,7 +10,7 @@ public interface BookDbService {
 
     Optional<Book> getById(long id);
 
-    void update(Book book);
+    boolean update(Book book);
 
-    void deleteById(long id);
+    boolean deleteById(long id);
 }

@@ -70,15 +70,17 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public void update(@NonNull Book book) {
+    public boolean update(@NonNull Book book) {
         Map<String, Object> params = Map.of("id", book.id(), "title", book.title());
-        jdbc.update("update books set title = :title where id = :id", params);
+        int rows = jdbc.update("update books set title = :title where id = :id", params);
+        return rows > 0;
     }
 
     @Override
-    public void deleteById(long id) {
+    public boolean deleteById(long id) {
         Map<String, Object> params = Map.of("id", id);
-        jdbc.update("delete from books where id = :id", params);
+        int rows = jdbc.update("delete from books where id = :id", params);
+        return rows > 0;
     }
 
     private static class BookMapper implements RowMapper<Book> {
