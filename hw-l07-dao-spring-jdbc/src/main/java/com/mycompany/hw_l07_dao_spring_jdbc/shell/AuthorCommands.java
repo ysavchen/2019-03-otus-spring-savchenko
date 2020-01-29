@@ -22,9 +22,13 @@ public class AuthorCommands {
         }
 
         var author = optAuthor.get();
-        String books = author.getBooks().stream()
-                .map(Book::title)
-                .collect(joining(", "));
+
+        String books = "No books available";
+        if (!author.getBooks().isEmpty()) {
+            books = author.getBooks().stream()
+                    .map(Book::title)
+                    .collect(joining(", "));
+        }
 
         return "Author: " + author.getName() + " " + author.getSurname() + "\n" +
                 "Books: " + books;

@@ -69,12 +69,15 @@ public class AuthorDaoJdbc implements AuthorDao {
                 author.setSurname(rs.getString("authorSurName"));
 
                 do {
-                    var book = new Book(
-                            rs.getLong("bookId"),
-                            rs.getString("title")
-                    );
-                    author.getBooks().add(book);
+                    var bookId = rs.getLong("bookId");
+                    var titleId = rs.getString("title");
+
+                    if (bookId != 0 && titleId != null) {
+                        author.getBooks().add(new Book(bookId, titleId));
+                    }
                 } while (rs.next());
+            } else {
+                author = null;
             }
             return author;
         }
