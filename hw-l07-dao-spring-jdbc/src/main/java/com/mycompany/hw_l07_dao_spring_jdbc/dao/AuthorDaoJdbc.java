@@ -63,16 +63,18 @@ public class AuthorDaoJdbc implements AuthorDao {
         public Author extractData(ResultSet rs) throws SQLException, DataAccessException {
             Author author = new Author();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 author.setId(rs.getLong("authorId"));
                 author.setName(rs.getString("authorName"));
                 author.setSurname(rs.getString("authorSurName"));
 
-                var book = Book.builder()
-                        .id(rs.getLong("bookId"))
-                        .title(rs.getString("title"))
-                        .build();
-                author.getBooks().add(book);
+                do {
+                    var book = Book.builder()
+                            .id(rs.getLong("bookId"))
+                            .title(rs.getString("title"))
+                            .build();
+                    author.getBooks().add(book);
+                } while (rs.next());
             }
             return author;
         }

@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenreDaoJdbcTests {
 
+    private final Genre genre = new Genre(1, "Computers & Technology");
+
     @Autowired
     private GenreDaoJdbc genreDaoJdbc;
 
@@ -25,13 +27,18 @@ public class GenreDaoJdbcTests {
         var genre = new Genre("test");
         long id = genreDaoJdbc.insert(genre);
         assertEquals(2, id, "Invalid id for an inserted Genre");
-        assertThat(genreDaoJdbc.getById(id)).get()
-                .hasFieldOrPropertyWithValue("name", genre.getName());
     }
 
     @Test
     void insertGenreWithId() {
         var genre = new Genre(100, "test");
-        assertEquals(2, genreDaoJdbc.insert(genre));
+        assertEquals(2, genreDaoJdbc.insert(genre),
+                "Id of the entity must not be inserted in DB");
+    }
+
+    @Test
+    void getGenreById() {
+        assertThat(genreDaoJdbc.getById(genre.getId())).get()
+                .hasFieldOrPropertyWithValue("name", genre.getName());
     }
 }

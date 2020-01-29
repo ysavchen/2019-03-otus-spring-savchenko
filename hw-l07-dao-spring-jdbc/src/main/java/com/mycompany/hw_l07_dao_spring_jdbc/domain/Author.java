@@ -27,7 +27,8 @@ public class Author {
         this.surname = surname;
     }
 
-    public void addBook(Book book) {
+    public Author addBook(Book book) {
         books.add(book);
+        return this;
     }
 }
