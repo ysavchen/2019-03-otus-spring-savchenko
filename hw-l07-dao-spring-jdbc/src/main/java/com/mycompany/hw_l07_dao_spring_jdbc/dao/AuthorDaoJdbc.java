@@ -31,7 +31,7 @@ public class AuthorDaoJdbc implements AuthorDao {
                 .addValue("name", author.getName())
                 .addValue("surname", author.getSurname());
 
-        jdbc.update("insert into author (name, surname) values (:name, :surname)", params, keyHolder);
+        jdbc.update("insert into authors (name, surname) values (:name, :surname)", params, keyHolder);
 
         var number = keyHolder.getKey();
         if (number == null) {
