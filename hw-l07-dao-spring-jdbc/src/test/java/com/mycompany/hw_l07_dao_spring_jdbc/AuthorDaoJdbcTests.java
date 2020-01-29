@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class AuthorDaoJdbcTests {
 
-    private final Book book1 = Book.builder().id(1).title("A Guide to SQL").build();
-    private final Book book2 = Book.builder().id(2).title("Concepts of Database Management").build();
+    private final Book book1 = new Book(1, "A Guide to SQL");
+    private final Book book2 = new Book(2, "Concepts of Database Management");
     private final Author author =
             new Author(1, "Philip", "Pratt")
                     .addBook(book1).addBook(book2);

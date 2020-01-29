@@ -23,7 +23,7 @@ public class AuthorCommands {
 
         var author = optAuthor.get();
         String books = author.getBooks().stream()
-                .map(Book::getTitle)
+                .map(Book::title)
                 .collect(joining(", "));
 
         return "Author: " + author.getName() + " " + author.getSurname() + "\n" +

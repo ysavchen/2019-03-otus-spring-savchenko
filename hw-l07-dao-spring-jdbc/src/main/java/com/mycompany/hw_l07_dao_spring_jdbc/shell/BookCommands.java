@@ -7,6 +7,9 @@ import com.mycompany.hw_l07_dao_spring_jdbc.service.BookDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
+
+import static org.springframework.shell.standard.ShellOption.NULL;
 
 @ShellComponent
 @RequiredArgsConstructor
@@ -14,16 +17,20 @@ public class BookCommands {
 
     private final BookDbService dbService;
 
-    //TODO: make author and genre optional
     @ShellMethod(value = "Add book", key = {"ab", "add-book"})
-    public String addBook(String title, String authorName,
-                          String authorSurname, String genre) {
+    public String addBook(String title,
+                          @ShellOption(defaultValue = NULL) String authorName,
+                          @ShellOption(defaultValue = NULL) String authorSurname,
+                          @ShellOption(defaultValue = NULL) String genre) {
 
-        var book = Book.builder()
-                .title(title)
-                .author(new Author(authorName, authorSurname))
-                .genre(new Genre(genre))
-                .build();
+        var book = new Book(title);
+        if (authorName != null && authorSurname != null) {
+            book.author(new Author(authorSurname, authorSurname));
+        }
+        if (genre != null) {
+            book.genre(new Genre(genre));
+        }
+
         return "Added book with id = " + dbService.insert(book);
     }
 
@@ -36,17 +43,14 @@ public class BookCommands {
         }
 
         var book = optBook.get();
-        return "Title: " + book.getTitle() + "\n" +
-                "Author: " + book.getAuthor().getName() + " " + book.getAuthor().getSurname() + "\n" +
-                "Genre: " + book.getGenre().getName();
+        return "Title: " + book.title() + "\n" +
+                "Author: " + book.author().getName() + " " + book.author().getSurname() + "\n" +
+                "Genre: " + book.genre().getName();
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
     public String updateTitle(long id, String newTitle) {
-        var book = Book.builder()
-                .id(id).title(newTitle)
-                .build();
-
+        var book = new Book(id, newTitle);
         dbService.update(book);
         return "Title is changed for a book with id = " + id;
     }

@@ -19,13 +19,13 @@ public class BookDbServiceImpl implements BookDbService {
 
     @Override
     public long insert(Book book) {
-        if (book.getGenre() != null) {
-            long genreId = genreDao.insert(book.getGenre());
-            book.getGenre().setId(genreId);
+        if (book.genre() != null) {
+            long genreId = genreDao.insert(book.genre());
+            book.genre().setId(genreId);
         }
-        if (book.getAuthor() != null) {
-            long authorId = authorDao.insert(book.getAuthor());
-            book.getAuthor().setId(authorId);
+        if (book.author() != null) {
+            long authorId = authorDao.insert(book.author());
+            book.author().setId(authorId);
         }
 
         return bookDao.insert(book);
@@ -36,7 +36,7 @@ public class BookDbServiceImpl implements BookDbService {
     }
 
     public void update(Book book) {
-        if (book.getTitle() != null) bookDao.update(book);
+        if (book.title() != null) bookDao.update(book);
     }
 
     public void deleteById(long id) {

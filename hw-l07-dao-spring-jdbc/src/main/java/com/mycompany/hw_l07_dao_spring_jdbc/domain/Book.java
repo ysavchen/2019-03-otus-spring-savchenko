@@ -1,10 +1,10 @@
 package com.mycompany.hw_l07_dao_spring_jdbc.domain;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
-@Builder
+@Accessors(fluent = true)
 public class Book {
 
     private long id;
@@ -12,4 +12,12 @@ public class Book {
     private Author author;
     private Genre genre;
 
+    public Book(String title) {
+        this.title = title;
+    }
+
+    public Book(long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 }

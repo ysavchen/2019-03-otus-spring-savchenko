@@ -28,14 +28,14 @@ public class BookDaoJdbc implements BookDao {
     public long insert(@NonNull Book book) {
         var keyHolder = new GeneratedKeyHolder();
         var params = new MapSqlParameterSource()
-                .addValue("title", book.getTitle());
-        if (book.getAuthor() != null) {
-            params.addValue("author_id", book.getAuthor().getId());
+                .addValue("title", book.title());
+        if (book.author() != null) {
+            params.addValue("author_id", book.author().getId());
         } else {
             params.addValue("author_id", null);
         }
-        if (book.getGenre() != null) {
-            params.addValue("genre_id", book.getGenre().getId());
+        if (book.genre() != null) {
+            params.addValue("genre_id", book.genre().getId());
         } else {
             params.addValue("genre_id", null);
         }
@@ -45,7 +45,7 @@ public class BookDaoJdbc implements BookDao {
 
         var number = keyHolder.getKey();
         if (number == null) {
-            throw new NoIdException("No id for book with title = " + book.getTitle());
+            throw new NoIdException("No id for book with title = " + book.title());
         }
         return number.longValue();
     }
@@ -71,7 +71,7 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public void update(@NonNull Book book) {
-        Map<String, Object> params = Map.of("id", book.getId(), "title", book.getTitle());
+        Map<String, Object> params = Map.of("id", book.id(), "title", book.title());
         jdbc.update("update books set title = :title where id = :id", params);
     }
 
@@ -93,12 +93,9 @@ public class BookDaoJdbc implements BookDao {
             long genreId = resultSet.getLong("genreId");
             String genreName = resultSet.getString("genreName");
 
-            return Book.builder()
-                    .id(id)
-                    .title(title)
+            return new Book(id, title)
                     .author(new Author(authorId, authorName, authorSurname))
-                    .genre(new Genre(genreId, genreName))
-                    .build();
+                    .genre(new Genre(genreId, genreName));
         }
     }
 }

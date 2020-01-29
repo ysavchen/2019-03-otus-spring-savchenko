@@ -21,32 +21,29 @@ public class BookDaoJdbcTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author author = new Author(1, "Philip", "Pratt");
-    private final Book book =
-            Book.builder()
-                    .id(1).title("A Guide to SQL").author(author).genre(genre)
-                    .build();
+    private final Book book = new Book(1, "A Guide to SQL").author(author).genre(genre);
 
     @Autowired
     private BookDaoJdbc bookDaoJdbc;
 
     @Test
     void insertBook() {
-        var book = Book.builder().title("test").build();
+        var book = new Book("test");
         long id = bookDaoJdbc.insert(book);
         assertEquals(3, id, "Invalid id for an inserted Book");
     }
 
     @Test
     void insertBookWithId() {
-        var book = Book.builder().id(100).title("A Guide to SQL").build();
+        var book = new Book(100, "test");
         assertEquals(3, bookDaoJdbc.insert(book));
     }
 
     @Test
     void insertBookWithGenreAndAuthor() {
-        var bookWithGenre = Book.builder().title("test").genre(genre).build();
-        var bookWithAuthor = Book.builder().title("test").author(author).build();
-        var bookWithBoth = Book.builder().title("test").genre(genre).author(author).build();
+        var bookWithGenre = new Book("test").genre(genre);
+        var bookWithAuthor = new Book("test").author(author);
+        var bookWithBoth = new Book("test").author(author).genre(genre);
 
         assertEquals(3, bookDaoJdbc.insert(bookWithGenre));
         assertEquals(4, bookDaoJdbc.insert(bookWithAuthor));
@@ -55,11 +52,11 @@ public class BookDaoJdbcTests {
 
     @Test
     void getBookById() {
-        assertThat(bookDaoJdbc.getById(book.getId())).get()
-                .hasFieldOrPropertyWithValue("id", book.getId())
-                .hasFieldOrPropertyWithValue("title", book.getTitle())
-                .hasFieldOrPropertyWithValue("author", book.getAuthor())
-                .hasFieldOrPropertyWithValue("genre", book.getGenre());
+        assertThat(bookDaoJdbc.getById(book.id())).get()
+                .hasFieldOrPropertyWithValue("id", book.id())
+                .hasFieldOrPropertyWithValue("title", book.title())
+                .hasFieldOrPropertyWithValue("author", book.author())
+                .hasFieldOrPropertyWithValue("genre", book.genre());
     }
 
     @Test
