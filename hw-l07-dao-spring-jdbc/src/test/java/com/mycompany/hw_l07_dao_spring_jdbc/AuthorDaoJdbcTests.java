@@ -51,4 +51,9 @@ public class AuthorDaoJdbcTests {
                 .hasFieldOrPropertyWithValue("surname", author.getSurname())
                 .hasFieldOrPropertyWithValue("books", author.getBooks());
     }
+
+    @Test
+    void getAuthorByNonExistingId() {
+        assertThat(authorDaoJdbc.getById(50)).isEmpty();
+    }
 }

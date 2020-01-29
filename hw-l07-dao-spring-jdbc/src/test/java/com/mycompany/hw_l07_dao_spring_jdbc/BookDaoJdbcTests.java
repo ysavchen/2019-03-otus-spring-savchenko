@@ -62,6 +62,11 @@ public class BookDaoJdbcTests {
     }
 
     @Test
+    void getBookByNonExistingId(){
+        assertThat(bookDaoJdbc.getById(50)).isEmpty();
+    }
+
+    @Test
     void getBookWithGenreAndAuthor() {
         var bookWithGenre = new Book("test").genre(genre);
         var bookWithAuthor = new Book("test").author(author);

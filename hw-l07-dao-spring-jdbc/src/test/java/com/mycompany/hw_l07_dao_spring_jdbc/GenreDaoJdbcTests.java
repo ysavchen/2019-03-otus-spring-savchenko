@@ -42,4 +42,9 @@ public class GenreDaoJdbcTests {
                 .hasFieldOrPropertyWithValue("id", genre.getId())
                 .hasFieldOrPropertyWithValue("name", genre.getName());
     }
+
+    @Test
+    void getGenreByNonExistingId() {
+        assertThat(genreDaoJdbc.getById(50)).isEmpty();
+    }
 }
