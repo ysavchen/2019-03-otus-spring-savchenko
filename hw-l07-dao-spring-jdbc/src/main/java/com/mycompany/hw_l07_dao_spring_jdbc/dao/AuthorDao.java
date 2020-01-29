@@ -9,6 +9,4 @@ public interface AuthorDao {
     long insert(Author author);
 
     Optional<Author> getById(long id);
-
-    void deleteById(long id);
 }

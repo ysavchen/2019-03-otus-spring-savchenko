@@ -56,11 +56,6 @@ public class AuthorDaoJdbc implements AuthorDao {
         }
     }
 
-    @Override
-    public void deleteById(long id) {
-
-    }
-
     private static class AuthorExtractor implements ResultSetExtractor<Author> {
 
         @Override
