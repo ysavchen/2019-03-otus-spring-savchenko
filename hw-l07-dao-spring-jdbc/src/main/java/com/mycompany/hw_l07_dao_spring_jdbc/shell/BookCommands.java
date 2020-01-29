@@ -14,6 +14,7 @@ public class BookCommands {
 
     private final BookDbService dbService;
 
+    //TODO: make author and genre optional
     @ShellMethod(value = "Add book", key = {"ab", "add-book"})
     public String addBook(String title, String authorName,
                           String authorSurname, String genre) {

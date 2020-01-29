@@ -3,7 +3,6 @@ package com.mycompany.hw_l07_dao_spring_jdbc.service;
 import com.mycompany.hw_l07_dao_spring_jdbc.dao.AuthorDao;
 import com.mycompany.hw_l07_dao_spring_jdbc.dao.BookDao;
 import com.mycompany.hw_l07_dao_spring_jdbc.dao.GenreDao;
-import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +19,14 @@ public class BookDbServiceImpl implements BookDbService {
 
     @Override
     public long insert(Book book) {
-        long genreId = genreDao.insert(book.getGenre());
-        long authorId = authorDao.insert(book.getAuthor());
-
-        book.getAuthor().setId(authorId);
-        book.getGenre().setId(genreId);
+        if (book.getGenre() != null) {
+            long genreId = genreDao.insert(book.getGenre());
+            book.getGenre().setId(genreId);
+        }
+        if (book.getAuthor() != null) {
+            long authorId = authorDao.insert(book.getAuthor());
+            book.getAuthor().setId(authorId);
+        }
 
         return bookDao.insert(book);
     }

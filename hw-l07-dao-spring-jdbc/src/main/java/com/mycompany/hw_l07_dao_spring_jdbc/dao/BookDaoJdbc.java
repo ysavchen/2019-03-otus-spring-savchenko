@@ -28,9 +28,17 @@ public class BookDaoJdbc implements BookDao {
     public long insert(@NonNull Book book) {
         var keyHolder = new GeneratedKeyHolder();
         var params = new MapSqlParameterSource()
-                .addValue("title", book.getTitle())
-                .addValue("author_id", book.getAuthor().getId())
-                .addValue("genre_id", book.getGenre().getId());
+                .addValue("title", book.getTitle());
+        if (book.getAuthor() != null) {
+            params.addValue("author_id", book.getAuthor().getId());
+        } else {
+            params.addValue("author_id", null);
+        }
+        if (book.getGenre() != null) {
+            params.addValue("genre_id", book.getGenre().getId());
+        } else {
+            params.addValue("genre_id", null);
+        }
 
         jdbc.update("insert into books (title, author_id, genre_id) " +
                 "values (:title, :author_id, :genre_id)", params, keyHolder);

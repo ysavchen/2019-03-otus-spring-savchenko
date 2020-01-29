@@ -39,6 +39,7 @@ public class GenreDaoJdbcTests {
     @Test
     void getGenreById() {
         assertThat(genreDaoJdbc.getById(genre.getId())).get()
+                .hasFieldOrPropertyWithValue("id", genre.getId())
                 .hasFieldOrPropertyWithValue("name", genre.getName());
     }
 }
