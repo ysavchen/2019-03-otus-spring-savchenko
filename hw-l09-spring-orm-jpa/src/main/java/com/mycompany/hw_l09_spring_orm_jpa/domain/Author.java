@@ -19,9 +19,6 @@ public class Author {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    public Author() {
-    }
-
     public Author(String name, String surname) {
         this.name = name;
         this.surname = surname;
