@@ -2,16 +2,22 @@ package com.mycompany.hw_l09_spring_orm_jpa.domain;
 
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
 
 @Data
+@Entity
+@Table(name = "authors")
 public class Author {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "surname", nullable = false)
     private String surname;
-    private final Set<Book> books = new HashSet<>();
 
     public Author() {
     }
@@ -25,10 +31,5 @@ public class Author {
         this.id = id;
         this.name = name;
         this.surname = surname;
-    }
-
-    public Author addBook(Book book) {
-        books.add(book);
-        return this;
     }
 }
