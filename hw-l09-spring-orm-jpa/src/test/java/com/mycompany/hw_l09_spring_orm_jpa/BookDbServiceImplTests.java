@@ -1,8 +1,8 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorRepositoryImpl;
-import com.mycompany.hw_l09_spring_orm_jpa.dao.BookRepositoryImpl;
-import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.AuthorRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.GenreRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;

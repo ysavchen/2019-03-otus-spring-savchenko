@@ -1,4 +1,4 @@
-package com.mycompany.hw_l09_spring_orm_jpa.dao;
+package com.mycompany.hw_l09_spring_orm_jpa.repositories;
 
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.exception.NoIdException;

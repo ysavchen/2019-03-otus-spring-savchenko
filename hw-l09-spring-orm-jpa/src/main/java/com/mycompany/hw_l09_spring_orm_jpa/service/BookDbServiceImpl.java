@@ -1,8 +1,8 @@
 package com.mycompany.hw_l09_spring_orm_jpa.service;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorRepository;
-import com.mycompany.hw_l09_spring_orm_jpa.dao.BookRepository;
-import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreRepository;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.AuthorRepository;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepository;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.GenreRepository;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

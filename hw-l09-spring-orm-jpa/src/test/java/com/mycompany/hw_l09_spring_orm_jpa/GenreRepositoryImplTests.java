@@ -1,6 +1,6 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.GenreRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

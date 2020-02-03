@@ -1,6 +1,6 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.AuthorRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
