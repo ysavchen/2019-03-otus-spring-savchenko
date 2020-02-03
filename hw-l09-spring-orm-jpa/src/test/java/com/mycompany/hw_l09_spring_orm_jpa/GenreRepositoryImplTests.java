@@ -4,7 +4,7 @@ import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -12,7 +12,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@JdbcTest
+@DataJpaTest
 @Import(GenreRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenreRepositoryImplTests {

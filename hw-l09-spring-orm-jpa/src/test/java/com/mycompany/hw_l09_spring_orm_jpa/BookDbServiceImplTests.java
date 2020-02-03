@@ -9,7 +9,7 @@ import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
 import com.mycompany.hw_l09_spring_orm_jpa.service.BookDbServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
-@JdbcTest
+@DataJpaTest
 @Import({AuthorRepositoryImpl.class, BookRepositoryImpl.class,
         GenreRepositoryImpl.class, BookDbServiceImpl.class})
 public class BookDbServiceImplTests {

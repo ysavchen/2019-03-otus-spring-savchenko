@@ -6,7 +6,7 @@ import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@JdbcTest
+@DataJpaTest
 @Import(BookRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class BookRepositoryImplTests {
