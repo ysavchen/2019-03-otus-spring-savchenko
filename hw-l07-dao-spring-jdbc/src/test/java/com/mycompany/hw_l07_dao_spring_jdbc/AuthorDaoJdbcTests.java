@@ -2,7 +2,6 @@ package com.mycompany.hw_l07_dao_spring_jdbc;
 
 import com.mycompany.hw_l07_dao_spring_jdbc.dao.AuthorDaoJdbc;
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
-import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
@@ -18,11 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class AuthorDaoJdbcTests {
 
-    private final Book book1 = new Book(1, "A Guide to SQL");
-    private final Book book2 = new Book(2, "Concepts of Database Management");
-    private final Author author =
-            new Author(1, "Philip", "Pratt")
-                    .addBook(book1).addBook(book2);
+    private final Author author = new Author(1, "Philip", "Pratt");
 
     @Autowired
     private AuthorDaoJdbc authorDaoJdbc;
@@ -48,8 +43,7 @@ public class AuthorDaoJdbcTests {
         assertThat(authorDaoJdbc.getById(author.getId())).get()
                 .hasFieldOrPropertyWithValue("id", author.getId())
                 .hasFieldOrPropertyWithValue("name", author.getName())
-                .hasFieldOrPropertyWithValue("surname", author.getSurname())
-                .hasFieldOrPropertyWithValue("books", author.getBooks());
+                .hasFieldOrPropertyWithValue("surname", author.getSurname());
     }
 
     @Test

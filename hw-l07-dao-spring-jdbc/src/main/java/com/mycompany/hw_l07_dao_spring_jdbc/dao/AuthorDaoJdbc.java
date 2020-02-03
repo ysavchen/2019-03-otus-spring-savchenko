@@ -1,13 +1,11 @@
 package com.mycompany.hw_l07_dao_spring_jdbc.dao;
 
 import com.mycompany.hw_l07_dao_spring_jdbc.domain.Author;
-import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import com.mycompany.hw_l07_dao_spring_jdbc.exception.NoIdException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -44,12 +42,10 @@ public class AuthorDaoJdbc implements AuthorDao {
     public Optional<Author> getById(long id) {
         Map<String, Object> params = Map.of("id", id);
         try {
-            Author author = jdbc.query(
+            Author author = jdbc.queryForObject(
                     "select a.id as authorId, a.name as authorName, a.surname as authorSurname, " +
-                            "b.id as bookId, b.title as title " +
                             "from authors a " +
-                            "left join books b on b.author_id = a.id " +
-                            "where a.id = :id", params, new AuthorExtractor()
+                            "where a.id = :id", params, new AuthorMapper()
             );
             return Optional.ofNullable(author);
         } catch (EmptyResultDataAccessException ex) {
@@ -57,29 +53,14 @@ public class AuthorDaoJdbc implements AuthorDao {
         }
     }
 
-    private static class AuthorExtractor implements ResultSetExtractor<Author> {
+    private static class AuthorMapper implements RowMapper<Author> {
 
         @Override
-        public Author extractData(ResultSet rs) throws SQLException, DataAccessException {
-            Author author = new Author();
-
-            if (rs.next()) {
-                author.setId(rs.getLong("authorId"));
-                author.setName(rs.getString("authorName"));
-                author.setSurname(rs.getString("authorSurName"));
-
-                do {
-                    var bookId = rs.getLong("bookId");
-                    var titleId = rs.getString("title");
-
-                    if (bookId != 0 && titleId != null) {
-                        author.getBooks().add(new Book(bookId, titleId));
-                    }
-                } while (rs.next());
-            } else {
-                author = null;
-            }
-            return author;
+        public Author mapRow(ResultSet rs, int i) throws SQLException {
+            long id = rs.getLong("authorId");
+            String name = rs.getString("authorName");
+            String surname = rs.getString("authorSurName");
+            return new Author(id, name, surname);
         }
     }
 }
