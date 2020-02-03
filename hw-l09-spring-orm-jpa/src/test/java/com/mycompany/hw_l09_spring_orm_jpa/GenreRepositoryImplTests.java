@@ -1,6 +1,6 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreDaoJdbc;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @JdbcTest
-@Import(GenreDaoJdbc.class)
+@Import(GenreRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class GenreDaoJdbcTests {
+public class GenreRepositoryImplTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
 
     @Autowired
-    private GenreDaoJdbc genreDaoJdbc;
+    private GenreRepositoryImpl genreDaoJdbc;
 
     @Test
     void insertGenre() {

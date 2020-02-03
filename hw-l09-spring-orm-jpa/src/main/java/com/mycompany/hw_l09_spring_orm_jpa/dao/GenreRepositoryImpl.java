@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class GenreDaoJdbc implements GenreDao {
+public class GenreRepositoryImpl implements GenreRepository {
 
     private final NamedParameterJdbcOperations jdbc;
 

@@ -1,6 +1,6 @@
 package com.mycompany.hw_l09_spring_orm_jpa.service;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorDao;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorRepository;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,15 +11,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthorDbServiceImpl implements AuthorDbService {
 
-    private final AuthorDao authorDao;
+    private final AuthorRepository authorRepository;
 
     @Override
     public long insert(Author author) {
-        return authorDao.insert(author);
+        return authorRepository.insert(author);
     }
 
     @Override
     public Optional<Author> getById(long id) {
-        return authorDao.getById(id);
+        return authorRepository.getById(id);
     }
 }

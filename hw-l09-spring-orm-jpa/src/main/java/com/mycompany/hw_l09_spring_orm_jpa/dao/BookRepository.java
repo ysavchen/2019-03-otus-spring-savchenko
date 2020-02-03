@@ -4,7 +4,7 @@ import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 
 import java.util.Optional;
 
-public interface BookDao {
+public interface BookRepository {
 
     long insert(Book book);
 

@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class BookDaoJdbc implements BookDao {
+public class BookRepositoryImpl implements BookRepository {
 
     private final NamedParameterJdbcOperations jdbc;
 

@@ -1,6 +1,6 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorDaoJdbc;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import org.junit.jupiter.api.Test;
@@ -14,9 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @JdbcTest
-@Import(AuthorDaoJdbc.class)
+@Import(AuthorRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AuthorDaoJdbcTests {
+public class AuthorRepositoryImplTests {
 
     private final Book book1 = new Book(1, "A Guide to SQL");
     private final Book book2 = new Book(2, "Concepts of Database Management");
@@ -25,7 +25,7 @@ public class AuthorDaoJdbcTests {
                     .addBook(book1).addBook(book2);
 
     @Autowired
-    private AuthorDaoJdbc authorDaoJdbc;
+    private AuthorRepositoryImpl authorDaoJdbc;
 
     @Test
     void insertAuthor() {

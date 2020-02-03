@@ -1,8 +1,8 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorDaoJdbc;
-import com.mycompany.hw_l09_spring_orm_jpa.dao.BookDaoJdbc;
-import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreDaoJdbc;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.AuthorRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.BookRepositoryImpl;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.GenreRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
@@ -19,18 +19,18 @@ import static org.mockito.Mockito.verify;
 
 
 @JdbcTest
-@Import({AuthorDaoJdbc.class, BookDaoJdbc.class,
-        GenreDaoJdbc.class, BookDbServiceImpl.class})
+@Import({AuthorRepositoryImpl.class, BookRepositoryImpl.class,
+        GenreRepositoryImpl.class, BookDbServiceImpl.class})
 public class BookDbServiceImplTests {
 
     @MockBean
-    private GenreDaoJdbc genreDaoJdbc;
+    private GenreRepositoryImpl genreDaoJdbc;
 
     @MockBean
-    private AuthorDaoJdbc authorDaoJdbc;
+    private AuthorRepositoryImpl authorDaoJdbc;
 
     @MockBean
-    private BookDaoJdbc bookDaoJdbc;
+    private BookRepositoryImpl bookDaoJdbc;
 
     @Autowired
     private BookDbServiceImpl bookDbService;

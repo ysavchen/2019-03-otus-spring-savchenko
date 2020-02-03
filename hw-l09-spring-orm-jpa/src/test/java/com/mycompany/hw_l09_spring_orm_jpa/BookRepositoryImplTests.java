@@ -1,6 +1,6 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.dao.BookDaoJdbc;
+import com.mycompany.hw_l09_spring_orm_jpa.dao.BookRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
@@ -17,9 +17,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @JdbcTest
-@Import(BookDaoJdbc.class)
+@Import(BookRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class BookDaoJdbcTests {
+public class BookRepositoryImplTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author author = new Author(1, "Philip", "Pratt");
@@ -27,7 +27,7 @@ public class BookDaoJdbcTests {
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
-    private BookDaoJdbc bookDaoJdbc;
+    private BookRepositoryImpl bookDaoJdbc;
 
     @Test
     void insertBook() {
