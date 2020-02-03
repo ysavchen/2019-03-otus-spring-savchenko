@@ -37,7 +37,6 @@ public class BookCommands {
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
     public String findBookById(long id) {
         var optBook = dbService.getById(id);
-
         if (optBook.isEmpty()) {
             return "Book with id = " + id + " is not found";
         }
@@ -56,6 +55,11 @@ public class BookCommands {
         return "Title: " + book.title() + "\n" +
                 "Author: " + author + "\n" +
                 "Genre: " + genre;
+    }
+
+    @ShellMethod(value = "Find all books", key = {"fab", "find-all-books"})
+    public String findAllBooks() {
+        return "";
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
