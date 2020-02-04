@@ -18,8 +18,12 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
     private Author author;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
     private Genre genre;
 
     public Book(String title) {
