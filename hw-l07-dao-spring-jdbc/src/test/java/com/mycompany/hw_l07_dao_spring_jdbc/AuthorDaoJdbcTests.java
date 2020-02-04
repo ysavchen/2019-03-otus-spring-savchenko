@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AuthorDaoJdbcTests {
 
     private final Author author = new Author(1, "Philip", "Pratt");
+    private static final long NON_EXISTING_ID = 50;
 
     @Autowired
     private AuthorDaoJdbc authorDaoJdbc;
@@ -48,6 +49,6 @@ public class AuthorDaoJdbcTests {
 
     @Test
     void getAuthorByNonExistingId() {
-        assertThat(authorDaoJdbc.getById(50)).isEmpty();
+        assertThat(authorDaoJdbc.getById(NON_EXISTING_ID)).isEmpty();
     }
 }

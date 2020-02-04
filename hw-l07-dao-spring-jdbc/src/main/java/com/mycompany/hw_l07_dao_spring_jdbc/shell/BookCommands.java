@@ -9,6 +9,9 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.joining;
 import static org.springframework.shell.standard.ShellOption.NULL;
 
 @ShellComponent
@@ -37,7 +40,6 @@ public class BookCommands {
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
     public String findBookById(long id) {
         var optBook = dbService.getById(id);
-
         if (optBook.isEmpty()) {
             return "Book with id = " + id + " is not found";
         }
@@ -56,6 +58,31 @@ public class BookCommands {
         return "Title: " + book.title() + "\n" +
                 "Author: " + author + "\n" +
                 "Genre: " + genre;
+    }
+
+    @ShellMethod(value = "Find books by author id", key = {"fbai", "find-books-by-author-id"})
+    public String findBooksByAuthorId(long id) {
+        var books = dbService.getBooksByAuthorId(id);
+        if (books.isEmpty()) {
+            return "No books with authorId = " + id + " found";
+        }
+
+        Function<Book, String> bookFunc = book -> {
+            String genre = "not defined";
+
+            if (book.genre() != null) {
+                genre = book.genre().getName();
+            }
+            return book.title() + ", " + genre;
+        };
+        var booksStr = books.stream()
+                .map(bookFunc)
+                .collect(joining("\n"));
+
+        var author = books.get(0).author();
+        return "Books with author (id = " + author.getId() + ", " +
+                author.getName() + " " + author.getSurname() + "):" +
+                "\n" + booksStr;
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})

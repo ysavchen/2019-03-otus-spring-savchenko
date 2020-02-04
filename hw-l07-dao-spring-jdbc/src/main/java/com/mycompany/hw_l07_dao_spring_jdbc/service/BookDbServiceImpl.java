@@ -7,6 +7,7 @@ import com.mycompany.hw_l07_dao_spring_jdbc.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,11 @@ public class BookDbServiceImpl implements BookDbService {
 
     public Optional<Book> getById(long id) {
         return bookDao.getById(id);
+    }
+
+    @Override
+    public List<Book> getBooksByAuthorId(long id) {
+        return bookDao.getBooksByAuthorId(id);
     }
 
     public boolean update(Book book) {

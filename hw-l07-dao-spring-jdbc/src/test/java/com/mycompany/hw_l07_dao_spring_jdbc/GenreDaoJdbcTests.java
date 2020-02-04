@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GenreDaoJdbcTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
+    private static final long NON_EXISTING_ID = 50;
 
     @Autowired
     private GenreDaoJdbc genreDaoJdbc;
@@ -45,6 +46,6 @@ public class GenreDaoJdbcTests {
 
     @Test
     void getGenreByNonExistingId() {
-        assertThat(genreDaoJdbc.getById(50)).isEmpty();
+        assertThat(genreDaoJdbc.getById(NON_EXISTING_ID)).isEmpty();
     }
 }

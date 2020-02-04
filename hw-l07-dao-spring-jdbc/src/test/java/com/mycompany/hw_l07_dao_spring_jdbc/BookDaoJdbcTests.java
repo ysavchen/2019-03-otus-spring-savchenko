@@ -24,6 +24,7 @@ public class BookDaoJdbcTests {
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author author = new Author(1, "Philip", "Pratt");
     private final Book book = new Book(1, "A Guide to SQL").author(author).genre(genre);
+    private final Book anotherBook = new Book(2, "Concepts of Database Management").author(author).genre(genre);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -65,6 +66,17 @@ public class BookDaoJdbcTests {
     @Test
     void getBookByNonExistingId() {
         assertThat(bookDaoJdbc.getById(NON_EXISTING_ID)).isEmpty();
+    }
+
+    @Test
+    void getBooksByAuthorId() {
+        assertThat(bookDaoJdbc.getBooksByAuthorId(author.getId()))
+                .contains(book, anotherBook);
+    }
+
+    @Test
+    void getBooksByNonExistingAuthorId() {
+        assertThat(bookDaoJdbc.getBooksByAuthorId(NON_EXISTING_ID)).isEmpty();
     }
 
     @Test

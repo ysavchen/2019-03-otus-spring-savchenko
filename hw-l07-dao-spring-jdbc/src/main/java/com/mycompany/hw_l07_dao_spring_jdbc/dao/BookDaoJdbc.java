@@ -15,6 +15,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -66,6 +68,24 @@ public class BookDaoJdbc implements BookDao {
             return Optional.ofNullable(book);
         } catch (EmptyResultDataAccessException ex) {
             return Optional.empty();
+        }
+    }
+
+    @Override
+    public List<Book> getBooksByAuthorId(long id) {
+        Map<String, Object> params = Map.of("id", id);
+        try {
+            return jdbc.query(
+                    "select b.id as bookId, b.title as title, " +
+                            "a.id as authorId, a.name as authorName, a.surname as authorSurname, " +
+                            "g.id as genreId, g.name as genreName " +
+                            "from books b " +
+                            "left join authors a on b.author_id = a.id " +
+                            "left join genres g on b.genre_id = g.id " +
+                            "where a.id = :id", params, new BookMapper()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            return Collections.emptyList();
         }
     }
 
