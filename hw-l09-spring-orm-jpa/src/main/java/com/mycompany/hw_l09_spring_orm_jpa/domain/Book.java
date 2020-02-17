@@ -19,11 +19,11 @@ public class Book {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id", insertable = false, updatable = false)
+    @JoinColumn(name = "author_id")
     private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id", insertable = false, updatable = false)
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     public Book() {

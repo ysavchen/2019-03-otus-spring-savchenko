@@ -42,7 +42,10 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> getBooksByAuthorId(long id) {
         return em.createQuery(
-                "select b from books b join authors a where a.id = :id", Book.class)
+                "select b " +
+                        "from Book b " +
+                        "join fetch Author a " +
+                        "where a.id = :id", Book.class)
                 .setParameter("id", id)
                 .getResultList();
     }
@@ -50,13 +53,13 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> getAllBooks() {
         return em.createQuery(
-                "select b from books b", Book.class)
+                "select b from Book b", Book.class)
                 .getResultList();
     }
 
     @Override
     public boolean update(@NonNull Book book) {
-        int rows = em.createQuery("update books b set b.title = :title where b.id = :id")
+        int rows = em.createQuery("update Book b set b.title = :title where b.id = :id")
                 .setParameter("title", book.title())
                 .setParameter("id", book.id())
                 .executeUpdate();
@@ -65,7 +68,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public boolean deleteById(long id) {
-        int rows = em.createQuery("delete from books b where b.id = :id")
+        int rows = em.createQuery("delete from Book b where b.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
         return rows > 0;

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.Function;
 
@@ -37,6 +38,7 @@ public class BookCommands {
         return "Added book with id = " + dbService.insert(book);
     }
 
+    @Transactional
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
     public String findBookById(long id) {
         var optBook = dbService.getById(id);
@@ -60,6 +62,7 @@ public class BookCommands {
                 "Genre: " + genre;
     }
 
+    @Transactional
     @ShellMethod(value = "Find books by author id", key = {"fbai", "find-books-by-author-id"})
     public String findBooksByAuthorId(long id) {
         var books = dbService.getBooksByAuthorId(id);
@@ -85,6 +88,7 @@ public class BookCommands {
                 "\n" + booksStr;
     }
 
+    @Transactional
     @ShellMethod(value = "Find all books", key = {"fab", "find-all-books"})
     public String findAllBooks() {
         dbService.getAllBooks();

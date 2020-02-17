@@ -42,9 +42,12 @@ public class BookRepositoryImplTests {
 
     @Test
     void insertBookWithGenreAndAuthor() {
-        var bookWithGenre = new Book("test").genre(genre);
-        var bookWithAuthor = new Book("test").author(author);
-        var bookWithBoth = new Book("test").author(author).genre(genre);
+        var testGenre = new Genre("test genre");
+        var testAuthor = new Author("testName", "testSurname");
+
+        var bookWithGenre = new Book("test").genre(testGenre);
+        var bookWithAuthor = new Book("test").author(testAuthor);
+        var bookWithBoth = new Book("test").author(testAuthor).genre(testGenre);
 
         assertEquals(3, bookRepository.insert(bookWithGenre));
         assertEquals(4, bookRepository.insert(bookWithAuthor));
@@ -67,9 +70,12 @@ public class BookRepositoryImplTests {
 
     @Test
     void getBookWithGenreAndAuthor() {
-        var bookWithGenre = new Book("test").genre(genre);
-        var bookWithAuthor = new Book("test").author(author);
-        var bookWithBoth = new Book("test").author(author).genre(genre);
+        var testGenre = new Genre("test genre");
+        var testAuthor = new Author("testName", "testSurname");
+
+        var bookWithGenre = new Book("test").genre(testGenre);
+        var bookWithAuthor = new Book("test").author(testAuthor);
+        var bookWithBoth = new Book("test").author(testAuthor).genre(testGenre);
 
         List.of(bookWithGenre, bookWithAuthor, bookWithBoth)
                 .forEach(testBook -> {
