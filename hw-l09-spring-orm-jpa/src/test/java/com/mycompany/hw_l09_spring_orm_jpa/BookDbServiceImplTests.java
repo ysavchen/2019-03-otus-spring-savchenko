@@ -1,57 +1,35 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.repositories.AuthorRepositoryImpl;
-import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepositoryImpl;
-import com.mycompany.hw_l09_spring_orm_jpa.repositories.GenreRepositoryImpl;
-import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
-import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.service.BookDbServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @DataJpaTest
-@Import({AuthorRepositoryImpl.class, BookRepositoryImpl.class,
-        GenreRepositoryImpl.class, BookDbServiceImpl.class})
+@Import({BookRepositoryImpl.class, BookDbServiceImpl.class})
 public class BookDbServiceImplTests {
-
-    @MockBean
-    private BookRepositoryImpl bookRepository;
 
     @Autowired
     private BookDbServiceImpl bookDbService;
 
-    @Autowired
-    private TestEntityManager em;
-
     @Test
-    void insertBookWithAuthorAndGenre() {
-        var genre = new Genre("Programming");
-        var author = new Author("Benjamin", "Evans");
-        var book = new Book("test").author(author).genre(genre);
-        bookDbService.insert(book);
-
-//        verify(genreDaoJdbc, times(1)).insert(genre);
-//        verify(authorDaoJdbc, times(1)).insert(author);
-//        verify(bookDaoJdbc, times(1)).insert(book);
+    void updateBookWithTitle() {
+        var book = new Book(1, "newTitle");
+        assertTrue(bookDbService.update(book),
+                "Book title is not updated");
     }
 
     @Test
-    void insertBookWithNullAuthorAndGenre() {
-        var book = new Book("test");
-        bookDbService.insert(book);
-
-//        verify(genreDaoJdbc, times(0)).insert(any());
-//        verify(authorDaoJdbc, times(0)).insert(any());
-//        verify(bookDaoJdbc, times(1)).insert(book);
+    void updateBookWithoutTitle() {
+        var book = new Book(1, null);
+        assertFalse(bookDbService.update(book),
+                "Book title is updated");
     }
 }
