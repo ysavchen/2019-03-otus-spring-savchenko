@@ -1,12 +1,14 @@
 package com.mycompany.hw_l09_spring_orm_jpa.domain;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "genres")
+@Accessors(fluent = true)
 public class Genre {
 
     @Id
@@ -15,6 +17,9 @@ public class Genre {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    public Genre() {
+    }
 
     public Genre(String name) {
         this.name = name;

@@ -10,6 +10,7 @@ import com.mycompany.hw_l09_spring_orm_jpa.service.BookDbServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
@@ -24,16 +25,13 @@ import static org.mockito.Mockito.verify;
 public class BookDbServiceImplTests {
 
     @MockBean
-    private GenreRepositoryImpl genreDaoJdbc;
-
-    @MockBean
-    private AuthorRepositoryImpl authorDaoJdbc;
-
-    @MockBean
-    private BookRepositoryImpl bookDaoJdbc;
+    private BookRepositoryImpl bookRepository;
 
     @Autowired
     private BookDbServiceImpl bookDbService;
+
+    @Autowired
+    private TestEntityManager em;
 
     @Test
     void insertBookWithAuthorAndGenre() {
@@ -42,9 +40,9 @@ public class BookDbServiceImplTests {
         var book = new Book("test").author(author).genre(genre);
         bookDbService.insert(book);
 
-        verify(genreDaoJdbc, times(1)).insert(genre);
-        verify(authorDaoJdbc, times(1)).insert(author);
-        verify(bookDaoJdbc, times(1)).insert(book);
+//        verify(genreDaoJdbc, times(1)).insert(genre);
+//        verify(authorDaoJdbc, times(1)).insert(author);
+//        verify(bookDaoJdbc, times(1)).insert(book);
     }
 
     @Test
@@ -52,8 +50,8 @@ public class BookDbServiceImplTests {
         var book = new Book("test");
         bookDbService.insert(book);
 
-        verify(genreDaoJdbc, times(0)).insert(any());
-        verify(authorDaoJdbc, times(0)).insert(any());
-        verify(bookDaoJdbc, times(1)).insert(book);
+//        verify(genreDaoJdbc, times(0)).insert(any());
+//        verify(authorDaoJdbc, times(0)).insert(any());
+//        verify(bookDaoJdbc, times(1)).insert(book);
     }
 }

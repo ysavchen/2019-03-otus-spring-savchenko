@@ -49,10 +49,10 @@ public class BookCommands {
         String genre = "not defined";
 
         if (book.author() != null) {
-            author = book.author().getName() + " " + book.author().getSurname();
+            author = book.author().name() + " " + book.author().surname();
         }
         if (book.genre() != null) {
-            genre = book.genre().getName();
+            genre = book.genre().name();
         }
 
         return "Title: " + book.title() + "\n" +
@@ -71,7 +71,7 @@ public class BookCommands {
             String genre = "not defined";
 
             if (book.genre() != null) {
-                genre = book.genre().getName();
+                genre = book.genre().name();
             }
             return book.title() + ", " + genre;
         };
@@ -80,13 +80,15 @@ public class BookCommands {
                 .collect(joining("\n"));
 
         var author = books.get(0).author();
-        return "Books with author (id = " + author.getId() + ", " +
-                author.getName() + " " + author.getSurname() + "):" +
+        return "Books with author (id = " + author.id() + ", " +
+                author.name() + " " + author.surname() + "):" +
                 "\n" + booksStr;
     }
 
     @ShellMethod(value = "Find all books", key = {"fab", "find-all-books"})
     public String findAllBooks() {
+        dbService.getAllBooks();
+        //TODO
         return "";
     }
 

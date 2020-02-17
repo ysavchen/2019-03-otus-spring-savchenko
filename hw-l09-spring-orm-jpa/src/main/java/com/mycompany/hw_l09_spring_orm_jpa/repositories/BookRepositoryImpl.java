@@ -1,129 +1,73 @@
 package com.mycompany.hw_l09_spring_orm_jpa.repositories;
 
-import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
-import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
-import com.mycompany.hw_l09_spring_orm_jpa.exception.NoIdException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collections;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
+@Transactional
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
 
-    private final NamedParameterJdbcOperations jdbc;
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public long insert(@NonNull Book book) {
-        var keyHolder = new GeneratedKeyHolder();
-        var params = new MapSqlParameterSource()
-                .addValue("title", book.title());
-        if (book.author() != null) {
-            params.addValue("author_id", book.author().getId());
+        if (book.id() <= 0) {
+            em.persist(book);
         } else {
-            params.addValue("author_id", null);
+            em.merge(book);
         }
-        if (book.genre() != null) {
-            params.addValue("genre_id", book.genre().getId());
-        } else {
-            params.addValue("genre_id", null);
-        }
-
-        jdbc.update("insert into books (title, author_id, genre_id) " +
-                "values (:title, :author_id, :genre_id)", params, keyHolder);
-
-        var number = keyHolder.getKey();
-        if (number == null) {
-            throw new NoIdException("No id for book with title = " + book.title());
-        }
-        return number.longValue();
+        return book.id();
     }
 
     @Override
     public Optional<Book> getById(long id) {
-        Map<String, Object> params = Map.of("id", id);
         try {
-            Book book = jdbc.queryForObject(
-                    "select b.id as bookId, b.title as title, " +
-                            "a.id as authorId, a.name as authorName, a.surname as authorSurname, " +
-                            "g.id as genreId, g.name as genreName " +
-                            "from books b " +
-                            "left join authors a on b.author_id = a.id " +
-                            "left join genres g on b.genre_id = g.id " +
-                            "where b.id = :id", params, new BookMapper()
-            );
+            var book = em.find(Book.class, id);
             return Optional.ofNullable(book);
-        } catch (EmptyResultDataAccessException ex) {
+        } catch (Exception ex) {
             return Optional.empty();
         }
     }
 
     @Override
     public List<Book> getBooksByAuthorId(long id) {
-        Map<String, Object> params = Map.of("id", id);
-        try {
-            return jdbc.query(
-                    "select b.id as bookId, b.title as title, " +
-                            "a.id as authorId, a.name as authorName, a.surname as authorSurname, " +
-                            "g.id as genreId, g.name as genreName " +
-                            "from books b " +
-                            "left join authors a on b.author_id = a.id " +
-                            "left join genres g on b.genre_id = g.id " +
-                            "where a.id = :id", params, new BookMapper()
-            );
-        } catch (EmptyResultDataAccessException ex) {
-            return Collections.emptyList();
-        }
+        return em.createQuery(
+                "select b from books b join authors a where a.id = :id", Book.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        return em.createQuery(
+                "select b from books b", Book.class)
+                .getResultList();
     }
 
     @Override
     public boolean update(@NonNull Book book) {
-        Map<String, Object> params = Map.of("id", book.id(), "title", book.title());
-        int rows = jdbc.update("update books set title = :title where id = :id", params);
+        int rows = em.createQuery("update books b set b.title = :title where b.id = :id")
+                .setParameter("title", book.title())
+                .setParameter("id", book.id())
+                .executeUpdate();
         return rows > 0;
     }
 
     @Override
     public boolean deleteById(long id) {
-        Map<String, Object> params = Map.of("id", id);
-        int rows = jdbc.update("delete from books where id = :id", params);
+        int rows = em.createQuery("delete from books b where b.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
         return rows > 0;
-    }
-
-    private static class BookMapper implements RowMapper<Book> {
-
-        @Override
-        public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String title = resultSet.getString("title");
-            long authorId = resultSet.getLong("authorId");
-            String authorName = resultSet.getString("authorName");
-            String authorSurname = resultSet.getString("authorSurname");
-            long genreId = resultSet.getLong("genreId");
-            String genreName = resultSet.getString("genreName");
-
-            var book = new Book(id, title);
-            if (authorId != 0 && authorName != null && authorSurname != null) {
-                book.author(new Author(authorId, authorName, authorSurname));
-            }
-            if (genreId != 0 && genreName != null) {
-                book.genre(new Genre(genreId, genreName));
-            }
-
-            return book;
-        }
     }
 }

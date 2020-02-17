@@ -19,6 +19,6 @@ public class AuthorCommands {
         }
 
         var author = optAuthor.get();
-        return "Author: " + author.getName() + " " + author.getSurname();
+        return "Author: " + author.name() + " " + author.surname();
     }
 }

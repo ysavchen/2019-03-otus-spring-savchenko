@@ -13,6 +13,8 @@ public interface BookRepository {
 
     List<Book> getBooksByAuthorId(long id);
 
+    List<Book> getAllBooks();
+
     boolean update(Book book);
 
     boolean deleteById(long id);

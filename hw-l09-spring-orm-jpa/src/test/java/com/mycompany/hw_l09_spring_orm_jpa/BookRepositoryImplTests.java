@@ -1,12 +1,13 @@
 package com.mycompany.hw_l09_spring_orm_jpa;
 
-import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepositoryImpl;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
+import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -27,19 +28,16 @@ public class BookRepositoryImplTests {
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
-    private BookRepositoryImpl bookDaoJdbc;
+    private BookRepositoryImpl bookRepository;
+
+    @Autowired
+    private TestEntityManager em;
 
     @Test
     void insertBook() {
         var book = new Book("test");
-        long id = bookDaoJdbc.insert(book);
+        long id = bookRepository.insert(book);
         assertEquals(3, id, "Invalid id for an inserted Book");
-    }
-
-    @Test
-    void insertBookWithId() {
-        var book = new Book(100, "test");
-        assertEquals(3, bookDaoJdbc.insert(book));
     }
 
     @Test
@@ -48,14 +46,14 @@ public class BookRepositoryImplTests {
         var bookWithAuthor = new Book("test").author(author);
         var bookWithBoth = new Book("test").author(author).genre(genre);
 
-        assertEquals(3, bookDaoJdbc.insert(bookWithGenre));
-        assertEquals(4, bookDaoJdbc.insert(bookWithAuthor));
-        assertEquals(5, bookDaoJdbc.insert(bookWithBoth));
+        assertEquals(3, bookRepository.insert(bookWithGenre));
+        assertEquals(4, bookRepository.insert(bookWithAuthor));
+        assertEquals(5, bookRepository.insert(bookWithBoth));
     }
 
     @Test
     void getBookById() {
-        assertThat(bookDaoJdbc.getById(book.id())).get()
+        assertThat(bookRepository.getById(book.id())).get()
                 .hasFieldOrPropertyWithValue("id", book.id())
                 .hasFieldOrPropertyWithValue("title", book.title())
                 .hasFieldOrPropertyWithValue("author", book.author())
@@ -64,7 +62,7 @@ public class BookRepositoryImplTests {
 
     @Test
     void getBookByNonExistingId() {
-        assertThat(bookDaoJdbc.getById(NON_EXISTING_ID)).isEmpty();
+        assertThat(bookRepository.getById(NON_EXISTING_ID)).isEmpty();
     }
 
     @Test
@@ -75,8 +73,8 @@ public class BookRepositoryImplTests {
 
         List.of(bookWithGenre, bookWithAuthor, bookWithBoth)
                 .forEach(testBook -> {
-                    long id = bookDaoJdbc.insert(testBook);
-                    assertThat(bookDaoJdbc.getById(id)).get()
+                    long id = bookRepository.insert(testBook);
+                    assertThat(bookRepository.getById(id)).get()
                             .hasFieldOrPropertyWithValue("id", id)
                             .hasFieldOrPropertyWithValue("title", testBook.title())
                             .hasFieldOrPropertyWithValue("author", testBook.author())
@@ -86,28 +84,28 @@ public class BookRepositoryImplTests {
 
     @Test
     void updateBookTitle() {
-        boolean isUpdated = bookDaoJdbc.update(book.title("newTitle"));
+        boolean isUpdated = bookRepository.update(book.title("newTitle"));
         assertTrue(isUpdated, "Book is not updated by id = " + book.id());
-        assertThat(bookDaoJdbc.getById(book.id())).get()
+        assertThat(bookRepository.getById(book.id())).get()
                 .hasFieldOrPropertyWithValue("title", book.title());
     }
 
     @Test
     void updateBookWithNonExistingId() {
-        boolean isUpdated = bookDaoJdbc.update(book.id(NON_EXISTING_ID).title("newTitle"));
+        boolean isUpdated = bookRepository.update(book.id(NON_EXISTING_ID).title("newTitle"));
         assertFalse(isUpdated, "Book with non-existing id is updated");
     }
 
     @Test
     void deleteById() {
-        boolean isDeleted = bookDaoJdbc.deleteById(book.id());
+        boolean isDeleted = bookRepository.deleteById(book.id());
         assertTrue(isDeleted, "Book is not deleted by id = " + book.id());
-        assertThat(bookDaoJdbc.getById(book.id())).isEmpty();
+        assertThat(bookRepository.getById(book.id())).isEmpty();
     }
 
     @Test
     void deleteByNonExistingId() {
-        boolean isDeleted = bookDaoJdbc.deleteById(NON_EXISTING_ID);
+        boolean isDeleted = bookRepository.deleteById(NON_EXISTING_ID);
         assertFalse(isDeleted, "Book with non-existing id is deleted");
     }
 }

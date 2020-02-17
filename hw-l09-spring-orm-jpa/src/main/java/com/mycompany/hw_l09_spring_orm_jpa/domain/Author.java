@@ -1,12 +1,14 @@
 package com.mycompany.hw_l09_spring_orm_jpa.domain;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "authors")
+@Accessors(fluent = true)
 public class Author {
 
     @Id
@@ -18,6 +20,9 @@ public class Author {
 
     @Column(name = "surname", nullable = false)
     private String surname;
+
+    public Author() {
+    }
 
     public Author(String name, String surname) {
         this.name = name;
