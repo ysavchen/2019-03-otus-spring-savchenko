@@ -91,9 +91,29 @@ public class BookCommands {
     @Transactional
     @ShellMethod(value = "Find all books", key = {"fab", "find-all-books"})
     public String findAllBooks() {
-        dbService.getAllBooks();
-        //TODO
-        return "";
+        var books = dbService.getAllBooks();
+        if (books.isEmpty()) {
+            return "No books found";
+        }
+
+        Function<Book, String> bookFunc = book -> {
+            String author = "not defined";
+            String genre = "not defined";
+
+            if (book.author() != null) {
+                author = book.author().name() + " " + book.author().surname();
+            }
+            if (book.genre() != null) {
+                genre = book.genre().name();
+            }
+            return "Title: " + book.title() + "\n" +
+                    "Author: " + author + "\n" +
+                    "Genre: " + genre;
+        };
+
+        return books.stream()
+                .map(bookFunc)
+                .collect(joining("\n\n"));
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
