@@ -12,37 +12,37 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookDbServiceImpl implements BookDbService {
 
-    private final BookRepository bookRepository;
+    private final BookRepository repository;
 
     @Override
     public long insert(Book book) {
-        return bookRepository.insert(book);
+        return repository.insert(book);
     }
 
     public Optional<Book> getById(long id) {
-        return bookRepository.getById(id);
+        return repository.getById(id);
     }
 
     @Override
     public List<Book> getBooksByAuthorId(long id) {
-        return bookRepository.getBooksByAuthorId(id);
+        return repository.getBooksByAuthorId(id);
     }
 
     @Override
     public List<Book> getAllBooks() {
-        return bookRepository.getAllBooks();
+        return repository.getAllBooks();
     }
 
     @Override
     public boolean update(Book book) {
         if (book.title() != null) {
-            return bookRepository.update(book);
+            return repository.update(book);
         }
         return false;
     }
 
     @Override
     public boolean deleteById(long id) {
-        return bookRepository.deleteById(id);
+        return repository.deleteById(id);
     }
 }

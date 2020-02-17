@@ -11,15 +11,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthorDbServiceImpl implements AuthorDbService {
 
-    private final AuthorRepository authorRepository;
+    private final AuthorRepository repository;
 
     @Override
     public long insert(Author author) {
-        return authorRepository.insert(author);
+        return repository.insert(author);
     }
 
     @Override
     public Optional<Author> getById(long id) {
-        return authorRepository.getById(id);
+        return repository.getById(id);
     }
 }
