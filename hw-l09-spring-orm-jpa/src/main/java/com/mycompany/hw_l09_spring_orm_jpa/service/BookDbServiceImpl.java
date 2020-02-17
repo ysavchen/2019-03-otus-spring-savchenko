@@ -1,12 +1,13 @@
 package com.mycompany.hw_l09_spring_orm_jpa.service;
 
+import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.AuthorRepository;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepository;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.GenreRepository;
-import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,11 @@ public class BookDbServiceImpl implements BookDbService {
 
     public Optional<Book> getById(long id) {
         return bookRepository.getById(id);
+    }
+
+    @Override
+    public List<Book> getBooksByAuthorId(long id) {
+        return bookRepository.getBooksByAuthorId(id);
     }
 
     public boolean update(Book book) {
