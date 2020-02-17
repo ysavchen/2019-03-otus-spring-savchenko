@@ -44,7 +44,7 @@ public class BookRepositoryImpl implements BookRepository {
         return em.createQuery(
                 "select b " +
                         "from Book b " +
-                        "join fetch Author a " +
+                        "join fetch b.author a " +
                         "where a.id = :id", Book.class)
                 .setParameter("id", id)
                 .getResultList();
