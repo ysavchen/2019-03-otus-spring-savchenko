@@ -33,6 +33,7 @@ public class BookDbServiceImpl implements BookDbService {
         return bookRepository.getAllBooks();
     }
 
+    @Override
     public boolean update(Book book) {
         if (book.title() != null) {
             return bookRepository.update(book);
@@ -40,6 +41,7 @@ public class BookDbServiceImpl implements BookDbService {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) {
         return bookRepository.deleteById(id);
     }
