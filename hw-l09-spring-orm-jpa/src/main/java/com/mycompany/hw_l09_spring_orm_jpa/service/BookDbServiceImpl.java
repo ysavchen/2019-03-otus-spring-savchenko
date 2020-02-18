@@ -3,12 +3,15 @@ package com.mycompany.hw_l09_spring_orm_jpa.service;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookDbServiceImpl implements BookDbService {
 
@@ -19,8 +22,14 @@ public class BookDbServiceImpl implements BookDbService {
         return repository.insert(book);
     }
 
+    @Override
     public Optional<Book> getById(long id) {
-        return repository.getById(id);
+        Optional<Book> optBook = repository.getById(id);
+        optBook.ifPresent(book -> {
+            Hibernate.initialize(book.author());
+            Hibernate.initialize(book.genre());
+        });
+        return optBook;
     }
 
     @Override

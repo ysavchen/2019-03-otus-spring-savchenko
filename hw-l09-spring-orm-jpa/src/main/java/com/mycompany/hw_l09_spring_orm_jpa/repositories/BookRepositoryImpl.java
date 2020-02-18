@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
 
@@ -45,6 +44,7 @@ public class BookRepositoryImpl implements BookRepository {
                 "select b " +
                         "from Book b " +
                         "join fetch b.author a " +
+                        "join fetch b.genre g " +
                         "where a.id = :id", Book.class)
                 .setParameter("id", id)
                 .getResultList();
@@ -53,7 +53,9 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> getAllBooks() {
         return em.createQuery(
-                "select b from Book b", Book.class)
+                "select b from Book b " +
+                        "join fetch b.author " +
+                        "join fetch b.genre", Book.class)
                 .getResultList();
     }
 

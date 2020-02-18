@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @DataJpaTest
 @Import({BookRepositoryImpl.class, BookDbServiceImpl.class})
 public class BookDbServiceImplTests {
