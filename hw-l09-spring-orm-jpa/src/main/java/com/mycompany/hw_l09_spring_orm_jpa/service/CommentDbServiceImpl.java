@@ -4,8 +4,9 @@ import com.mycompany.hw_l09_spring_orm_jpa.domain.Comment;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service

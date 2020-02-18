@@ -4,14 +4,12 @@ import com.mycompany.hw_l09_spring_orm_jpa.domain.Author;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class AuthorRepositoryImpl implements AuthorRepository {
 
