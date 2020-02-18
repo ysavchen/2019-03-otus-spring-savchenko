@@ -27,7 +27,6 @@ public class CommentRepositoryImplTests {
 
     private final Comment commentOne = new Comment(1, "First comment - Guide").book(guide);
     private final Comment commentTwo = new Comment(2, "Second comment - Guide").book(guide);
-    private final Comment commentTree = new Comment(3, "Comment - Concepts").book(concepts);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
