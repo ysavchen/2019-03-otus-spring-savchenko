@@ -23,7 +23,6 @@ public class CommentRepositoryImplTests {
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author pratt = new Author(1, "Philip", "Pratt");
     private final Book guide = new Book(1, "A Guide to SQL").author(pratt).genre(genre);
-    private final Book concepts = new Book(2, "Concepts of Database Management").author(pratt).genre(genre);
 
     private final Comment commentOne = new Comment(1, "First comment - Guide").book(guide);
     private final Comment commentTwo = new Comment(2, "Second comment - Guide").book(guide);
@@ -50,11 +49,11 @@ public class CommentRepositoryImplTests {
     @Test
     void addCommentByBookId() {
         var comment = new Comment("Test comment");
-        long id = repository.addCommentByBookId(concepts.id(), comment);
+        long id = repository.addCommentByBookId(guide.id(), comment);
         assertThat(id).isEqualTo(4);
 
         em.clear();
-        comment.book(concepts);
+        comment.book(guide);
         var commentInDb = em.find(Comment.class, id);
         assertThat(comment).isEqualTo(commentInDb);
     }
