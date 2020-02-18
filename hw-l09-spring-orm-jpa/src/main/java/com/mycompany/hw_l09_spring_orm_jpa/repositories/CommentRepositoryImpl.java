@@ -31,14 +31,16 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public long addCommentByBookId(long id, @NonNull Comment comment) {
         var book = em.find(Book.class, id);
-        comment.book(book);
-
-        if (comment.id() <= 0) {
-            em.persist(comment);
-        } else {
-            em.merge(comment);
+        if (book != null) {
+            comment.book(book);
+            if (comment.id() <= 0) {
+                em.persist(comment);
+            } else {
+                em.merge(comment);
+            }
+            return comment.id();
         }
-        return comment.id();
+        return 0;
     }
 
     @Override

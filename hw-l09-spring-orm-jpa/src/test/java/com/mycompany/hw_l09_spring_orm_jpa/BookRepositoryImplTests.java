@@ -23,11 +23,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BookRepositoryImplTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
-    private final Author author = new Author(1, "Philip", "Pratt");
-    private final Author authorTwo = new Author(2, "Michael", "Learn");
-    private final Book bookOne = new Book(1, "A Guide to SQL").author(author).genre(genre);
-    private final Book bookTwo = new Book(2, "Concepts of Database Management").author(author).genre(genre);
-    private final Book bookThree = new Book(3, "SQL Programming and Coding").author(authorTwo).genre(genre);
+    private final Author pratt = new Author(1, "Philip", "Pratt");
+    private final Author learn = new Author(2, "Michael", "Learn");
+    private final Book guide = new Book(1, "A Guide to SQL").author(pratt).genre(genre);
+    private final Book concepts = new Book(2, "Concepts of Database Management").author(pratt).genre(genre);
+    private final Book sqlCoding = new Book(3, "SQL Programming and Coding").author(learn).genre(genre);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -59,11 +59,11 @@ public class BookRepositoryImplTests {
 
     @Test
     void getBookById() {
-        assertThat(bookRepository.getById(bookOne.id())).get()
-                .hasFieldOrPropertyWithValue("id", bookOne.id())
-                .hasFieldOrPropertyWithValue("title", bookOne.title())
-                .hasFieldOrPropertyWithValue("author", bookOne.author())
-                .hasFieldOrPropertyWithValue("genre", bookOne.genre());
+        assertThat(bookRepository.getById(guide.id())).get()
+                .hasFieldOrPropertyWithValue("id", guide.id())
+                .hasFieldOrPropertyWithValue("title", guide.title())
+                .hasFieldOrPropertyWithValue("author", guide.author())
+                .hasFieldOrPropertyWithValue("genre", guide.genre());
     }
 
     @Test
@@ -93,23 +93,23 @@ public class BookRepositoryImplTests {
 
     @Test
     void updateBookTitle() {
-        boolean isUpdated = bookRepository.update(bookOne.title("newTitle"));
-        assertTrue(isUpdated, "Book is not updated by id = " + bookOne.id());
-        assertThat(bookRepository.getById(bookOne.id())).get()
-                .hasFieldOrPropertyWithValue("title", bookOne.title());
+        boolean isUpdated = bookRepository.update(guide.title("newTitle"));
+        assertTrue(isUpdated, "Book is not updated by id = " + guide.id());
+        assertThat(bookRepository.getById(guide.id())).get()
+                .hasFieldOrPropertyWithValue("title", guide.title());
     }
 
     @Test
     void updateBookWithNonExistingId() {
-        boolean isUpdated = bookRepository.update(bookOne.id(NON_EXISTING_ID).title("newTitle"));
+        boolean isUpdated = bookRepository.update(guide.id(NON_EXISTING_ID).title("newTitle"));
         assertFalse(isUpdated, "Book with non-existing id is updated");
     }
 
     @Test
     void deleteById() {
-        boolean isDeleted = bookRepository.deleteById(bookOne.id());
-        assertTrue(isDeleted, "Book is not deleted by id = " + bookOne.id());
-        assertThat(bookRepository.getById(bookOne.id())).isEmpty();
+        boolean isDeleted = bookRepository.deleteById(guide.id());
+        assertTrue(isDeleted, "Book is not deleted by id = " + guide.id());
+        assertThat(bookRepository.getById(guide.id())).isEmpty();
     }
 
     @Test
@@ -120,8 +120,8 @@ public class BookRepositoryImplTests {
 
     @Test
     void getBooksByAuthorId() {
-        var books = bookRepository.getBooksByAuthorId(author.id());
-        assertThat(books).containsExactlyInAnyOrder(bookOne, bookTwo);
+        var books = bookRepository.getBooksByAuthorId(pratt.id());
+        assertThat(books).containsExactlyInAnyOrder(guide, concepts);
     }
 
     @Test
@@ -133,6 +133,6 @@ public class BookRepositoryImplTests {
     @Test
     void getAllBooks() {
         var books = bookRepository.getAllBooks();
-        assertThat(books).containsExactlyInAnyOrder(bookOne, bookTwo, bookThree);
+        assertThat(books).containsExactlyInAnyOrder(guide, concepts, sqlCoding);
     }
 }

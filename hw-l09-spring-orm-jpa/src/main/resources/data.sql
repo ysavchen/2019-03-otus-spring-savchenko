@@ -9,3 +9,7 @@ insert into books (id, title, author_id, genre_id) values (1, 'A Guide to SQL', 
 insert into books (id, title, author_id, genre_id) values (2, 'Concepts of Database Management', 1, 1);
 insert into books (id, title, author_id, genre_id) values (3, 'SQL Programming and Coding', 2, 1);
 insert into books (id, title, author_id, genre_id) values (4, 'Atomic Habits', 3, 2);
+
+insert into comments (id, content, book_id) values (1, 'First comment - Guide', 1);
+insert into comments (id, content, book_id) values (2, 'Second comment - Guide', 1);
+insert into comments (id, content, book_id) values (3, 'Comment - Concepts', 2);
