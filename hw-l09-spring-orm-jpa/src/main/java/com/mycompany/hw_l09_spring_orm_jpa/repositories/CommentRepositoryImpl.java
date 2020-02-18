@@ -3,7 +3,6 @@ package com.mycompany.hw_l09_spring_orm_jpa.repositories;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Comment;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepository {
 
     @PersistenceContext
