@@ -8,7 +8,7 @@ public interface CommentDbService {
 
     List<Comment> getCommentsByBookId(long id);
 
-    boolean addCommentByBookId(long id, String comment);
+    long addCommentByBookId(long id, Comment comment);
 
-    boolean deleteCommentByBookId(long id, String comment);
+    boolean deleteCommentByBookId(long id, Comment comment);
 }

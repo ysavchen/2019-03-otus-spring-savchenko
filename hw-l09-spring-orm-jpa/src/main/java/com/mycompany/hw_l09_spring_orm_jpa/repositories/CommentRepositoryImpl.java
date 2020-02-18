@@ -1,16 +1,15 @@
 package com.mycompany.hw_l09_spring_orm_jpa.repositories;
 
+import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional
 @RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepository {
 
@@ -19,16 +18,35 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     @Override
     public List<Comment> getCommentsByBookId(long id) {
-        return null;
+        return em.createQuery(
+                "select c " +
+                        "from Comment c " +
+                        "join fetch c.book b " +
+                        "where b.id = :id", Comment.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 
     @Override
-    public boolean addCommentByBookId(long id, String comment) {
-        return false;
+    public long addCommentByBookId(long id, Comment comment) {
+        var book = em.find(Book.class, id);
+        comment.book(book);
+
+        if (comment.id() <= 0) {
+            em.persist(comment);
+        } else {
+            em.merge(comment);
+        }
+        return comment.id();
     }
 
     @Override
-    public boolean deleteCommentByBookId(long id, String comment) {
-        return false;
+    public boolean deleteCommentByBookId(long id, Comment comment) {
+        int rows = em.createQuery("delete from Comment c " +
+                "where c.book.id = :id and c.content = :content")
+                .setParameter("id", id)
+                .setParameter("content", comment.content())
+                .executeUpdate();
+        return rows > 0;
     }
 }

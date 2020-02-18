@@ -22,4 +22,10 @@ public class Comment {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    public Comment() {
+    }
+
+    public Comment(String content) {
+        this.content = content;
+    }
 }

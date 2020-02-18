@@ -14,28 +14,35 @@ public class CommentCommands {
 
     private final CommentDbService dbService;
 
-    @ShellMethod(value = "Find comments by book_id", key = {"fci", "find-comments-by-book-id"})
+    @ShellMethod(value = "Find comments by book_id", key = {"fcbi", "find-comments-by-book-id"})
     public String findCommentsByBookId(long id) {
         var comments = dbService.getCommentsByBookId(id);
         if (comments.isEmpty()) {
-            return "No comments (bookId = " + id + ") found";
+            return "No comments with bookId = " + id + " found";
         }
 
         var bookTitle = comments.get(0).book().title();
-        return "Comments for book (" + bookTitle + "): \n" +
+        return "Comments for book '" + bookTitle + "': \n" +
                 comments.stream()
                         .map(Comment::content)
                         .collect(joining("\n"));
     }
 
-    @ShellMethod(value = "Add comment by book_id", key = {"aci", "add-comment-by-book-id"})
-    public String addCommentByBookId(long bookId, String comment) {
-
-        return "";
+    @ShellMethod(value = "Add comment by book_id", key = {"acbi", "add-comment-by-book-id"})
+    public String addCommentByBookId(long id, String comment) {
+        long commentId = dbService.addCommentByBookId(id, new Comment(comment));
+        if (commentId != 0) {
+            return "Comment is added with id = " + commentId;
+        }
+        return "Book with id = " + id + " is not found";
     }
 
-    @ShellMethod(value = "Delete comment by book_id", key = {"dci", "delete-comment-by-book-id"})
-    public String deleteCommentByBookId(long bookId, String comment) {
-        return "";
+    @ShellMethod(value = "Delete comment by book_id", key = {"dcbi", "delete-comment-by-book-id"})
+    public String deleteCommentByBookId(long id, String comment) {
+        boolean isDeleted = dbService.deleteCommentByBookId(id, new Comment(comment));
+        if (isDeleted) {
+            return "Comment is is deleted from book (id = " + id + ")";
+        }
+        return "Comment with book_id = " + id + " and content '" + comment + "' is not found";
     }
 }
