@@ -31,7 +31,7 @@ public class AuthorRepositoryImplTests {
     void insertAuthor() {
         var author = new Author("Michael", "Smith");
         long id = authorRepository.insert(author);
-        assertEquals(2, id, "Invalid id for an inserted Author");
+        assertEquals(3, id, "Invalid id for an inserted Author");
         assertThat(authorRepository.getById(id)).get()
                 .hasFieldOrPropertyWithValue("name", author.name())
                 .hasFieldOrPropertyWithValue("surname", author.surname());
