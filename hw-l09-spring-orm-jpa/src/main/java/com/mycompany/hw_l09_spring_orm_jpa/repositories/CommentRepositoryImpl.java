@@ -2,6 +2,7 @@ package com.mycompany.hw_l09_spring_orm_jpa.repositories;
 
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Comment;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public long addCommentByBookId(long id, Comment comment) {
+    public long addCommentByBookId(long id, @NonNull Comment comment) {
         var book = em.find(Book.class, id);
         comment.book(book);
 
@@ -41,7 +42,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public boolean deleteCommentByBookId(long id, Comment comment) {
+    public boolean deleteCommentByBookId(long id, @NonNull Comment comment) {
         int rows = em.createQuery("delete from Comment c " +
                 "where c.book.id = :id and c.content = :content")
                 .setParameter("id", id)
