@@ -22,6 +22,7 @@ public class BookDbServiceImpl implements BookDbService {
         return repository.insert(book);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Book> getById(long id) {
         Optional<Book> optBook = repository.getById(id);
@@ -32,11 +33,13 @@ public class BookDbServiceImpl implements BookDbService {
         return optBook;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Book> getBooksByAuthorId(long id) {
         return repository.getBooksByAuthorId(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Book> getAllBooks() {
         return repository.getAllBooks();

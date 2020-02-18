@@ -16,6 +16,7 @@ public class CommentDbServiceImpl implements CommentDbService {
 
     private final CommentRepository repository;
 
+    @Transactional(readOnly = true)
     @Override
     public List<Comment> getCommentsByBookId(long id) {
         return repository.getCommentsByBookId(id);

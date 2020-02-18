@@ -20,6 +20,7 @@ public class AuthorDbServiceImpl implements AuthorDbService {
         return repository.insert(author);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Author> getById(long id) {
         return repository.getById(id);
