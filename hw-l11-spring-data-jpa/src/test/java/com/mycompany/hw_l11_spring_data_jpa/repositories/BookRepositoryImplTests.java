@@ -1,4 +1,4 @@
-package com.mycompany.hw_l11_spring_data_jpa;
+package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Author;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Import(BookRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class BookRepositoryImplTests {
 
@@ -31,7 +30,7 @@ public class BookRepositoryImplTests {
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
-    private BookRepositoryImpl bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
     private TestEntityManager em;
@@ -39,7 +38,7 @@ public class BookRepositoryImplTests {
     @Test
     void insertBook() {
         var book = new Book("test");
-        long id = bookRepository.insert(book);
+        long id = bookRepository.save(book).id();
         assertEquals(4, id, "Invalid id for an inserted Book");
     }
 
@@ -52,14 +51,14 @@ public class BookRepositoryImplTests {
         var bookWithAuthor = new Book("test").author(testAuthor);
         var bookWithBoth = new Book("test").author(testAuthor).genre(testGenre);
 
-        assertEquals(4, bookRepository.insert(bookWithGenre));
-        assertEquals(5, bookRepository.insert(bookWithAuthor));
-        assertEquals(6, bookRepository.insert(bookWithBoth));
+        assertEquals(4, bookRepository.save(bookWithGenre).id());
+        assertEquals(5, bookRepository.save(bookWithAuthor).id());
+        assertEquals(6, bookRepository.save(bookWithBoth).id());
     }
 
     @Test
     void getBookById() {
-        assertThat(bookRepository.getById(guide.id())).get()
+        assertThat(bookRepository.findById(guide.id())).get()
                 .hasFieldOrPropertyWithValue("id", guide.id())
                 .hasFieldOrPropertyWithValue("title", guide.title())
                 .hasFieldOrPropertyWithValue("author", guide.author())
@@ -68,7 +67,7 @@ public class BookRepositoryImplTests {
 
     @Test
     void getBookByNonExistingId() {
-        assertThat(bookRepository.getById(NON_EXISTING_ID)).isEmpty();
+        assertThat(bookRepository.findById(NON_EXISTING_ID)).isEmpty();
     }
 
     @Test
@@ -82,8 +81,8 @@ public class BookRepositoryImplTests {
 
         List.of(bookWithGenre, bookWithAuthor, bookWithBoth)
                 .forEach(testBook -> {
-                    long id = bookRepository.insert(testBook);
-                    assertThat(bookRepository.getById(id)).get()
+                    long id = bookRepository.save(testBook).id();
+                    assertThat(bookRepository.findById(id)).get()
                             .hasFieldOrPropertyWithValue("id", id)
                             .hasFieldOrPropertyWithValue("title", testBook.title())
                             .hasFieldOrPropertyWithValue("author", testBook.author())
@@ -93,46 +92,46 @@ public class BookRepositoryImplTests {
 
     @Test
     void updateBookTitle() {
-        boolean isUpdated = bookRepository.update(guide.title("newTitle"));
-        assertTrue(isUpdated, "Book is not updated by id = " + guide.id());
-        assertThat(bookRepository.getById(guide.id())).get()
+        bookRepository.updateTitle(guide.id(), "newTitle");
+        //assertTrue(isUpdated, "Book is not updated by id = " + guide.id());
+        assertThat(bookRepository.findById(guide.id())).get()
                 .hasFieldOrPropertyWithValue("title", guide.title());
     }
 
     @Test
     void updateBookWithNonExistingId() {
-        boolean isUpdated = bookRepository.update(guide.id(NON_EXISTING_ID).title("newTitle"));
-        assertFalse(isUpdated, "Book with non-existing id is updated");
+        bookRepository.updateTitle(NON_EXISTING_ID, "newTitle");
+        //assertFalse(isUpdated, "Book with non-existing id is updated");
     }
 
     @Test
     void deleteById() {
-        boolean isDeleted = bookRepository.deleteById(guide.id());
-        assertTrue(isDeleted, "Book is not deleted by id = " + guide.id());
-        assertThat(bookRepository.getById(guide.id())).isEmpty();
+        bookRepository.deleteById(guide.id());
+        //assertTrue(isDeleted, "Book is not deleted by id = " + guide.id());
+        assertThat(bookRepository.findById(guide.id())).isEmpty();
     }
 
     @Test
     void deleteByNonExistingId() {
-        boolean isDeleted = bookRepository.deleteById(NON_EXISTING_ID);
-        assertFalse(isDeleted, "Book with non-existing id is deleted");
+        bookRepository.deleteById(NON_EXISTING_ID);
+        //assertFalse(isDeleted, "Book with non-existing id is deleted");
     }
 
     @Test
     void getBooksByAuthorId() {
-        var books = bookRepository.getBooksByAuthorId(pratt.id());
+        var books = bookRepository.findByAuthorId(pratt.id());
         assertThat(books).containsExactlyInAnyOrder(guide, concepts);
     }
 
     @Test
     void getBooksByNonExistingAuthorId() {
-        var books = bookRepository.getBooksByAuthorId(NON_EXISTING_ID);
+        var books = bookRepository.findByAuthorId(NON_EXISTING_ID);
         assertThat(books).isEmpty();
     }
 
     @Test
     void getAllBooks() {
-        var books = bookRepository.getAllBooks();
+        var books = bookRepository.findAll();
         assertThat(books).containsExactlyInAnyOrder(guide, concepts, sqlCoding);
     }
 }

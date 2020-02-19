@@ -34,7 +34,7 @@ public class BookCommands {
             book.genre(new Genre(genre));
         }
 
-        return "Added book with id = " + dbService.insert(book);
+        return "Added book with id = " + dbService.save(book);
     }
 
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
@@ -114,20 +114,13 @@ public class BookCommands {
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
     public String updateTitle(long id, String newTitle) {
-        var book = new Book(id, newTitle);
-        boolean isUpdated = dbService.update(book);
-        if (isUpdated) {
-            return "Title is changed for a book with id = " + id;
-        }
-        return "Book with id = " + id + " is not found";
+        dbService.updateTitle(id, newTitle);
+        return "Title is changed for a book with id = " + id;
     }
 
     @ShellMethod(value = "Delete book by id", key = {"dbi", "delete-book-by-id"})
     public String deleteBookById(long id) {
-        boolean isDeleted = dbService.deleteById(id);
-        if (isDeleted) {
-            return "Deleted book with id = " + id;
-        }
-        return "Book with id = " + id + " is not found";
+        dbService.deleteById(id);
+        return "Deleted book with id = " + id;
     }
 }

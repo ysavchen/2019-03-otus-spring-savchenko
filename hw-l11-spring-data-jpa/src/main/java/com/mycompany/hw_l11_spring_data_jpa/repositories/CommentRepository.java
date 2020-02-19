@@ -1,14 +1,16 @@
 package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository {
+public interface CommentRepository extends JpaRepository<Comment, Long>, CommentRepositoryAdding {
 
-    List<Comment> getCommentsByBookId(long id);
+    List<Comment> findByBookId(long id);
 
-    long addCommentByBookId(long id, Comment comment);
-
-    boolean deleteCommentByBookId(long id, Comment comment);
+    @Query("delete from Comment c where c.book.id = :id and c.content = :comment")
+    void deleteCommentByBookId(@Param("id") long id, @Param("comment") String comment);
 }

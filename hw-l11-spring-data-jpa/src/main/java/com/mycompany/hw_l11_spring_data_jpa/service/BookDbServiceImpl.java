@@ -3,7 +3,6 @@ package com.mycompany.hw_l11_spring_data_jpa.service;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
 import com.mycompany.hw_l11_spring_data_jpa.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,43 +17,37 @@ public class BookDbServiceImpl implements BookDbService {
     private final BookRepository repository;
 
     @Override
-    public long insert(Book book) {
-        return repository.insert(book);
+    public long save(Book book) {
+        return repository.save(book).id();
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<Book> getById(long id) {
-        Optional<Book> optBook = repository.getById(id);
-        optBook.ifPresent(book -> {
-            Hibernate.initialize(book.author());
-            Hibernate.initialize(book.genre());
-        });
-        return optBook;
+        return repository.findById(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Book> getBooksByAuthorId(long id) {
-        return repository.getBooksByAuthorId(id);
+        return repository.findByAuthorId(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Book> getAllBooks() {
-        return repository.getAllBooks();
+        return repository.findAll();
     }
 
     @Override
-    public boolean update(Book book) {
-        if (book.title() != null) {
-            return repository.update(book);
+    public void updateTitle(long id, String title) {
+        if (title != null) {
+            repository.updateTitle(id, title);
         }
-        return false;
     }
 
     @Override
-    public boolean deleteById(long id) {
-        return repository.deleteById(id);
+    public void deleteById(long id) {
+        repository.deleteById(id);
     }
 }

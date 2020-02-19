@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BookDbService {
 
-    long insert(Book book);
+    long save(Book book);
 
     Optional<Book> getById(long id);
 
@@ -15,7 +15,7 @@ public interface BookDbService {
 
     List<Book> getAllBooks();
 
-    boolean update(Book book);
+    void updateTitle(long id, String title);
 
-    boolean deleteById(long id);
+    void deleteById(long id);
 }

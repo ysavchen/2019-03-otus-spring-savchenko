@@ -1,7 +1,7 @@
-package com.mycompany.hw_l11_spring_data_jpa;
+package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Genre;
-import com.mycompany.hw_l11_spring_data_jpa.repositories.GenreRepositoryImpl;
+import com.mycompany.hw_l11_spring_data_jpa.repositories.GenreRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,35 +14,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@Import(GenreRepositoryImpl.class)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class GenreRepositoryImplTests {
+public class GenreRepositoryTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
-    private GenreRepositoryImpl genreRepository;
-
-    @Autowired
-    private TestEntityManager em;
+    private GenreRepository repository;
 
     @Test
     void insertGenre() {
         var genre = new Genre("test");
-        long id = genreRepository.insert(genre);
+        long id = repository.save(genre).id();
         assertEquals(2, id, "Invalid id for an inserted Genre");
     }
 
     @Test
     void getGenreById() {
-        assertThat(genreRepository.getById(genre.id())).get()
+        assertThat(repository.findById(genre.id())).get()
                 .hasFieldOrPropertyWithValue("id", genre.id())
                 .hasFieldOrPropertyWithValue("name", genre.name());
     }
 
     @Test
     void getGenreByNonExistingId() {
-        assertThat(genreRepository.getById(NON_EXISTING_ID)).isEmpty();
+        assertThat(repository.findById(NON_EXISTING_ID)).isEmpty();
     }
 }

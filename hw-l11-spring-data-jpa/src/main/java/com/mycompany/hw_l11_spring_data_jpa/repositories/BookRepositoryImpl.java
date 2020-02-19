@@ -2,20 +2,16 @@ package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
 import lombok.NonNull;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class BookRepositoryImpl implements BookRepository {
+public class BookRepositoryImpl {
 
-    @PersistenceContext
     private EntityManager em;
 
-    @Override
     public long insert(@NonNull Book book) {
         if (book.id() <= 0) {
             em.persist(book);
@@ -25,7 +21,6 @@ public class BookRepositoryImpl implements BookRepository {
         return book.id();
     }
 
-    @Override
     public Optional<Book> getById(long id) {
         try {
             var book = em.find(Book.class, id);
@@ -35,7 +30,6 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
-    @Override
     public List<Book> getBooksByAuthorId(long id) {
         return em.createQuery(
                 "select b " +
@@ -47,7 +41,6 @@ public class BookRepositoryImpl implements BookRepository {
                 .getResultList();
     }
 
-    @Override
     public List<Book> getAllBooks() {
         return em.createQuery(
                 "select b from Book b " +
@@ -56,7 +49,6 @@ public class BookRepositoryImpl implements BookRepository {
                 .getResultList();
     }
 
-    @Override
     public boolean update(@NonNull Book book) {
         int rows = em.createQuery("update Book b set b.title = :title where b.id = :id")
                 .setParameter("title", book.title())
@@ -65,7 +57,6 @@ public class BookRepositoryImpl implements BookRepository {
         return rows > 0;
     }
 
-    @Override
     public boolean deleteById(long id) {
         int rows = em.createQuery("delete from Book b where b.id = :id")
                 .setParameter("id", id)

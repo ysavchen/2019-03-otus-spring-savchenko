@@ -10,5 +10,5 @@ public interface CommentDbService {
 
     long addCommentByBookId(long id, Comment comment);
 
-    boolean deleteCommentByBookId(long id, Comment comment);
+    void deleteCommentByBookId(long id, Comment comment);
 }

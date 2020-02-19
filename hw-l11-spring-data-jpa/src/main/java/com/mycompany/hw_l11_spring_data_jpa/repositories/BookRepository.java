@@ -1,21 +1,16 @@
 package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookRepository {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
-    long insert(Book book);
+    List<Book> findByAuthorId(long id);
 
-    Optional<Book> getById(long id);
-
-    List<Book> getBooksByAuthorId(long id);
-
-    List<Book> getAllBooks();
-
-    boolean update(Book book);
-
-    boolean deleteById(long id);
+    @Query("update Book b set b.title = :title where b.id = :id")
+    void updateTitle(@Param("id") long id, @Param("title") String title);
 }

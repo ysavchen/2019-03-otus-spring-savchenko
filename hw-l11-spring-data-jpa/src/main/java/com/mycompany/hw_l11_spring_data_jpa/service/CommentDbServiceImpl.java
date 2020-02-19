@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.List;
 
 @Service
@@ -14,21 +13,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentDbServiceImpl implements CommentDbService {
 
-    private final CommentRepository repository;
+    private final CommentRepository commentRepository;
 
     @Transactional(readOnly = true)
     @Override
     public List<Comment> getCommentsByBookId(long id) {
-        return repository.getCommentsByBookId(id);
+        return commentRepository.findByBookId(id);
     }
 
     @Override
     public long addCommentByBookId(long id, Comment comment) {
-        return repository.addCommentByBookId(id, comment);
+        return commentRepository.addCommentByBookId(id, comment);
     }
 
     @Override
-    public boolean deleteCommentByBookId(long id, Comment comment) {
-        return repository.deleteCommentByBookId(id, comment);
+    public void deleteCommentByBookId(long id, Comment comment) {
+        commentRepository.deleteCommentByBookId(id, comment.content());
     }
 }

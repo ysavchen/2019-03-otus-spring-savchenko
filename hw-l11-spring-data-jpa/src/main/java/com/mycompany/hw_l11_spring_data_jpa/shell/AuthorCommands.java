@@ -14,9 +14,8 @@ public class AuthorCommands {
 
     @ShellMethod(value = "Add author", key = {"aa", "add-author"})
     public String addBook(String name, String surname) {
-
-        var author = new Author(name, surname);
-        return "Added author with id = " + dbService.insert(author);
+        long id = dbService.save(new Author(name, surname));
+        return "Added author with id = " + id;
     }
 
     @ShellMethod(value = "Find author by id", key = {"fai", "find-author-by-id"})

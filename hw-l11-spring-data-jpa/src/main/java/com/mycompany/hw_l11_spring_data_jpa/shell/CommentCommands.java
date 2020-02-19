@@ -39,10 +39,7 @@ public class CommentCommands {
 
     @ShellMethod(value = "Delete comment by book_id", key = {"dcbi", "delete-comment-by-book-id"})
     public String deleteCommentByBookId(long id, String comment) {
-        boolean isDeleted = dbService.deleteCommentByBookId(id, new Comment(comment));
-        if (isDeleted) {
-            return "Comment is is deleted from book (id = " + id + ")";
-        }
-        return "Comment with book_id = " + id + " and content '" + comment + "' is not found";
+        dbService.deleteCommentByBookId(id, new Comment(comment));
+        return "Comment is is deleted from book (id = " + id + ")";
     }
 }

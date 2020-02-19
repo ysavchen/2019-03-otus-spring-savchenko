@@ -1,12 +1,7 @@
 package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Genre;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
-public interface GenreRepository {
-
-    long insert(Genre genre);
-
-    Optional<Genre> getById(long id);
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 }

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface AuthorDbService {
 
-    long insert(Author author);
+    long save(Author author);
 
     Optional<Author> getById(long id);
 }
