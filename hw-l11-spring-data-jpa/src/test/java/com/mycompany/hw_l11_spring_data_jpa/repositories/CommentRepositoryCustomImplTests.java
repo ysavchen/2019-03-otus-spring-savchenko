@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class CommentRepositoryAddingImplTests {
+public class CommentRepositoryCustomImplTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author pratt = new Author(1, "Philip", "Pratt");

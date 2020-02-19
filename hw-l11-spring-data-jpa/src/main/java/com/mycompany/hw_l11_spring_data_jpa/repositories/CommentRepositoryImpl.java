@@ -3,12 +3,11 @@ package com.mycompany.hw_l11_spring_data_jpa.repositories;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Comment;
 import lombok.NonNull;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class CommentRepositoryAddingImpl implements CommentRepositoryAdding {
+public class CommentRepositoryImpl implements CommentRepositoryCustom {
 
     @PersistenceContext
     private EntityManager em;

@@ -7,10 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long>, CommentRepositoryAdding {
+public interface CommentRepository extends JpaRepository<Comment, Long>, CommentRepositoryCustom {
 
     List<Comment> findByBookId(long id);
 
-    @Query("delete from Comment c where c.book.id = :id and c.content = :comment")
-    void deleteCommentByBookId(@Param("id") long id, @Param("comment") String comment);
+    @Query("delete from Comment c where c.book.id = :id and c.content = :#{#comment.content}")
+    void deleteCommentByBookId(@Param("id") long id, @Param("comment") Comment comment);
 }
