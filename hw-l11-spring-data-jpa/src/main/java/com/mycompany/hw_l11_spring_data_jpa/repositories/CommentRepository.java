@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long>, CommentRepositoryCustom {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByBookId(long id);
 

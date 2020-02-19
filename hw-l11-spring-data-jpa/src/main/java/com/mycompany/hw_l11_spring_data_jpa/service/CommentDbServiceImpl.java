@@ -1,18 +1,22 @@
 package com.mycompany.hw_l11_spring_data_jpa.service;
 
+import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Comment;
+import com.mycompany.hw_l11_spring_data_jpa.repositories.BookRepository;
 import com.mycompany.hw_l11_spring_data_jpa.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class CommentDbServiceImpl implements CommentDbService {
 
+    private final BookRepository bookRepository;
     private final CommentRepository commentRepository;
 
     @Transactional(readOnly = true)
@@ -23,7 +27,12 @@ public class CommentDbServiceImpl implements CommentDbService {
 
     @Override
     public long addCommentByBookId(long id, Comment comment) {
-        return commentRepository.addCommentByBookId(id, comment);
+        Optional<Book> optBook = bookRepository.findById(id);
+        if (optBook.isPresent()) {
+            comment.book(optBook.get());
+            return commentRepository.save(comment).id();
+        }
+        return 0;
     }
 
     @Override
