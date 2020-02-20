@@ -13,7 +13,7 @@ public class AuthorCommands {
     private final AuthorDbService dbService;
 
     @ShellMethod(value = "Add author", key = {"aa", "add-author"})
-    public String addBook(String name, String surname) {
+    public String addAuthor(String name, String surname) {
         long id = dbService.save(new Author(name, surname));
         return "Added author with id = " + id;
     }
