@@ -21,10 +21,10 @@ public class CommentCommands {
             return "No comments with bookId = " + id + " found";
         }
 
-        var bookTitle = comments.get(0).book().title();
+        var bookTitle = comments.get(0).getBook().getTitle();
         return "Comments for book '" + bookTitle + "': \n" +
                 comments.stream()
-                        .map(Comment::content)
+                        .map(Comment::getContent)
                         .collect(joining("\n"));
     }
 

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "comments")
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class Comment {
 
     @Id
@@ -18,11 +18,15 @@ public class Comment {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 
     public Comment() {
+    }
+
+    public Comment(String content) {
+        this.content = content;
     }
 
     public Comment(long id, String content) {
@@ -30,7 +34,9 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment(String content) {
+    public Comment(long id, String content, Book book) {
+        this.id = id;
         this.content = content;
+        this.book = book;
     }
 }

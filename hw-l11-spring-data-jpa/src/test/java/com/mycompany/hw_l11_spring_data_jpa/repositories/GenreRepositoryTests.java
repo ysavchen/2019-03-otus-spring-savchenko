@@ -26,15 +26,15 @@ public class GenreRepositoryTests {
     @Test
     void insertGenre() {
         var genre = new Genre("test");
-        long id = repository.save(genre).id();
+        long id = repository.save(genre).getId();
         assertEquals(2, id, "Invalid id for an inserted Genre");
     }
 
     @Test
     void getGenreById() {
-        assertThat(repository.findById(genre.id())).get()
-                .hasFieldOrPropertyWithValue("id", genre.id())
-                .hasFieldOrPropertyWithValue("name", genre.name());
+        assertThat(repository.findById(genre.getId())).get()
+                .hasFieldOrPropertyWithValue("id", genre.getId())
+                .hasFieldOrPropertyWithValue("name", genre.getName());
     }
 
     @Test

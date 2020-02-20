@@ -23,19 +23,19 @@ public class AuthorRepositoryTests {
     @Test
     void insertAuthor() {
         var author = new Author("Michael", "Smith");
-        long id = repository.save(author).id();
+        long id = repository.save(author).getId();
         assertEquals(3, id, "Invalid id for an inserted Author");
         assertThat(repository.findById(id)).get()
-                .hasFieldOrPropertyWithValue("name", author.name())
-                .hasFieldOrPropertyWithValue("surname", author.surname());
+                .hasFieldOrPropertyWithValue("name", author.getName())
+                .hasFieldOrPropertyWithValue("surname", author.getSurname());
     }
 
     @Test
     void getAuthorById() {
-        assertThat(repository.findById(author.id())).get()
-                .hasFieldOrPropertyWithValue("id", author.id())
-                .hasFieldOrPropertyWithValue("name", author.name())
-                .hasFieldOrPropertyWithValue("surname", author.surname());
+        assertThat(repository.findById(author.getId())).get()
+                .hasFieldOrPropertyWithValue("id", author.getId())
+                .hasFieldOrPropertyWithValue("name", author.getName())
+                .hasFieldOrPropertyWithValue("surname", author.getSurname());
     }
 
     @Test

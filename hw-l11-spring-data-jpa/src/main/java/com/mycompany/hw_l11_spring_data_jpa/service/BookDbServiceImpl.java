@@ -24,7 +24,7 @@ public class BookDbServiceImpl implements BookDbService {
 
     @Override
     public long save(Book book) {
-        return bookRepository.save(book).id();
+        return bookRepository.save(book).getId();
     }
 
     @Transactional(readOnly = true)
@@ -59,21 +59,21 @@ public class BookDbServiceImpl implements BookDbService {
             return;
         }
         var book = optBook.get();
-        var author = book.author();
-        var genre = book.genre();
+        var author = book.getAuthor();
+        var genre = book.getGenre();
 
         bookRepository.deleteById(id);
         if (author != null) {
-            var books = bookRepository.findByAuthorId(author.id());
+            var books = bookRepository.findByAuthorId(author.getId());
             if (books.isEmpty()) {
-                authorRepository.deleteById(author.id());
+                authorRepository.deleteById(author.getId());
             }
         }
 
         if (genre != null) {
-            var books = bookRepository.findByGenreId(genre.id());
+            var books = bookRepository.findByGenreId(genre.getId());
             if (books.isEmpty()) {
-                genreRepository.deleteById(genre.id());
+                genreRepository.deleteById(genre.getId());
             }
         }
 

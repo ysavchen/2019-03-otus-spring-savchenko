@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "authors")
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class Author {
 
     @Id

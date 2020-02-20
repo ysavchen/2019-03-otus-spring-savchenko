@@ -22,9 +22,9 @@ public class BookRepositoryImplTests {
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author pratt = new Author(1, "Philip", "Pratt");
     private final Author learn = new Author(2, "Michael", "Learn");
-    private final Book guide = new Book(1, "A Guide to SQL").author(pratt).genre(genre);
-    private final Book concepts = new Book(2, "Concepts of Database Management").author(pratt).genre(genre);
-    private final Book sqlCoding = new Book(3, "SQL Programming and Coding").author(learn).genre(genre);
+    private final Book guide = new Book(1, "A Guide to SQL", pratt, genre);
+    private final Book concepts = new Book(2, "Concepts of Database Management", pratt, genre);
+    private final Book sqlCoding = new Book(3, "SQL Programming and Coding", learn, genre);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -36,7 +36,7 @@ public class BookRepositoryImplTests {
     @Test
     void insertBook() {
         var book = new Book("test");
-        long id = bookRepository.save(book).id();
+        long id = bookRepository.save(book).getId();
         assertEquals(4, id, "Invalid id for an inserted Book");
     }
 
@@ -45,22 +45,22 @@ public class BookRepositoryImplTests {
         var testGenre = new Genre("test genre");
         var testAuthor = new Author("testName", "testSurname");
 
-        var bookWithGenre = new Book("test").genre(testGenre);
-        var bookWithAuthor = new Book("test").author(testAuthor);
-        var bookWithBoth = new Book("test").author(testAuthor).genre(testGenre);
+        var bookWithGenre = new Book("test").setGenre(testGenre);
+        var bookWithAuthor = new Book("test").setAuthor(testAuthor);
+        var bookWithBoth = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
-        assertEquals(4, bookRepository.save(bookWithGenre).id());
-        assertEquals(5, bookRepository.save(bookWithAuthor).id());
-        assertEquals(6, bookRepository.save(bookWithBoth).id());
+        assertEquals(4, bookRepository.save(bookWithGenre).getId());
+        assertEquals(5, bookRepository.save(bookWithAuthor).getId());
+        assertEquals(6, bookRepository.save(bookWithBoth).getId());
     }
 
     @Test
     void getBookById() {
-        assertThat(bookRepository.findById(guide.id())).get()
-                .hasFieldOrPropertyWithValue("id", guide.id())
-                .hasFieldOrPropertyWithValue("title", guide.title())
-                .hasFieldOrPropertyWithValue("author", guide.author())
-                .hasFieldOrPropertyWithValue("genre", guide.genre());
+        assertThat(bookRepository.findById(guide.getId())).get()
+                .hasFieldOrPropertyWithValue("id", guide.getId())
+                .hasFieldOrPropertyWithValue("title", guide.getTitle())
+                .hasFieldOrPropertyWithValue("author", guide.getAuthor())
+                .hasFieldOrPropertyWithValue("genre", guide.getGenre());
     }
 
     @Test
@@ -73,27 +73,27 @@ public class BookRepositoryImplTests {
         var testGenre = new Genre("test genre");
         var testAuthor = new Author("testName", "testSurname");
 
-        var bookWithGenre = new Book("test").genre(testGenre);
-        var bookWithAuthor = new Book("test").author(testAuthor);
-        var bookWithBoth = new Book("test").author(testAuthor).genre(testGenre);
+        var bookWithGenre = new Book("test").setGenre(testGenre);
+        var bookWithAuthor = new Book("test").setAuthor(testAuthor);
+        var bookWithBoth = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
         List.of(bookWithGenre, bookWithAuthor, bookWithBoth)
                 .forEach(testBook -> {
-                    long id = bookRepository.save(testBook).id();
+                    long id = bookRepository.save(testBook).getId();
                     assertThat(bookRepository.findById(id)).get()
                             .hasFieldOrPropertyWithValue("id", id)
-                            .hasFieldOrPropertyWithValue("title", testBook.title())
-                            .hasFieldOrPropertyWithValue("author", testBook.author())
-                            .hasFieldOrPropertyWithValue("genre", testBook.genre());
+                            .hasFieldOrPropertyWithValue("title", testBook.getTitle())
+                            .hasFieldOrPropertyWithValue("author", testBook.getAuthor())
+                            .hasFieldOrPropertyWithValue("genre", testBook.getGenre());
                 });
     }
 
     @Test
     void updateBookTitle() {
-        bookRepository.updateTitle(guide.id(), "newTitle");
+        bookRepository.updateTitle(guide.getId(), "newTitle");
         //assertTrue(isUpdated, "Book is not updated by id = " + guide.id());
-        assertThat(bookRepository.findById(guide.id())).get()
-                .hasFieldOrPropertyWithValue("title", guide.title());
+        assertThat(bookRepository.findById(guide.getId())).get()
+                .hasFieldOrPropertyWithValue("title", guide.getTitle());
     }
 
     @Test
@@ -104,9 +104,9 @@ public class BookRepositoryImplTests {
 
     @Test
     void deleteById() {
-        bookRepository.deleteById(guide.id());
+        bookRepository.deleteById(guide.getId());
         //assertTrue(isDeleted, "Book is not deleted by id = " + guide.id());
-        assertThat(bookRepository.findById(guide.id())).isEmpty();
+        assertThat(bookRepository.findById(guide.getId())).isEmpty();
     }
 
     @Test
@@ -117,7 +117,7 @@ public class BookRepositoryImplTests {
 
     @Test
     void getBooksByAuthorId() {
-        var books = bookRepository.findByAuthorId(pratt.id());
+        var books = bookRepository.findByAuthorId(pratt.getId());
         assertThat(books).containsExactlyInAnyOrder(guide, concepts);
     }
 

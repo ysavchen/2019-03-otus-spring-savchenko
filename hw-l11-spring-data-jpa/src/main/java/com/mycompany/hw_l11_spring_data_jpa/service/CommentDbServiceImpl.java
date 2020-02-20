@@ -29,8 +29,8 @@ public class CommentDbServiceImpl implements CommentDbService {
     public long addCommentByBookId(long id, Comment comment) {
         Optional<Book> optBook = bookRepository.findById(id);
         if (optBook.isPresent()) {
-            comment.book(optBook.get());
-            return commentRepository.save(comment).id();
+            comment.setBook(optBook.get());
+            return commentRepository.save(comment).getId();
         }
         return 0;
     }

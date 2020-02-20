@@ -28,10 +28,10 @@ public class BookCommands {
 
         var book = new Book(title);
         if (authorName != null && authorSurname != null) {
-            book.author(new Author(authorSurname, authorSurname));
+            book.setAuthor(new Author(authorSurname, authorSurname));
         }
         if (genre != null) {
-            book.genre(new Genre(genre));
+            book.setGenre(new Genre(genre));
         }
 
         return "Added book with id = " + dbService.save(book);
@@ -48,14 +48,14 @@ public class BookCommands {
         String author = "not defined";
         String genre = "not defined";
 
-        if (book.author() != null) {
-            author = book.author().name() + " " + book.author().surname();
+        if (book.getAuthor() != null) {
+            author = book.getAuthor().getName() + " " + book.getAuthor().getSurname();
         }
-        if (book.genre() != null) {
-            genre = book.genre().name();
+        if (book.getGenre() != null) {
+            genre = book.getGenre().getName();
         }
 
-        return "Title: " + book.title() + "\n" +
+        return "Title: " + book.getTitle() + "\n" +
                 "Author: " + author + "\n" +
                 "Genre: " + genre;
     }
@@ -70,18 +70,18 @@ public class BookCommands {
         Function<Book, String> bookFunc = book -> {
             String genre = "not defined";
 
-            if (book.genre() != null) {
-                genre = book.genre().name();
+            if (book.getGenre() != null) {
+                genre = book.getGenre().getName();
             }
-            return book.title() + ", " + genre;
+            return book.getTitle() + ", " + genre;
         };
         var booksStr = books.stream()
                 .map(bookFunc)
                 .collect(joining("\n"));
 
-        var author = books.get(0).author();
-        return "Books with author (id = " + author.id() + ", " +
-                author.name() + " " + author.surname() + "):" +
+        var author = books.get(0).getAuthor();
+        return "Books with author (id = " + author.getId() + ", " +
+                author.getName() + " " + author.getSurname() + "):" +
                 "\n" + booksStr;
     }
 
@@ -96,13 +96,13 @@ public class BookCommands {
             String author = "not defined";
             String genre = "not defined";
 
-            if (book.author() != null) {
-                author = book.author().name() + " " + book.author().surname();
+            if (book.getAuthor() != null) {
+                author = book.getAuthor().getName() + " " + book.getAuthor().getSurname();
             }
-            if (book.genre() != null) {
-                genre = book.genre().name();
+            if (book.getGenre() != null) {
+                genre = book.getGenre().getName();
             }
-            return "Title: " + book.title() + "\n" +
+            return "Title: " + book.getTitle() + "\n" +
                     "Author: " + author + "\n" +
                     "Genre: " + genre;
         };

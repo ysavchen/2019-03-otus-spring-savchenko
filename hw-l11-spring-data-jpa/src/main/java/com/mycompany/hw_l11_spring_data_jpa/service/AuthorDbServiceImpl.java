@@ -17,7 +17,7 @@ public class AuthorDbServiceImpl implements AuthorDbService {
 
     @Override
     public long save(Author author) {
-        return repository.save(author).id();
+        return repository.save(author).getId();
     }
 
     @Transactional(readOnly = true)

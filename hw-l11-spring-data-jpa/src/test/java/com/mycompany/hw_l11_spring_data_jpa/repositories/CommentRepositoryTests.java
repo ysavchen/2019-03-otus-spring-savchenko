@@ -8,22 +8,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class CommentRepositoryCustomImplTests {
+public class CommentRepositoryTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author pratt = new Author(1, "Philip", "Pratt");
-    private final Book guide = new Book(1, "A Guide to SQL").author(pratt).genre(genre);
+    private final Book guide = new Book(1, "A Guide to SQL", pratt, genre);
 
-    private final Comment commentOne = new Comment(1, "First comment - Guide").book(guide);
-    private final Comment commentTwo = new Comment(2, "Second comment - Guide").book(guide);
+    private final Comment commentOne = new Comment(1, "First comment - Guide", guide);
+    private final Comment commentTwo = new Comment(2, "Second comment - Guide", guide);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -34,7 +32,7 @@ public class CommentRepositoryCustomImplTests {
 
     @Test
     void getCommentsByBookId() {
-        var comments = repository.findByBookId(guide.id());
+        var comments = repository.findByBookId(guide.getId());
         assertThat(comments).containsExactlyInAnyOrder(commentOne, commentTwo);
     }
 
