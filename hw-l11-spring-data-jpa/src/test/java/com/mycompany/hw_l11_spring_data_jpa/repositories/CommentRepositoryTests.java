@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CommentRepositoryTests {
 
-    private final Genre genre = new Genre(1, "Computers & Technology");
-    private final Author pratt = new Author(1, "Philip", "Pratt");
-    private final Book guide = new Book(1, "A Guide to SQL", pratt, genre);
+    private static final Genre GENRE = new Genre(1, "Computers & Technology");
+    private static final Author PRATT_AUTHOR = new Author(1, "Philip", "Pratt");
+    private static final Book GUIDE_BOOK = new Book(1, "A Guide to SQL", PRATT_AUTHOR, GENRE);
 
-    private final Comment commentOne = new Comment(1, "First comment - Guide", guide);
-    private final Comment commentTwo = new Comment(2, "Second comment - Guide", guide);
+    private static final Comment COMMENT_ONE = new Comment(1, "First comment - Guide", GUIDE_BOOK);
+    private static final Comment COMMENT_TWO = new Comment(2, "Second comment - Guide", GUIDE_BOOK);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -34,8 +34,8 @@ public class CommentRepositoryTests {
 
     @Test
     void findByBookId() {
-        var comments = repository.findByBookId(guide.getId());
-        assertThat(comments).containsExactlyInAnyOrder(commentOne, commentTwo);
+        var comments = repository.findByBookId(PRATT_AUTHOR.getId());
+        assertThat(comments).containsExactlyInAnyOrder(COMMENT_ONE, COMMENT_TWO);
     }
 
     @Test
@@ -46,22 +46,22 @@ public class CommentRepositoryTests {
 
     @Test
     void deleteByBookId() {
-        repository.deleteByBookId(guide.getId(), commentOne);
-        var comment = em.find(Comment.class, commentOne.getId());
+        repository.deleteByBookId(PRATT_AUTHOR.getId(), COMMENT_ONE);
+        var comment = em.find(Comment.class, COMMENT_ONE.getId());
         assertNull(comment, "Comment is not deleted form DB");
     }
 
     @Test
     void deleteByNonExistingBookId() {
-        repository.deleteByBookId(NON_EXISTING_ID, commentOne);
-        var comment = em.find(Comment.class, commentOne.getId());
+        repository.deleteByBookId(NON_EXISTING_ID, COMMENT_ONE);
+        var comment = em.find(Comment.class, COMMENT_ONE.getId());
         assertNotNull(comment, "Comment is deleted form DB");
     }
 
     @Test
     void deleteAllByBookId() {
-        repository.deleteAllByBookId(guide.getId());
-        var comments = repository.findByBookId(guide.getId());
+        repository.deleteAllByBookId(GUIDE_BOOK.getId());
+        var comments = repository.findByBookId(GUIDE_BOOK.getId());
         assertThat(comments).isEmpty();
     }
 }

@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class BookRepositoryImplTests {
 
-    private final Genre genre = new Genre(1, "Computers & Technology");
-    private final Author pratt = new Author(1, "Philip", "Pratt");
-    private final Author learn = new Author(2, "Michael", "Learn");
-    private final Book guide = new Book(1, "A Guide to SQL", pratt, genre);
-    private final Book concepts = new Book(2, "Concepts of Database Management", pratt, genre);
-    private final Book sqlCoding = new Book(3, "SQL Programming and Coding", learn, genre);
+    private static final Genre GENRE = new Genre(1, "Computers & Technology");
+    private static final Author PRATT_AUTHOR = new Author(1, "Philip", "Pratt");
+    private static final Author LEARN_AUTHOR = new Author(2, "Michael", "Learn");
+    private static final Book GUIDE_BOOK = new Book(1, "A Guide to SQL", PRATT_AUTHOR, GENRE);
+    private static final Book CONCEPTS_BOOK = new Book(2, "Concepts of Database Management", PRATT_AUTHOR, GENRE);
+    private static final Book SQL_CODING_BOOK = new Book(3, "SQL Programming and Coding", LEARN_AUTHOR, GENRE);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -68,11 +68,11 @@ public class BookRepositoryImplTests {
 
     @Test
     void findBookById() {
-        assertThat(bookRepository.findById(guide.getId())).get()
-                .hasFieldOrPropertyWithValue("id", guide.getId())
-                .hasFieldOrPropertyWithValue("title", guide.getTitle())
-                .hasFieldOrPropertyWithValue("author", guide.getAuthor())
-                .hasFieldOrPropertyWithValue("genre", guide.getGenre());
+        assertThat(bookRepository.findById(GUIDE_BOOK.getId())).get()
+                .hasFieldOrPropertyWithValue("id", GUIDE_BOOK.getId())
+                .hasFieldOrPropertyWithValue("title", GUIDE_BOOK.getTitle())
+                .hasFieldOrPropertyWithValue("author", GUIDE_BOOK.getAuthor())
+                .hasFieldOrPropertyWithValue("genre", GUIDE_BOOK.getGenre());
     }
 
     @Test
@@ -126,24 +126,24 @@ public class BookRepositoryImplTests {
     @Test
     void updateBookTitle() {
         var newTitle = "newTitle";
-        bookRepository.updateTitle(guide.getId(), newTitle);
+        bookRepository.updateTitle(GUIDE_BOOK.getId(), newTitle);
 
         em.clear();
-        assertThat(bookRepository.findById(guide.getId())).get()
+        assertThat(bookRepository.findById(GUIDE_BOOK.getId())).get()
                 .hasFieldOrPropertyWithValue("title", newTitle);
     }
 
     @Test
     void deleteById() {
-        bookRepository.deleteById(guide.getId());
-        assertNull(em.find(Book.class, guide.getId()),
+        bookRepository.deleteById(GUIDE_BOOK.getId());
+        assertNull(em.find(Book.class, GUIDE_BOOK.getId()),
                 "Book is not deleted by id");
     }
 
     @Test
     void findBooksByAuthorId() {
-        var books = bookRepository.findByAuthorId(pratt.getId());
-        assertThat(books).containsExactlyInAnyOrder(guide, concepts);
+        var books = bookRepository.findByAuthorId(PRATT_AUTHOR.getId());
+        assertThat(books).containsExactlyInAnyOrder(GUIDE_BOOK, CONCEPTS_BOOK);
     }
 
     @Test
@@ -154,8 +154,8 @@ public class BookRepositoryImplTests {
 
     @Test
     void findBooksByGenreId() {
-        var books = bookRepository.findByGenreId(genre.getId());
-        assertThat(books).containsExactlyInAnyOrder(guide, concepts, sqlCoding);
+        var books = bookRepository.findByGenreId(GENRE.getId());
+        assertThat(books).containsExactlyInAnyOrder(GUIDE_BOOK, CONCEPTS_BOOK, SQL_CODING_BOOK);
     }
 
     @Test
@@ -167,6 +167,6 @@ public class BookRepositoryImplTests {
     @Test
     void findAllBooks() {
         var books = bookRepository.findAll();
-        assertThat(books).containsExactlyInAnyOrder(guide, concepts, sqlCoding);
+        assertThat(books).containsExactlyInAnyOrder(GUIDE_BOOK, CONCEPTS_BOOK, SQL_CODING_BOOK);
     }
 }

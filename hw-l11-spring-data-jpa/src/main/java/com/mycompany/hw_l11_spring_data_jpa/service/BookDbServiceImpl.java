@@ -63,6 +63,8 @@ public class BookDbServiceImpl implements BookDbService {
         var genre = book.getGenre();
 
         bookRepository.deleteById(id);
+
+        //remove relations as CascadeType.REMOVE deletes data used by other books
         if (author != null) {
             var books = bookRepository.findByAuthorId(author.getId());
             if (books.isEmpty()) {
