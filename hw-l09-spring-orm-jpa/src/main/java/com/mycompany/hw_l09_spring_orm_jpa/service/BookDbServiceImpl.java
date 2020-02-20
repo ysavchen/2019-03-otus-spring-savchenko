@@ -3,7 +3,6 @@ package com.mycompany.hw_l09_spring_orm_jpa.service;
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +24,7 @@ public class BookDbServiceImpl implements BookDbService {
     @Transactional(readOnly = true)
     @Override
     public Optional<Book> getById(long id) {
-        Optional<Book> optBook = repository.getById(id);
-        optBook.ifPresent(book -> {
-            Hibernate.initialize(book.author());
-            Hibernate.initialize(book.genre());
-        });
-        return optBook;
+        return repository.getById(id);
     }
 
     @Transactional(readOnly = true)
