@@ -10,10 +10,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -34,28 +33,41 @@ public class BookRepositoryImplTests {
     private TestEntityManager em;
 
     @Test
-    void insertBook() {
+    void saveBook() {
         var book = new Book("test");
         long id = bookRepository.save(book).getId();
-        assertEquals(4, id, "Invalid id for an inserted Book");
+        assertEquals(4, id, "Invalid id for an saved Book");
     }
 
     @Test
-    void insertBookWithGenreAndAuthor() {
+    void saveBookWithGenre() {
+        var genre = new Genre("test genre");
+        var bookWithGenre = new Book("test").setGenre(genre);
+        assertEquals(4, bookRepository.save(bookWithGenre).getId(),
+                "Book with genre is not saved");
+    }
+
+    @Test
+    void saveBookWithAuthor() {
+        var testAuthor = new Author("testName", "testSurname");
+        var bookWithAuthor = new Book("test").setAuthor(testAuthor);
+        assertEquals(4, bookRepository.save(bookWithAuthor).getId(),
+                "Book with author is not saved");
+
+    }
+
+    @Test
+    void saveBookWithGenreAndAuthor() {
         var testGenre = new Genre("test genre");
         var testAuthor = new Author("testName", "testSurname");
-
-        var bookWithGenre = new Book("test").setGenre(testGenre);
-        var bookWithAuthor = new Book("test").setAuthor(testAuthor);
         var bookWithBoth = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
-        assertEquals(4, bookRepository.save(bookWithGenre).getId());
-        assertEquals(5, bookRepository.save(bookWithAuthor).getId());
-        assertEquals(6, bookRepository.save(bookWithBoth).getId());
+        assertEquals(4, bookRepository.save(bookWithBoth).getId(),
+                "Book with genre and author is not saved");
     }
 
     @Test
-    void getBookById() {
+    void findBookById() {
         assertThat(bookRepository.findById(guide.getId())).get()
                 .hasFieldOrPropertyWithValue("id", guide.getId())
                 .hasFieldOrPropertyWithValue("title", guide.getTitle())
@@ -64,71 +76,96 @@ public class BookRepositoryImplTests {
     }
 
     @Test
-    void getBookByNonExistingId() {
+    void findBookByNonExistingId() {
         assertThat(bookRepository.findById(NON_EXISTING_ID)).isEmpty();
     }
 
     @Test
-    void getBookWithGenreAndAuthor() {
+    void findBookWithGenre() {
+        var testGenre = new Genre("test genre");
+        var book = new Book("test").setGenre(testGenre);
+        long id = bookRepository.save(book).getId();
+
+        em.clear();
+        assertThat(bookRepository.findById(id)).get()
+                .hasFieldOrPropertyWithValue("id", id)
+                .hasFieldOrPropertyWithValue("title", book.getTitle())
+                .hasFieldOrPropertyWithValue("author", null)
+                .hasFieldOrPropertyWithValue("genre", testGenre);
+    }
+
+    @Test
+    void findBookWithAuthor() {
+        var testAuthor = new Author("testName", "testSurname");
+        var book = new Book("test").setAuthor(testAuthor);
+        long id = bookRepository.save(book).getId();
+
+        em.clear();
+        assertThat(bookRepository.findById(id)).get()
+                .hasFieldOrPropertyWithValue("id", id)
+                .hasFieldOrPropertyWithValue("title", book.getTitle())
+                .hasFieldOrPropertyWithValue("author", testAuthor)
+                .hasFieldOrPropertyWithValue("genre", null);
+    }
+
+    @Test
+    void findBookWithGenreAndAuthor() {
         var testGenre = new Genre("test genre");
         var testAuthor = new Author("testName", "testSurname");
+        var book = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
-        var bookWithGenre = new Book("test").setGenre(testGenre);
-        var bookWithAuthor = new Book("test").setAuthor(testAuthor);
-        var bookWithBoth = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
-
-        List.of(bookWithGenre, bookWithAuthor, bookWithBoth)
-                .forEach(testBook -> {
-                    long id = bookRepository.save(testBook).getId();
-                    assertThat(bookRepository.findById(id)).get()
-                            .hasFieldOrPropertyWithValue("id", id)
-                            .hasFieldOrPropertyWithValue("title", testBook.getTitle())
-                            .hasFieldOrPropertyWithValue("author", testBook.getAuthor())
-                            .hasFieldOrPropertyWithValue("genre", testBook.getGenre());
-                });
+        em.clear();
+        long id = bookRepository.save(book).getId();
+        assertThat(bookRepository.findById(id)).get()
+                .hasFieldOrPropertyWithValue("id", id)
+                .hasFieldOrPropertyWithValue("title", book.getTitle())
+                .hasFieldOrPropertyWithValue("author", testAuthor)
+                .hasFieldOrPropertyWithValue("genre", testGenre);
     }
 
     @Test
     void updateBookTitle() {
-        bookRepository.updateTitle(guide.getId(), "newTitle");
-        //assertTrue(isUpdated, "Book is not updated by id = " + guide.id());
-        assertThat(bookRepository.findById(guide.getId())).get()
-                .hasFieldOrPropertyWithValue("title", guide.getTitle());
-    }
+        var newTitle = "newTitle";
+        bookRepository.updateTitle(guide.getId(), newTitle);
 
-    @Test
-    void updateBookWithNonExistingId() {
-        bookRepository.updateTitle(NON_EXISTING_ID, "newTitle");
-        //assertFalse(isUpdated, "Book with non-existing id is updated");
+        em.clear();
+        assertThat(bookRepository.findById(guide.getId())).get()
+                .hasFieldOrPropertyWithValue("title", newTitle);
     }
 
     @Test
     void deleteById() {
         bookRepository.deleteById(guide.getId());
-        //assertTrue(isDeleted, "Book is not deleted by id = " + guide.id());
-        assertThat(bookRepository.findById(guide.getId())).isEmpty();
+        assertNull(em.find(Book.class, guide.getId()),
+                "Book is not deleted by id");
     }
 
     @Test
-    void deleteByNonExistingId() {
-        bookRepository.deleteById(NON_EXISTING_ID);
-        //assertFalse(isDeleted, "Book with non-existing id is deleted");
-    }
-
-    @Test
-    void getBooksByAuthorId() {
+    void findBooksByAuthorId() {
         var books = bookRepository.findByAuthorId(pratt.getId());
         assertThat(books).containsExactlyInAnyOrder(guide, concepts);
     }
 
     @Test
-    void getBooksByNonExistingAuthorId() {
+    void findBooksByNonExistingAuthorId() {
         var books = bookRepository.findByAuthorId(NON_EXISTING_ID);
         assertThat(books).isEmpty();
     }
 
     @Test
-    void getAllBooks() {
+    void findBooksByGenreId() {
+        var books = bookRepository.findByGenreId(genre.getId());
+        assertThat(books).containsExactlyInAnyOrder(guide, concepts, sqlCoding);
+    }
+
+    @Test
+    void findBooksByNonExistingGenreId() {
+        var books = bookRepository.findByGenreId(NON_EXISTING_ID);
+        assertThat(books).isEmpty();
+    }
+
+    @Test
+    void findAllBooks() {
         var books = bookRepository.findAll();
         assertThat(books).containsExactlyInAnyOrder(guide, concepts, sqlCoding);
     }
