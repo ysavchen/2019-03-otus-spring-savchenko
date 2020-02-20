@@ -1,4 +1,4 @@
-package com.mycompany.hw_l09_spring_orm_jpa;
+package com.mycompany.hw_l09_spring_orm_jpa.repositories;
 
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Genre;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.GenreRepositoryImpl;

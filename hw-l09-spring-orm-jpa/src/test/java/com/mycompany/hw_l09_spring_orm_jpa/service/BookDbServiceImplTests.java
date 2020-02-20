@@ -1,4 +1,4 @@
-package com.mycompany.hw_l09_spring_orm_jpa;
+package com.mycompany.hw_l09_spring_orm_jpa.service;
 
 import com.mycompany.hw_l09_spring_orm_jpa.domain.Book;
 import com.mycompany.hw_l09_spring_orm_jpa.repositories.BookRepositoryImpl;
