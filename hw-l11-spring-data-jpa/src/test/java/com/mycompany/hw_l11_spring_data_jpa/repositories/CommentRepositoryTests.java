@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -31,60 +33,35 @@ public class CommentRepositoryTests {
     private TestEntityManager em;
 
     @Test
-    void getCommentsByBookId() {
+    void findByBookId() {
         var comments = repository.findByBookId(guide.getId());
         assertThat(comments).containsExactlyInAnyOrder(commentOne, commentTwo);
     }
 
     @Test
-    void getCommentsByNonExistingBookId() {
+    void findByNonExistingBookId() {
         var comments = repository.findByBookId(NON_EXISTING_ID);
         assertThat(comments).isEmpty();
     }
 
     @Test
-    void addCommentByBookId() {
-        var comment = new Comment("Test comment");
-        //long id = repository.addCommentByBookId(guide.id(), comment);
-        //assertThat(id).isEqualTo(4);
-
-        //em.clear();
-        //comment.book(guide);
-        //var commentInDb = em.find(Comment.class, id);
-        //assertThat(comment).isEqualTo(commentInDb);
+    void deleteByBookId() {
+        repository.deleteByBookId(guide.getId(), commentOne);
+        var comment = em.find(Comment.class, commentOne.getId());
+        assertNull(comment, "Comment is not deleted form DB");
     }
 
     @Test
-    void addCommentByNonExistingBookId() {
-        var comment = new Comment("Test comment");
-        //long id = repository.addCommentByBookId(NON_EXISTING_ID, comment);
-        //assertThat(id).isEqualTo(0);
+    void deleteByNonExistingBookId() {
+        repository.deleteByBookId(NON_EXISTING_ID, commentOne);
+        var comment = em.find(Comment.class, commentOne.getId());
+        assertNotNull(comment, "Comment is deleted form DB");
     }
 
     @Test
-    void deleteCommentByBookId() {
-        //boolean isDeleted = repository.deleteCommentByBookId(guide.id(), commentOne);
-        //assertTrue(isDeleted, "Comment is not deleted by bookId");
-
-        //em.clear();
-        //var comment = em.find(Comment.class, commentOne.id());
-        //assertNull(comment, "Comment is not deleted form DB");
-    }
-
-    @Test
-    void deleteCommentByNonExistingBookId() {
-        //boolean isDeleted = repository.deleteCommentByBookId(NON_EXISTING_ID, commentOne);
-        //assertFalse(isDeleted, "Comment is deleted by non-existing bookId");
-
-        //em.clear();
-        //var comment = em.find(Comment.class, commentOne.id());
-        //assertNotNull(comment, "Comment is deleted form DB");
-    }
-
-    @Test
-    void deleteNonExistingComment() {
-        //var comment = new Comment("Non existing");
-        //boolean isDeleted = repository.deleteCommentByBookId(guide.id(), comment);
-        //assertFalse(isDeleted, "Non-existing comment is deleted by bookId");
+    void deleteAllByBookId() {
+        repository.deleteAllByBookId(guide.getId());
+        var comments = repository.findByBookId(guide.getId());
+        assertThat(comments).isEmpty();
     }
 }

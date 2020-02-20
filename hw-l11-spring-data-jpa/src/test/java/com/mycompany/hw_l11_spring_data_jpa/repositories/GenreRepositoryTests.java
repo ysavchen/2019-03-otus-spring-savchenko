@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenreRepositoryTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
@@ -24,7 +23,7 @@ public class GenreRepositoryTests {
     private GenreRepository repository;
 
     @Test
-    void insertGenre() {
+    void saveGenre() {
         var genre = new Genre("test");
         long id = repository.save(genre).getId();
         assertEquals(2, id, "Invalid id for an inserted Genre");
