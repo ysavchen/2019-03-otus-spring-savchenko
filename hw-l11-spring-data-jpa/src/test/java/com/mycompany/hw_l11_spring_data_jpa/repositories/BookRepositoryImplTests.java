@@ -18,12 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class BookRepositoryImplTests {
 
-    private static final Genre GENRE = new Genre(1, "Computers & Technology");
-    private static final Author PRATT_AUTHOR = new Author(1, "Philip", "Pratt");
-    private static final Author LEARN_AUTHOR = new Author(2, "Michael", "Learn");
-    private static final Book GUIDE_BOOK = new Book(1, "A Guide to SQL", PRATT_AUTHOR, GENRE);
-    private static final Book CONCEPTS_BOOK = new Book(2, "Concepts of Database Management", PRATT_AUTHOR, GENRE);
-    private static final Book SQL_CODING_BOOK = new Book(3, "SQL Programming and Coding", LEARN_AUTHOR, GENRE);
+    private final Genre genre = new Genre(1, "Computers & Technology");
+    private final Author prattAuthor = new Author(1, "Philip", "Pratt");
+    private final Author learnAuthor = new Author(2, "Michael", "Learn");
+
+    private final Book guideBook = new Book(1, "A Guide to SQL", prattAuthor, genre);
+    private final Book conceptsBook = new Book(2, "Concepts of Database Management", prattAuthor, genre);
+    private final Book sqlCodingBook = new Book(3, "SQL Programming and Coding", learnAuthor, genre);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -68,11 +69,11 @@ public class BookRepositoryImplTests {
 
     @Test
     void findBookById() {
-        assertThat(bookRepository.findById(GUIDE_BOOK.getId())).get()
-                .hasFieldOrPropertyWithValue("id", GUIDE_BOOK.getId())
-                .hasFieldOrPropertyWithValue("title", GUIDE_BOOK.getTitle())
-                .hasFieldOrPropertyWithValue("author", GUIDE_BOOK.getAuthor())
-                .hasFieldOrPropertyWithValue("genre", GUIDE_BOOK.getGenre());
+        assertThat(bookRepository.findById(guideBook.getId())).get()
+                .hasFieldOrPropertyWithValue("id", guideBook.getId())
+                .hasFieldOrPropertyWithValue("title", guideBook.getTitle())
+                .hasFieldOrPropertyWithValue("author", guideBook.getAuthor())
+                .hasFieldOrPropertyWithValue("genre", guideBook.getGenre());
     }
 
     @Test
@@ -126,24 +127,24 @@ public class BookRepositoryImplTests {
     @Test
     void updateBookTitle() {
         var newTitle = "newTitle";
-        bookRepository.updateTitle(GUIDE_BOOK.getId(), newTitle);
+        bookRepository.updateTitle(guideBook.getId(), newTitle);
 
         em.clear();
-        assertThat(bookRepository.findById(GUIDE_BOOK.getId())).get()
+        assertThat(bookRepository.findById(guideBook.getId())).get()
                 .hasFieldOrPropertyWithValue("title", newTitle);
     }
 
     @Test
     void deleteById() {
-        bookRepository.deleteById(GUIDE_BOOK.getId());
-        assertNull(em.find(Book.class, GUIDE_BOOK.getId()),
+        bookRepository.deleteById(guideBook.getId());
+        assertNull(em.find(Book.class, guideBook.getId()),
                 "Book is not deleted by id");
     }
 
     @Test
     void findBooksByAuthorId() {
-        var books = bookRepository.findByAuthorId(PRATT_AUTHOR.getId());
-        assertThat(books).containsExactlyInAnyOrder(GUIDE_BOOK, CONCEPTS_BOOK);
+        var books = bookRepository.findByAuthorId(prattAuthor.getId());
+        assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook);
     }
 
     @Test
@@ -154,8 +155,8 @@ public class BookRepositoryImplTests {
 
     @Test
     void findBooksByGenreId() {
-        var books = bookRepository.findByGenreId(GENRE.getId());
-        assertThat(books).containsExactlyInAnyOrder(GUIDE_BOOK, CONCEPTS_BOOK, SQL_CODING_BOOK);
+        var books = bookRepository.findByGenreId(genre.getId());
+        assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook, sqlCodingBook);
     }
 
     @Test
@@ -167,6 +168,6 @@ public class BookRepositoryImplTests {
     @Test
     void findAllBooks() {
         var books = bookRepository.findAll();
-        assertThat(books).containsExactlyInAnyOrder(GUIDE_BOOK, CONCEPTS_BOOK, SQL_CODING_BOOK);
+        assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook, sqlCodingBook);
     }
 }

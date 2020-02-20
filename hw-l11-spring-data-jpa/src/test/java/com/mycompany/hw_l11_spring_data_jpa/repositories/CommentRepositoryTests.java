@@ -9,21 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CommentRepositoryTests {
 
-    private static final Genre GENRE = new Genre(1, "Computers & Technology");
-    private static final Author PRATT_AUTHOR = new Author(1, "Philip", "Pratt");
-    private static final Book GUIDE_BOOK = new Book(1, "A Guide to SQL", PRATT_AUTHOR, GENRE);
+    private final Genre genre = new Genre(1, "Computers & Technology");
+    private final Author author = new Author(1, "Philip", "Pratt");
+    private final Book book = new Book(1, "A Guide to SQL", author, genre);
 
-    private static final Comment COMMENT_ONE = new Comment(1, "First comment - Guide", GUIDE_BOOK);
-    private static final Comment COMMENT_TWO = new Comment(2, "Second comment - Guide", GUIDE_BOOK);
+    private final Comment commentOne = new Comment(1, "First comment - Guide", book);
+    private final Comment commentTwo = new Comment(2, "Second comment - Guide", book);
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -34,8 +35,8 @@ public class CommentRepositoryTests {
 
     @Test
     void findByBookId() {
-        var comments = repository.findByBookId(PRATT_AUTHOR.getId());
-        assertThat(comments).containsExactlyInAnyOrder(COMMENT_ONE, COMMENT_TWO);
+        var comments = repository.findByBookId(author.getId());
+        assertThat(comments).containsExactlyInAnyOrder(commentOne, commentTwo);
     }
 
     @Test
@@ -46,22 +47,22 @@ public class CommentRepositoryTests {
 
     @Test
     void deleteByBookId() {
-        repository.deleteByBookId(PRATT_AUTHOR.getId(), COMMENT_ONE);
-        var comment = em.find(Comment.class, COMMENT_ONE.getId());
+        repository.deleteByBookId(author.getId(), commentOne);
+        var comment = em.find(Comment.class, commentOne.getId());
         assertNull(comment, "Comment is not deleted form DB");
     }
 
     @Test
     void deleteByNonExistingBookId() {
-        repository.deleteByBookId(NON_EXISTING_ID, COMMENT_ONE);
-        var comment = em.find(Comment.class, COMMENT_ONE.getId());
+        repository.deleteByBookId(NON_EXISTING_ID, commentOne);
+        var comment = em.find(Comment.class, commentOne.getId());
         assertNotNull(comment, "Comment is deleted form DB");
     }
 
     @Test
     void deleteAllByBookId() {
-        repository.deleteAllByBookId(GUIDE_BOOK.getId());
-        var comments = repository.findByBookId(GUIDE_BOOK.getId());
+        repository.deleteAllByBookId(book.getId());
+        var comments = repository.findByBookId(book.getId());
         assertThat(comments).isEmpty();
     }
 }

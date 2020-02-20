@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class AuthorRepositoryTests {
 
-    private static final Author AUTHOR = new Author(1, "Philip", "Pratt");
+    private final Author author = new Author(1, "Philip", "Pratt");
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -38,10 +38,10 @@ public class AuthorRepositoryTests {
 
     @Test
     void findAuthorById() {
-        assertThat(repository.findById(AUTHOR.getId())).get()
-                .hasFieldOrPropertyWithValue("id", AUTHOR.getId())
-                .hasFieldOrPropertyWithValue("name", AUTHOR.getName())
-                .hasFieldOrPropertyWithValue("surname", AUTHOR.getSurname());
+        assertThat(repository.findById(author.getId())).get()
+                .hasFieldOrPropertyWithValue("id", author.getId())
+                .hasFieldOrPropertyWithValue("name", author.getName())
+                .hasFieldOrPropertyWithValue("surname", author.getSurname());
     }
 
     @Test

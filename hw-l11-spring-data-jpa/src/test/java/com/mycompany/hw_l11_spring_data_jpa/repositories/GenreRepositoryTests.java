@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenreRepositoryTests {
 
-    private static final Genre GENRE = new Genre(1, "Computers & Technology");
+    private final Genre genre = new Genre(1, "Computers & Technology");
     private static final long NON_EXISTING_ID = 50;
 
     @Autowired
@@ -29,9 +29,9 @@ public class GenreRepositoryTests {
 
     @Test
     void findGenreById() {
-        assertThat(repository.findById(GENRE.getId())).get()
-                .hasFieldOrPropertyWithValue("id", GENRE.getId())
-                .hasFieldOrPropertyWithValue("name", GENRE.getName());
+        assertThat(repository.findById(genre.getId())).get()
+                .hasFieldOrPropertyWithValue("id", genre.getId())
+                .hasFieldOrPropertyWithValue("name", genre.getName());
     }
 
     @Test
