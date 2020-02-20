@@ -37,6 +37,6 @@ public class CommentDbServiceImpl implements CommentDbService {
 
     @Override
     public void deleteCommentByBookId(long id, Comment comment) {
-        commentRepository.deleteCommentByBookId(id, comment);
+        commentRepository.deleteByBookId(id, comment);
     }
 }

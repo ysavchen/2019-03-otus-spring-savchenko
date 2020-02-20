@@ -12,5 +12,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByBookId(long id);
 
     @Query("delete from Comment c where c.book.id = :id and c.content = :#{#comment.content}")
-    void deleteCommentByBookId(@Param("id") long id, @Param("comment") Comment comment);
+    void deleteByBookId(@Param("id") long id, @Param("comment") Comment comment);
+
+    @Query("delete from Comment c where c.book.id = :id")
+    void deleteAllByBookId(@Param("id") long id);
 }

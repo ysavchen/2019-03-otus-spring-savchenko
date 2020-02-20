@@ -3,19 +3,17 @@ package com.mycompany.hw_l11_spring_data_jpa.repositories;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Author;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
 import com.mycompany.hw_l11_spring_data_jpa.domain.Genre;
-import com.mycompany.hw_l11_spring_data_jpa.repositories.BookRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)

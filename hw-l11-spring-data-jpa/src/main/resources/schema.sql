@@ -23,14 +23,14 @@ create table comments (
 drop table if exists genres;
 create table genres (
     id bigint primary key auto_increment,
-    name varchar(255) unique not null
+    name varchar(255) not null
 );
 
 alter table books
-add foreign key (author_id) references authors(id);
+add foreign key (author_id) references authors(id) on delete cascade;
 
 alter table books
-add foreign key (genre_id) references genres(id);
+add foreign key (genre_id) references genres(id) on delete cascade;
 
 alter table comments
-add foreign key (book_id) references books(id);
+add foreign key (book_id) references books(id) on delete cascade;
