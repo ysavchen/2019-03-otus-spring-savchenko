@@ -75,8 +75,6 @@ public class BookDbServiceImplTests {
         bookDbService.deleteById(book.getId());
         verify(bookRepository, atMostOnce()).deleteById(book.getId());
         verify(authorRepository, atMostOnce()).deleteById(author.getId());
-        verify(genreRepository, never()).deleteById(anyLong());
-        verify(commentRepository, never()).deleteAllByBookId(anyLong());
     }
 
     @Test
@@ -86,9 +84,7 @@ public class BookDbServiceImplTests {
         book.setGenre(genre);
         bookDbService.deleteById(book.getId());
         verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(authorRepository, never()).deleteById(anyLong());
         verify(genreRepository, atMostOnce()).deleteById(genre.getId());
-        verify(commentRepository, never()).deleteAllByBookId(anyLong());
     }
 
     @Test
@@ -98,8 +94,6 @@ public class BookDbServiceImplTests {
 
         bookDbService.deleteById(book.getId());
         verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(authorRepository, never()).deleteById(anyLong());
-        verify(genreRepository, never()).deleteById(anyLong());
         verify(commentRepository, atMostOnce()).deleteAllByBookId(book.getId());
     }
 }
