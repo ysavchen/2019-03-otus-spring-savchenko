@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class AuthorRepositoryTests {
 
     private final Author author = new Author(1, "Philip", "Pratt");
@@ -28,7 +25,7 @@ public class AuthorRepositoryTests {
     void saveAuthor() {
         var author = new Author("Michael", "Smith");
         long id = repository.save(author).getId();
-        assertEquals(3, id, "Invalid id for an saved Author");
+        assertTrue(id > 0, "Invalid id for an saved Author");
 
         em.clear();
         assertThat(repository.findById(id)).get()

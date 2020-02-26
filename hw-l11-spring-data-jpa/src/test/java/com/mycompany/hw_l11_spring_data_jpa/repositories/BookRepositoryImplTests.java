@@ -7,15 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class BookRepositoryImplTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
@@ -37,14 +34,15 @@ public class BookRepositoryImplTests {
     void saveBook() {
         var book = new Book("test");
         long id = bookRepository.save(book).getId();
-        assertEquals(4, id, "Invalid id for an saved Book");
+        assertTrue(id > 0, "Invalid id for an saved Book");
     }
 
     @Test
     void saveBookWithGenre() {
         var genre = new Genre("test genre");
         var bookWithGenre = new Book("test").setGenre(genre);
-        assertEquals(4, bookRepository.save(bookWithGenre).getId(),
+        long id = bookRepository.save(bookWithGenre).getId();
+        assertTrue(id > 0,
                 "Book with genre is not saved");
     }
 
@@ -52,7 +50,8 @@ public class BookRepositoryImplTests {
     void saveBookWithAuthor() {
         var testAuthor = new Author("testName", "testSurname");
         var bookWithAuthor = new Book("test").setAuthor(testAuthor);
-        assertEquals(4, bookRepository.save(bookWithAuthor).getId(),
+        long id = bookRepository.save(bookWithAuthor).getId();
+        assertTrue(id > 0,
                 "Book with author is not saved");
 
     }
@@ -63,7 +62,8 @@ public class BookRepositoryImplTests {
         var testAuthor = new Author("testName", "testSurname");
         var bookWithBoth = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
-        assertEquals(4, bookRepository.save(bookWithBoth).getId(),
+        long id = bookRepository.save(bookWithBoth).getId();
+        assertTrue(id > 0,
                 "Book with genre and author is not saved");
     }
 

@@ -4,14 +4,12 @@ import com.mycompany.hw_l11_spring_data_jpa.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class GenreRepositoryTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
@@ -24,7 +22,7 @@ public class GenreRepositoryTests {
     void saveGenre() {
         var genre = new Genre("test");
         long id = repository.save(genre).getId();
-        assertEquals(2, id, "Invalid id for an saved Genre");
+        assertTrue(id > 0, "Invalid id for an saved Genre");
     }
 
     @Test
