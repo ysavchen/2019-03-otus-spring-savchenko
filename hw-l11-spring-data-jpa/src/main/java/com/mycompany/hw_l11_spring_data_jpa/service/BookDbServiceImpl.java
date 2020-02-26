@@ -63,6 +63,7 @@ public class BookDbServiceImpl implements BookDbService {
         var genre = book.getGenre();
 
         bookRepository.deleteById(id);
+        commentRepository.deleteAllByBookId(id);
 
         //remove relations as CascadeType.REMOVE deletes data used by other books
         if (author != null) {
@@ -77,11 +78,6 @@ public class BookDbServiceImpl implements BookDbService {
             if (books.isEmpty()) {
                 genreRepository.deleteById(genre.getId());
             }
-        }
-
-        var comments = commentRepository.findByBookId(id);
-        if (!comments.isEmpty()) {
-            commentRepository.deleteAllByBookId(id);
         }
     }
 }
