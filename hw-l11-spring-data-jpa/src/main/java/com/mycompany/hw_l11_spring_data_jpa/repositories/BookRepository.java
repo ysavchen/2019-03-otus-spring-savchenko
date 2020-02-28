@@ -1,6 +1,7 @@
 package com.mycompany.hw_l11_spring_data_jpa.repositories;
 
 import com.mycompany.hw_l11_spring_data_jpa.domain.Book;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,22 +11,14 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query("select b from Book b " +
-            "join fetch b.author a " +
-            "join fetch b.genre g " +
-            "where a.id = :id") //prevent generating lots of requests to DB
+    @EntityGraph("book-entity-graph")
     List<Book> findByAuthorId(@Param("id") long id);
 
-    @Query("select b from Book b " +
-            "join fetch b.author a " +
-            "join fetch b.genre g " +
-            "where g.id = :id")
+    @EntityGraph("book-entity-graph")
     List<Book> findByGenreId(@Param("id") long id);
 
     @Override
-    @Query("select b from Book b " +
-            "join fetch b.author " +
-            "join fetch b.genre")
+    @EntityGraph("book-entity-graph")
     List<Book> findAll();
 
     @Modifying
