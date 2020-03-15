@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GenreRepositoryTests extends AbstractRepositoryTest {
 
-    private final Genre genre = new Genre("1", "Computers & Technology");
+    private final Genre genre = new Genre( "Computers & Technology");
     private static final String NON_EXISTING_ID = "50";
 
     @Autowired

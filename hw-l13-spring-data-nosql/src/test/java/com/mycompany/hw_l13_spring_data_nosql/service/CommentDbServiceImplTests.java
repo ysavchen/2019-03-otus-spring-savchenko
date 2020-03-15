@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @Import(CommentDbServiceImpl.class)
 public class CommentDbServiceImplTests {
 
-    private final Book book = new Book("1", "A Guide to SQL");
+    private final Book book = new Book( "A Guide to SQL");
     private static final String NON_EXISTING_ID = "50";
     private static final String EMPTY_STRING = "";
 
@@ -35,7 +35,7 @@ public class CommentDbServiceImplTests {
 
     @Test
     void addCommentByBookId() {
-        var comment = new Comment("1", "Test comment");
+        var comment = new Comment("Test comment").setId("1");
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
         when(commentRepository.save(comment)).thenReturn(comment);
 

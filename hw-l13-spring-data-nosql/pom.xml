@@ -18,7 +18,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mongock.version>3.2.4</mongock.version>
+        <mongock.version>2.0.2</mongock.version>
     </properties>
 
     <dependencies>

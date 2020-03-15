@@ -22,10 +22,4 @@ public class Author {
         this.name = name;
         this.surname = surname;
     }
-
-    public Author(String id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
 }

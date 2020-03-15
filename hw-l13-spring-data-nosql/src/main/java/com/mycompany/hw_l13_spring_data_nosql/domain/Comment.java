@@ -25,12 +25,7 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment(String id, String content) {
-        this.id = id;
-        this.content = content;
-    }
-
-    public Comment(String id, String content, Book book) {
+    public Comment(String content, Book book) {
         this.id = id;
         this.content = content;
         this.book = book;

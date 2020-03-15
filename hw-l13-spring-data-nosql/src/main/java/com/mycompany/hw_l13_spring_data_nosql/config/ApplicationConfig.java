@@ -2,7 +2,7 @@ package com.mycompany.hw_l13_spring_data_nosql.config;
 
 import com.github.cloudyrock.mongock.Mongock;
 import com.github.cloudyrock.mongock.SpringMongockBuilder;
-import com.mongodb.client.MongoClient;
+import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

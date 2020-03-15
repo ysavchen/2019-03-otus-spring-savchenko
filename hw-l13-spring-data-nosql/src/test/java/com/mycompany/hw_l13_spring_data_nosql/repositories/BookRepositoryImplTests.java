@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class BookRepositoryImplTests extends AbstractRepositoryTest {
 
-    private final Genre genre = new Genre("1", "Computers & Technology");
-    private final Author prattAuthor = new Author("1", "Philip", "Pratt");
-    private final Author learnAuthor = new Author("2", "Michael", "Learn");
+    private final Genre genre = new Genre("Computers & Technology");
+    private final Author prattAuthor = new Author("Philip", "Pratt");
+    private final Author learnAuthor = new Author("Michael", "Learn");
 
-    private final Book guideBook = new Book("1", "A Guide to SQL", prattAuthor, genre);
-    private final Book conceptsBook = new Book("2", "Concepts of Database Management", prattAuthor, genre);
-    private final Book sqlCodingBook = new Book("3", "SQL Programming and Coding", learnAuthor, genre);
+    private final Book guideBook = new Book("A Guide to SQL", prattAuthor, genre);
+    private final Book conceptsBook = new Book("Concepts of Database Management", prattAuthor, genre);
+    private final Book sqlCodingBook = new Book("SQL Programming and Coding", learnAuthor, genre);
     private static final String NON_EXISTING_ID = "50";
 
     @Autowired

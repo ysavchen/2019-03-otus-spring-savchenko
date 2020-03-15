@@ -26,12 +26,7 @@ public class Book {
         this.title = title;
     }
 
-    public Book(String id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-
-    public Book(String id, String title, Author author, Genre genre) {
+    public Book(String title, Author author, Genre genre) {
         this.id = id;
         this.title = title;
         this.author = author;

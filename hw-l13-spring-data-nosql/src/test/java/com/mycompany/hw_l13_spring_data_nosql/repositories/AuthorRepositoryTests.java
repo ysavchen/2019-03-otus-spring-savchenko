@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class AuthorRepositoryTests extends AbstractRepositoryTest {
 
-    private final Author author = new Author("1", "Philip", "Pratt");
     private static final String NON_EXISTING_ID = "50";
 
     @Autowired
@@ -23,13 +22,6 @@ public class AuthorRepositoryTests extends AbstractRepositoryTest {
         assertFalse(id.isEmpty(), "Invalid id for an saved Author");
 
         assertThat(repository.findById(id)).get()
-                .hasFieldOrPropertyWithValue("name", author.getName())
-                .hasFieldOrPropertyWithValue("surname", author.getSurname());
-    }
-
-    @Test
-    void findAuthorById() {
-        assertThat(repository.findById(author.getId())).get()
                 .hasFieldOrPropertyWithValue("id", author.getId())
                 .hasFieldOrPropertyWithValue("name", author.getName())
                 .hasFieldOrPropertyWithValue("surname", author.getSurname());

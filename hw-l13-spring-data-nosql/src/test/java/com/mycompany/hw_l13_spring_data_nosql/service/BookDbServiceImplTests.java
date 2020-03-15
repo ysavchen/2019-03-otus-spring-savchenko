@@ -22,9 +22,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 public class BookDbServiceImplTests {
 
-    private final Genre genre = new Genre("1", "Computers & Technology");
-    private final Author author = new Author("1", "Philip", "Pratt");
-    private final Book book = new Book("1", "A Guide to SQL");
+    private final Genre genre = new Genre( "Computers & Technology");
+    private final Author author = new Author( "Philip", "Pratt");
+    private final Book book = new Book( "A Guide to SQL");
 
     @MockBean
     private BookRepository bookRepository;
