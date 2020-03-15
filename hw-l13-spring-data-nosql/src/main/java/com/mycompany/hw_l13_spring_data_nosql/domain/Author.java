@@ -2,23 +2,17 @@ package com.mycompany.hw_l13_spring_data_nosql.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
-@Table(name = "authors")
+@Document(collection = "authors")
 @Accessors(chain = true)
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "surname", nullable = false)
     private String surname;
 
     public Author() {

@@ -2,29 +2,22 @@ package com.mycompany.hw_l13_spring_data_nosql.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
-@Table(name = "books")
+@Document(collection = "books")
 @Accessors(chain = true)
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "title", nullable = false)
     private String title;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "author_id")
-    private Author author;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "genre_id")
     private Genre genre;
+
+    @DBRef
+    private Author author;
 
     public Book() {
     }
