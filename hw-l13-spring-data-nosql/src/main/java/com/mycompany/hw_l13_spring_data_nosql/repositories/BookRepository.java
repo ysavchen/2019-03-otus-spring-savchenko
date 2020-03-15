@@ -9,12 +9,6 @@ import java.util.List;
 
 public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
 
-    Book save(Book book);
-
-    //    @Query("select b from Book b " +
-//            "join fetch b.author a " +
-//            "join fetch b.genre g " +
-//            "where a.id = :id") //prevent generating lots of requests to DB
     List<Book> findByAuthorId(@Param("id") String id);
 
     //    @Query("select b from Book b " +

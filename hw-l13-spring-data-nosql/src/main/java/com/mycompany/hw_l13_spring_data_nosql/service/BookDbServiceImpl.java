@@ -22,7 +22,7 @@ public class BookDbServiceImpl implements BookDbService {
 
     @Override
     public String save(Book book) {
-        return bookRepository.save(book).getId();
+        return bookRepository.saveWithAuthor(book).getId();
     }
 
     @Override
