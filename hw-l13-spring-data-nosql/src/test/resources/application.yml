@@ -5,8 +5,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost
-      port: 27020
+      port: 0
       database: test_db
 
     logging:
