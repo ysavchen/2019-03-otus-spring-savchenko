@@ -3,18 +3,12 @@ spring:
     interactive:
       enabled: true
 
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    initialization-mode: always
-    data: data.sql
+  data:
+    mongodb:
+      uri: mongodb://localhost
+      port: 27017
+      database: app_db
 
-  jpa:
-    generate-ddl: false
-    hibernate:
-      ddl-auto: validate
-
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  logging:
+    level:
+      root: ERROR
