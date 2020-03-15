@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class GenreRepositoryTests {
 
-    private final Genre genre = new Genre(1, "Computers & Technology");
-    private static final long NON_EXISTING_ID = 50;
+    private final Genre genre = new Genre("1", "Computers & Technology");
+    private static final String NON_EXISTING_ID = "50";
 
     @Autowired
     private GenreRepository repository;
@@ -21,8 +20,8 @@ public class GenreRepositoryTests {
     @Test
     void saveGenre() {
         var genre = new Genre("test");
-        long id = repository.save(genre).getId();
-        assertTrue(id > 0, "Invalid id for an saved Genre");
+        String id = repository.save(genre).getId();
+        assertFalse(id.isEmpty(), "Invalid id for an saved Genre");
     }
 
     @Test

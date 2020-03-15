@@ -16,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @DataJpaTest
 public class CommentRepositoryTests {
 
-    private final Genre genre = new Genre(1, "Computers & Technology");
-    private final Author author = new Author(1, "Philip", "Pratt");
-    private final Book book = new Book(1, "A Guide to SQL", author, genre);
+    private final Genre genre = new Genre("1", "Computers & Technology");
+    private final Author author = new Author("1", "Philip", "Pratt");
+    private final Book book = new Book("1", "A Guide to SQL", author, genre);
 
-    private final Comment commentOne = new Comment(1, "First comment - Guide", book);
-    private final Comment commentTwo = new Comment(2, "Second comment - Guide", book);
-    private static final long NON_EXISTING_ID = 50;
+    private final Comment commentOne = new Comment("1", "First comment - Guide", book);
+    private final Comment commentTwo = new Comment("2", "Second comment - Guide", book);
+    private static final String NON_EXISTING_ID = "50";
 
     @Autowired
     private CommentRepository repository;

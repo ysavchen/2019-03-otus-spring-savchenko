@@ -7,13 +7,11 @@ import com.mycompany.hw_l13_spring_data_nosql.repositories.CommentRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class BookDbServiceImpl implements BookDbService {
 
@@ -23,37 +21,34 @@ public class BookDbServiceImpl implements BookDbService {
     private final CommentRepository commentRepository;
 
     @Override
-    public long save(Book book) {
+    public String save(Book book) {
         return bookRepository.save(book).getId();
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public Optional<Book> getById(long id) {
+    public Optional<Book> getById(String id) {
         return bookRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public List<Book> getBooksByAuthorId(long id) {
+    public List<Book> getBooksByAuthorId(String id) {
         return bookRepository.findByAuthorId(id);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @Override
-    public void updateTitle(long id, String title) {
+    public void updateTitle(String id, String title) {
         if (title != null) {
             bookRepository.updateTitle(id, title);
         }
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(String id) {
         Optional<Book> optBook = bookRepository.findById(id);
         if (optBook.isEmpty()) {
             return;

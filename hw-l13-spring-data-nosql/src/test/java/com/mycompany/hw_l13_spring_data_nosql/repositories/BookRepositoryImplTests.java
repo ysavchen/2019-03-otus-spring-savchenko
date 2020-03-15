@@ -9,20 +9,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class BookRepositoryImplTests {
 
-    private final Genre genre = new Genre(1, "Computers & Technology");
-    private final Author prattAuthor = new Author(1, "Philip", "Pratt");
-    private final Author learnAuthor = new Author(2, "Michael", "Learn");
+    private final Genre genre = new Genre("1", "Computers & Technology");
+    private final Author prattAuthor = new Author("1", "Philip", "Pratt");
+    private final Author learnAuthor = new Author("2", "Michael", "Learn");
 
-    private final Book guideBook = new Book(1, "A Guide to SQL", prattAuthor, genre);
-    private final Book conceptsBook = new Book(2, "Concepts of Database Management", prattAuthor, genre);
-    private final Book sqlCodingBook = new Book(3, "SQL Programming and Coding", learnAuthor, genre);
-    private static final long NON_EXISTING_ID = 50;
+    private final Book guideBook = new Book("1", "A Guide to SQL", prattAuthor, genre);
+    private final Book conceptsBook = new Book("2", "Concepts of Database Management", prattAuthor, genre);
+    private final Book sqlCodingBook = new Book("3", "SQL Programming and Coding", learnAuthor, genre);
+    private static final String NON_EXISTING_ID = "50";
 
     @Autowired
     private BookRepository bookRepository;
@@ -33,16 +32,16 @@ public class BookRepositoryImplTests {
     @Test
     void saveBook() {
         var book = new Book("test");
-        long id = bookRepository.save(book).getId();
-        assertTrue(id > 0, "Invalid id for an saved Book");
+        String id = bookRepository.save(book).getId();
+        assertFalse(id.isEmpty(), "Invalid id for an saved Book");
     }
 
     @Test
     void saveBookWithGenre() {
         var genre = new Genre("test genre");
         var bookWithGenre = new Book("test").setGenre(genre);
-        long id = bookRepository.save(bookWithGenre).getId();
-        assertTrue(id > 0,
+        String id = bookRepository.save(bookWithGenre).getId();
+        assertFalse(id.isEmpty(),
                 "Book with genre is not saved");
     }
 
@@ -50,8 +49,8 @@ public class BookRepositoryImplTests {
     void saveBookWithAuthor() {
         var testAuthor = new Author("testName", "testSurname");
         var bookWithAuthor = new Book("test").setAuthor(testAuthor);
-        long id = bookRepository.save(bookWithAuthor).getId();
-        assertTrue(id > 0,
+        String id = bookRepository.save(bookWithAuthor).getId();
+        assertFalse(id.isEmpty(),
                 "Book with author is not saved");
 
     }
@@ -62,8 +61,8 @@ public class BookRepositoryImplTests {
         var testAuthor = new Author("testName", "testSurname");
         var bookWithBoth = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
-        long id = bookRepository.save(bookWithBoth).getId();
-        assertTrue(id > 0,
+        String id = bookRepository.save(bookWithBoth).getId();
+        assertFalse(id.isEmpty(),
                 "Book with genre and author is not saved");
     }
 
@@ -85,7 +84,7 @@ public class BookRepositoryImplTests {
     void findBookWithGenre() {
         var testGenre = new Genre("test genre");
         var book = new Book("test").setGenre(testGenre);
-        long id = bookRepository.save(book).getId();
+        String id = bookRepository.save(book).getId();
 
         em.clear();
         assertThat(bookRepository.findById(id)).get()
@@ -99,7 +98,7 @@ public class BookRepositoryImplTests {
     void findBookWithAuthor() {
         var testAuthor = new Author("testName", "testSurname");
         var book = new Book("test").setAuthor(testAuthor);
-        long id = bookRepository.save(book).getId();
+        String id = bookRepository.save(book).getId();
 
         em.clear();
         assertThat(bookRepository.findById(id)).get()
@@ -116,7 +115,7 @@ public class BookRepositoryImplTests {
         var book = new Book("test").setAuthor(testAuthor).setGenre(testGenre);
 
         em.clear();
-        long id = bookRepository.save(book).getId();
+        String id = bookRepository.save(book).getId();
         assertThat(bookRepository.findById(id)).get()
                 .hasFieldOrPropertyWithValue("id", id)
                 .hasFieldOrPropertyWithValue("title", book.getTitle())

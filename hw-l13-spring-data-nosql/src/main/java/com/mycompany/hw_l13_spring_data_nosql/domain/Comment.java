@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Comment {
 
     @Id
-    private Long id;
+    private String id;
     private String content;
 
     @DBRef
@@ -25,12 +25,12 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment(long id, String content) {
+    public Comment(String id, String content) {
         this.id = id;
         this.content = content;
     }
 
-    public Comment(long id, String content, Book book) {
+    public Comment(String id, String content, Book book) {
         this.id = id;
         this.content = content;
         this.book = book;

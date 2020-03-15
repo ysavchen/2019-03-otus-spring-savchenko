@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Author {
 
     @Id
-    private Long id;
+    private String id;
     private String name;
     private String surname;
 
@@ -23,7 +23,7 @@ public class Author {
         this.surname = surname;
     }
 
-    public Author(long id, String name, String surname) {
+    public Author(String id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;

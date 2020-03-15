@@ -20,8 +20,8 @@ import static org.mockito.Mockito.*;
 @Import(CommentDbServiceImpl.class)
 public class CommentDbServiceImplTests {
 
-    private final Book book = new Book(1, "A Guide to SQL");
-    private static final long NON_EXISTING_ID = 50;
+    private final Book book = new Book("1", "A Guide to SQL");
+    private static final String NON_EXISTING_ID = "50";
 
     @MockBean
     private BookRepository bookRepository;
@@ -34,7 +34,7 @@ public class CommentDbServiceImplTests {
 
     @Test
     void addCommentByBookId() {
-        var comment = new Comment(1, "Test comment");
+        var comment = new Comment("1", "Test comment");
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
         when(commentRepository.save(comment)).thenReturn(comment);
 
@@ -45,7 +45,7 @@ public class CommentDbServiceImplTests {
     @Test
     void addCommentByNonExistingBookId() {
         var comment = new Comment("Test comment");
-        long id = commentDbService.addCommentByBookId(NON_EXISTING_ID, comment);
+        String id = commentDbService.addCommentByBookId(NON_EXISTING_ID, comment);
         verify(commentRepository, never()).save(comment);
         assertThat(id).isEqualTo(0);
     }

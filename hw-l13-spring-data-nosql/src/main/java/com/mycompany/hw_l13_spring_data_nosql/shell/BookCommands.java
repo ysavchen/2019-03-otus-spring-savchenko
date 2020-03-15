@@ -38,7 +38,7 @@ public class BookCommands {
     }
 
     @ShellMethod(value = "Find book by id", key = {"fbi", "find-book-by-id"})
-    public String findBookById(long id) {
+    public String findBookById(String id) {
         var optBook = dbService.getById(id);
         if (optBook.isEmpty()) {
             return "Book with id = " + id + " is not found";
@@ -61,7 +61,7 @@ public class BookCommands {
     }
 
     @ShellMethod(value = "Find books by author id", key = {"fbai", "find-books-by-author-id"})
-    public String findBooksByAuthorId(long id) {
+    public String findBooksByAuthorId(String id) {
         var books = dbService.getBooksByAuthorId(id);
         if (books.isEmpty()) {
             return "No books with authorId = " + id + " found";
@@ -113,13 +113,13 @@ public class BookCommands {
     }
 
     @ShellMethod(value = "Update title for a book", key = {"utb", "update-title-for-book"})
-    public String updateTitle(long id, String newTitle) {
+    public String updateTitle(String id, String newTitle) {
         dbService.updateTitle(id, newTitle);
         return "Title is changed for a book with id = " + id;
     }
 
     @ShellMethod(value = "Delete book by id", key = {"dbi", "delete-book-by-id"})
-    public String deleteBookById(long id) {
+    public String deleteBookById(String id) {
         dbService.deleteById(id);
         return "Deleted book with id = " + id;
     }

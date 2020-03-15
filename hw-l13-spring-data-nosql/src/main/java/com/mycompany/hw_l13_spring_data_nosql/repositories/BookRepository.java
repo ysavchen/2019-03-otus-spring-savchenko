@@ -1,34 +1,35 @@
 package com.mycompany.hw_l13_spring_data_nosql.repositories;
 
 import com.mycompany.hw_l13_spring_data_nosql.domain.Book;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
 
-    @Query("select b from Book b " +
-            "join fetch b.author a " +
-            "join fetch b.genre g " +
-            "where a.id = :id") //prevent generating lots of requests to DB
-    List<Book> findByAuthorId(@Param("id") long id);
+    Book save(Book book);
 
-    @Query("select b from Book b " +
-            "join fetch b.author a " +
-            "join fetch b.genre g " +
-            "where g.id = :id")
-    List<Book> findByGenreId(@Param("id") long id);
+    //    @Query("select b from Book b " +
+//            "join fetch b.author a " +
+//            "join fetch b.genre g " +
+//            "where a.id = :id") //prevent generating lots of requests to DB
+    List<Book> findByAuthorId(@Param("id") String id);
 
-    @Override
-    @Query("select b from Book b " +
-            "join fetch b.author " +
-            "join fetch b.genre")
-    List<Book> findAll();
+    //    @Query("select b from Book b " +
+//            "join fetch b.author a " +
+//            "join fetch b.genre g " +
+//            "where g.id = :id")
+    List<Book> findByGenreId(@Param("id") String id);
 
-    @Modifying
+//    @Override
+//    @Query("select b from Book b " +
+//            "join fetch b.author " +
+//            "join fetch b.genre")
+//    List<Book> findAll();
+
+    //    @Modifying
     @Query("update Book b set b.title = :title where b.id = :id")
-    void updateTitle(@Param("id") long id, @Param("title") String title);
+    void updateTitle(@Param("id") String id, @Param("title") String title);
 }

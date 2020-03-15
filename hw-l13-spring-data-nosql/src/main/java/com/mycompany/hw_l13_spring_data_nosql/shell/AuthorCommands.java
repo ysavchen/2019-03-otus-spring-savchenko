@@ -14,12 +14,12 @@ public class AuthorCommands {
 
     @ShellMethod(value = "Add author", key = {"aa", "add-author"})
     public String addAuthor(String name, String surname) {
-        long id = dbService.save(new Author(name, surname));
+        String id = dbService.save(new Author(name, surname));
         return "Added author with id = " + id;
     }
 
     @ShellMethod(value = "Find author by id", key = {"fai", "find-author-by-id"})
-    public String findAuthorById(long id) {
+    public String findAuthorById(String id) {
         var optAuthor = dbService.getById(id);
         if (optAuthor.isEmpty()) {
             return "Author with id = " + id + " is not found";

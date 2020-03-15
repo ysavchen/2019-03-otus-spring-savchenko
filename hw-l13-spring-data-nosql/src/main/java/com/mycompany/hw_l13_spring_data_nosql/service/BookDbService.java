@@ -7,15 +7,15 @@ import java.util.Optional;
 
 public interface BookDbService {
 
-    long save(Book book);
+    String save(Book book);
 
-    Optional<Book> getById(long id);
+    Optional<Book> getById(String id);
 
-    List<Book> getBooksByAuthorId(long id);
+    List<Book> getBooksByAuthorId(String id);
 
     List<Book> getAllBooks();
 
-    void updateTitle(long id, String title);
+    void updateTitle(String id, String title);
 
-    void deleteById(long id);
+    void deleteById(String id);
 }

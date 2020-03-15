@@ -22,9 +22,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 public class BookDbServiceImplTests {
 
-    private final Genre genre = new Genre(1, "Computers & Technology");
-    private final Author author = new Author(1, "Philip", "Pratt");
-    private final Book book = new Book(1, "A Guide to SQL");
+    private final Genre genre = new Genre("1", "Computers & Technology");
+    private final Author author = new Author("1", "Philip", "Pratt");
+    private final Book book = new Book("1", "A Guide to SQL");
 
     @MockBean
     private BookRepository bookRepository;
@@ -60,8 +60,8 @@ public class BookDbServiceImplTests {
 
         bookDbService.deleteById(book.getId());
         verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(authorRepository, never()).deleteById(anyLong());
-        verify(genreRepository, never()).deleteById(anyLong());
+        verify(authorRepository, never()).deleteById(anyString());
+        verify(genreRepository, never()).deleteById(anyString());
         verify(commentRepository, atMostOnce()).deleteAllByBookId(book.getId());
     }
 

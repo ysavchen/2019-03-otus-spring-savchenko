@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Book {
 
     @Id
-    private Long id;
+    private String id;
     private String title;
     private Genre genre;
 
@@ -26,12 +26,12 @@ public class Book {
         this.title = title;
     }
 
-    public Book(long id, String title) {
+    public Book(String id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public Book(long id, String title, Author author, Genre genre) {
+    public Book(String id, String title, Author author, Genre genre) {
         this.id = id;
         this.title = title;
         this.author = author;

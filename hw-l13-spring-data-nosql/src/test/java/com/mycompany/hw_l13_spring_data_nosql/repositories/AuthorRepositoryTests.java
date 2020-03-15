@@ -3,31 +3,26 @@ package com.mycompany.hw_l13_spring_data_nosql.repositories;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@DataJpaTest
+@DataMongoTest
 public class AuthorRepositoryTests {
 
-    private final Author author = new Author(1, "Philip", "Pratt");
-    private static final long NON_EXISTING_ID = 50;
+    private final Author author = new Author("1", "Philip", "Pratt");
+    private static final String NON_EXISTING_ID = "50";
 
     @Autowired
     private AuthorRepository repository;
 
-    @Autowired
-    private TestEntityManager em;
-
     @Test
     void saveAuthor() {
         var author = new Author("Michael", "Smith");
-        long id = repository.save(author).getId();
-        assertTrue(id > 0, "Invalid id for an saved Author");
+        String id = repository.save(author).getId();
+        assertFalse(id.isEmpty(), "Invalid id for an saved Author");
 
-        em.clear();
         assertThat(repository.findById(id)).get()
                 .hasFieldOrPropertyWithValue("name", author.getName())
                 .hasFieldOrPropertyWithValue("surname", author.getSurname());
