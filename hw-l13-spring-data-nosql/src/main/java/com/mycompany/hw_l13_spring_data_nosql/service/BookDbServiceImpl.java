@@ -4,7 +4,6 @@ import com.mycompany.hw_l13_spring_data_nosql.domain.Book;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.AuthorRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.BookRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.CommentRepository;
-import com.mycompany.hw_l13_spring_data_nosql.repositories.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +16,14 @@ public class BookDbServiceImpl implements BookDbService {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-    private final GenreRepository genreRepository;
     private final CommentRepository commentRepository;
 
     @Override
     public String save(Book book) {
-        return bookRepository.saveWithAuthor(book).getId();
+        if (book.getAuthor() != null) {
+            authorRepository.save(book.getAuthor());
+        }
+        return bookRepository.save(book).getId();
     }
 
     @Override
@@ -55,23 +56,14 @@ public class BookDbServiceImpl implements BookDbService {
         }
         var book = optBook.get();
         var author = book.getAuthor();
-        var genre = book.getGenre();
 
         bookRepository.deleteById(id);
         commentRepository.deleteAllByBookId(id);
 
-        //remove relations as CascadeType.REMOVE deletes data used by other books
         if (author != null) {
             var books = bookRepository.findByAuthorId(author.getId());
             if (books.isEmpty()) {
                 authorRepository.deleteById(author.getId());
-            }
-        }
-
-        if (genre != null) {
-            var books = bookRepository.findByGenreId(genre.getId());
-            if (books.isEmpty()) {
-                genreRepository.deleteById(genre.getId());
             }
         }
     }

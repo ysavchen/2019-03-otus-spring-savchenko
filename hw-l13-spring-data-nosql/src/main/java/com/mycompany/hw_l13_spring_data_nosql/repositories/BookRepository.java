@@ -7,21 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
+public interface BookRepository extends MongoRepository<Book, String> {
 
     List<Book> findByAuthorId(@Param("id") String id);
-
-    //    @Query("select b from Book b " +
-//            "join fetch b.author a " +
-//            "join fetch b.genre g " +
-//            "where g.id = :id")
-    List<Book> findByGenreId(@Param("id") String id);
-
-//    @Override
-//    @Query("select b from Book b " +
-//            "join fetch b.author " +
-//            "join fetch b.genre")
-//    List<Book> findAll();
 
     //    @Modifying
     @Query("update Book b set b.title = :title where b.id = :id")
