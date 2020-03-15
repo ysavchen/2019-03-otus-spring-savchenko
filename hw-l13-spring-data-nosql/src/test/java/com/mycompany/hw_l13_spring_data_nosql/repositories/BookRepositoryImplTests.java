@@ -9,7 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 public class BookRepositoryImplTests {
@@ -149,18 +150,6 @@ public class BookRepositoryImplTests {
     @Test
     void findBooksByNonExistingAuthorId() {
         var books = bookRepository.findByAuthorId(NON_EXISTING_ID);
-        assertThat(books).isEmpty();
-    }
-
-    @Test
-    void findBooksByGenreId() {
-        var books = bookRepository.findByGenreId(genre.getId());
-        assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook, sqlCodingBook);
-    }
-
-    @Test
-    void findBooksByNonExistingGenreId() {
-        var books = bookRepository.findByGenreId(NON_EXISTING_ID);
         assertThat(books).isEmpty();
     }
 
