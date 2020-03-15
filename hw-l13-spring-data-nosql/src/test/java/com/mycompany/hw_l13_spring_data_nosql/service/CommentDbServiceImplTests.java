@@ -22,6 +22,7 @@ public class CommentDbServiceImplTests {
 
     private final Book book = new Book("1", "A Guide to SQL");
     private static final String NON_EXISTING_ID = "50";
+    private static final String EMPTY_STRING = "";
 
     @MockBean
     private BookRepository bookRepository;
@@ -47,6 +48,6 @@ public class CommentDbServiceImplTests {
         var comment = new Comment("Test comment");
         String id = commentDbService.addCommentByBookId(NON_EXISTING_ID, comment);
         verify(commentRepository, never()).save(comment);
-        assertThat(id).isEqualTo(0);
+        assertThat(id).isEqualTo(EMPTY_STRING);
     }
 }

@@ -1,15 +1,14 @@
 package com.mycompany.hw_l13_spring_data_nosql.repositories;
 
+import com.mycompany.hw_l13_spring_data_nosql.AbstractRepositoryTest;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@DataJpaTest
-public class GenreRepositoryTests {
+public class GenreRepositoryTests extends AbstractRepositoryTest {
 
     private final Genre genre = new Genre("1", "Computers & Technology");
     private static final String NON_EXISTING_ID = "50";

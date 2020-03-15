@@ -1,15 +1,14 @@
 package com.mycompany.hw_l13_spring_data_nosql.repositories;
 
+import com.mycompany.hw_l13_spring_data_nosql.AbstractRepositoryTest;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@DataMongoTest
-public class AuthorRepositoryTests {
+public class AuthorRepositoryTests extends AbstractRepositoryTest {
 
     private final Author author = new Author("1", "Philip", "Pratt");
     private static final String NON_EXISTING_ID = "50";

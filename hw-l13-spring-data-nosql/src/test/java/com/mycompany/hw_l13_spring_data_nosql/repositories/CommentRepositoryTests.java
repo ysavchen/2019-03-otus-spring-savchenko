@@ -1,20 +1,19 @@
 package com.mycompany.hw_l13_spring_data_nosql.repositories;
 
+import com.mycompany.hw_l13_spring_data_nosql.AbstractRepositoryTest;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Author;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Book;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Comment;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@DataJpaTest
-public class CommentRepositoryTests {
+public class CommentRepositoryTests extends AbstractRepositoryTest {
 
     private final Genre genre = new Genre("1", "Computers & Technology");
     private final Author author = new Author("1", "Philip", "Pratt");
