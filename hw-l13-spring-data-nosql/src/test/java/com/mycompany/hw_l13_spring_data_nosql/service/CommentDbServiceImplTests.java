@@ -11,8 +11,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -20,7 +22,8 @@ import static org.mockito.Mockito.*;
 @Import(CommentDbServiceImpl.class)
 public class CommentDbServiceImplTests {
 
-    private final Book book = new Book( "A Guide to SQL");
+    private final Book book = new Book("A Guide to SQL").setId("1");
+    private final Comment comment = new Comment("First comment - Guide", book).setId("1");
     private static final String NON_EXISTING_ID = "50";
     private static final String EMPTY_STRING = "";
 
@@ -49,5 +52,21 @@ public class CommentDbServiceImplTests {
         String id = commentDbService.addCommentByBookId(NON_EXISTING_ID, comment);
         verify(commentRepository, never()).save(comment);
         assertThat(id).isEqualTo(EMPTY_STRING);
+    }
+
+    @Test
+    void deleteByBookId() {
+        when(commentRepository.findByBookId(book.getId())).thenReturn(List.of(comment));
+
+        commentDbService.deleteCommentByBookId(book.getId(), comment);
+        verify(commentRepository, atMostOnce()).save(comment);
+    }
+
+    @Test
+    void deleteByNonExistingBookId() {
+        when(commentRepository.findByBookId(book.getId())).thenReturn(emptyList());
+
+        commentDbService.deleteCommentByBookId(book.getId(), comment);
+        verify(commentRepository, never()).save(comment);
     }
 }
