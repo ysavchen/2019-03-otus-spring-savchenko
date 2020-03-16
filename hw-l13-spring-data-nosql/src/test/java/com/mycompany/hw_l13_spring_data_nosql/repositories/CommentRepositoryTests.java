@@ -7,58 +7,38 @@ import com.mycompany.hw_l13_spring_data_nosql.domain.Comment;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CommentRepositoryTests extends AbstractRepositoryTest {
 
-    private final Genre genre = new Genre("Computers & Technology");
-    private final Author author = new Author( "Philip", "Pratt");
-    private final Book book = new Book( "A Guide to SQL", author, genre);
+    private final Genre genre = new Genre("Computers & Technology").setId("1");
+    private final Author author = new Author("Philip", "Pratt").setId("1");
+    private final Book book = new Book("A Guide to SQL", author, genre).setId("1");
 
-    private final Comment commentOne = new Comment( "First comment - Guide", book);
-    private final Comment commentTwo = new Comment( "Second comment - Guide", book);
+    private final Comment commentOne = new Comment("First comment - Guide", book).setId("1");
+    private final Comment commentTwo = new Comment("Second comment - Guide", book).setId("2");
     private static final String NON_EXISTING_ID = "50";
 
     @Autowired
-    private CommentRepository repository;
-
-    @Autowired
-    private TestEntityManager em;
+    private CommentRepository commentRepository;
 
     @Test
-    void findByBookId() {
-        var comments = repository.findByBookId(author.getId());
+    void findCommentsByBookId() {
+        var comments = commentRepository.findByBookId(book.getId());
         assertThat(comments).containsExactlyInAnyOrder(commentOne, commentTwo);
     }
 
     @Test
     void findByNonExistingBookId() {
-        var comments = repository.findByBookId(NON_EXISTING_ID);
+        var comments = commentRepository.findByBookId(NON_EXISTING_ID);
         assertThat(comments).isEmpty();
     }
 
     @Test
-    void deleteByBookId() {
-        repository.deleteByBookId(author.getId(), commentOne);
-        var comment = em.find(Comment.class, commentOne.getId());
-        assertNull(comment, "Comment is not deleted form DB");
-    }
-
-    @Test
-    void deleteByNonExistingBookId() {
-        repository.deleteByBookId(NON_EXISTING_ID, commentOne);
-        var comment = em.find(Comment.class, commentOne.getId());
-        assertNotNull(comment, "Comment is deleted form DB");
-    }
-
-    @Test
     void deleteAllByBookId() {
-        repository.deleteAllByBookId(book.getId());
-        var comments = repository.findByBookId(book.getId());
+        commentRepository.deleteAllByBookId(book.getId());
+        var comments = commentRepository.findByBookId(book.getId());
         assertThat(comments).isEmpty();
     }
 }
