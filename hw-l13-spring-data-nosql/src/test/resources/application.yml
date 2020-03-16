@@ -7,6 +7,7 @@ spring:
     mongodb:
       port: 0
       database: test_db
+      changelogs: com.mycompany.hw_l13_spring_data_nosql.test_changelogs
 
     logging:
       level:
