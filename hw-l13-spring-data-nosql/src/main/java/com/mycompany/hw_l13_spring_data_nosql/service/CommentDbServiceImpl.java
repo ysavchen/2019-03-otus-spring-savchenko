@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,13 @@ public class CommentDbServiceImpl implements CommentDbService {
 
     @Override
     public void deleteCommentByBookId(String id, Comment comment) {
-        commentRepository.deleteByBookId(id, comment);
+        var comments = commentRepository.findByBookId(id);
+        if (comments.isEmpty()) {
+            return;
+        }
+
+        comments.stream()
+                .filter(comm -> Objects.equals(comment.getContent(), comm.getContent()))
+                .forEach(commentRepository::delete);
     }
 }

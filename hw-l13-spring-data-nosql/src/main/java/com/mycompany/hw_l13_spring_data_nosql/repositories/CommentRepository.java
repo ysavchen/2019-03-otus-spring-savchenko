@@ -10,11 +10,5 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
 
     List<Comment> findByBookId(String id);
 
-    //    @Modifying
-//    @Query("delete from Comment c where c.book.id = :id and c.content = :#{#comment.content}")
-    void deleteByBookId(@Param("id") String id, @Param("comment") Comment comment);
-
-    //    @Modifying
-//    @Query("delete from Comment c where c.book.id = :id")
     void deleteAllByBookId(@Param("id") String id);
 }
