@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GenreRepositoryTests extends AbstractRepositoryTest {
 
-    private final Genre genre = new Genre( "Computers & Technology");
     private static final String NON_EXISTING_ID = "50";
 
     @Autowired
@@ -21,11 +20,8 @@ public class GenreRepositoryTests extends AbstractRepositoryTest {
         var genre = new Genre("test");
         String id = repository.save(genre).getId();
         assertFalse(id.isEmpty(), "Invalid id for an saved Genre");
-    }
 
-    @Test
-    void findGenreById() {
-        assertThat(repository.findById(genre.getId())).get()
+        assertThat(repository.findById(id)).get()
                 .hasFieldOrPropertyWithValue("id", genre.getId())
                 .hasFieldOrPropertyWithValue("name", genre.getName());
     }
