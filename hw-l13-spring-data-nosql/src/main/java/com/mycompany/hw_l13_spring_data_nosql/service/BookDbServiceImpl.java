@@ -5,6 +5,7 @@ import com.mycompany.hw_l13_spring_data_nosql.repositories.AuthorRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.BookRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,7 +45,14 @@ public class BookDbServiceImpl implements BookDbService {
     @Override
     public void updateTitle(String id, String title) {
         if (title != null) {
-            bookRepository.updateTitle(id, title);
+            Optional<Book> optBook = bookRepository.findById(id);
+            if (optBook.isEmpty()) {
+                return;
+            }
+            var book = optBook.get();
+
+            book.setTitle(title);
+            bookRepository.save(book);
         }
     }
 
