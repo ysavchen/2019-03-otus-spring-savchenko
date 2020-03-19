@@ -4,27 +4,40 @@ import com.mycompany.hw_l13_spring_data_nosql.AbstractRepositoryTest;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class AuthorRepositoryTests extends AbstractRepositoryTest {
 
+    private final Author pratt = new Author("Philip", "Pratt").setId("1");
     private static final String NON_EXISTING_ID = "50";
 
     @Autowired
     private AuthorRepository repository;
 
+    @Autowired
+    private MongoOperations operations;
+
     @Test
     void saveAuthor() {
         var author = new Author("Michael", "Smith");
         String id = repository.save(author).getId();
-        assertFalse(id.isEmpty(), "Invalid id for an saved Author");
+        assertFalse(id.isEmpty(), "Invalid id for a saved Author");
 
-        assertThat(repository.findById(id)).get()
+        assertThat(operations.findById(id, Author.class))
                 .hasFieldOrPropertyWithValue("id", author.getId())
                 .hasFieldOrPropertyWithValue("name", author.getName())
                 .hasFieldOrPropertyWithValue("surname", author.getSurname());
+    }
+
+    @Test
+    void findAuthorById() {
+        assertThat(repository.findById(pratt.getId())).get()
+                .hasFieldOrPropertyWithValue("id", pratt.getId())
+                .hasFieldOrPropertyWithValue("name", pratt.getName())
+                .hasFieldOrPropertyWithValue("surname", pratt.getSurname());
     }
 
     @Test

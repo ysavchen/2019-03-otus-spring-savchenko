@@ -6,6 +6,7 @@ import com.mycompany.hw_l13_spring_data_nosql.domain.Book;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
 
@@ -29,6 +30,9 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private MongoOperations operations;
+
     @Test
     void saveBook() {
         var book = new Book("test");
@@ -49,7 +53,7 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
     void saveBookWithAuthor() {
         var testAuthor = new Author("testName", "testSurname");
         var bookWithAuthor = new Book("test");
-        authorRepository.save(testAuthor);
+        operations.save(testAuthor);
         bookWithAuthor.setAuthor(testAuthor);
 
         String id = bookRepository.save(bookWithAuthor).getId();
@@ -62,7 +66,7 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
         var testGenre = new Genre("test genre");
         var testAuthor = new Author("testName", "testSurname");
         var bookWithBoth = new Book("test").setGenre(testGenre);
-        authorRepository.save(testAuthor);
+        operations.save(testAuthor);
         bookWithBoth.setAuthor(testAuthor);
 
         String id = bookRepository.save(bookWithBoth).getId();
@@ -88,7 +92,7 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
     void findBookWithGenre() {
         var testGenre = new Genre("test genre");
         var book = new Book("test").setGenre(testGenre);
-        String id = bookRepository.save(book).getId();
+        String id = operations.save(book).getId();
 
         assertThat(bookRepository.findById(id)).get()
                 .hasFieldOrPropertyWithValue("id", id)
@@ -101,9 +105,9 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
     void findBookWithAuthor() {
         var testAuthor = new Author("testName", "testSurname");
         var book = new Book("test");
-        authorRepository.save(testAuthor);
+        operations.save(testAuthor);
         book.setAuthor(testAuthor);
-        String id = bookRepository.save(book).getId();
+        String id = operations.save(book).getId();
 
         assertThat(bookRepository.findById(id)).get()
                 .hasFieldOrPropertyWithValue("id", id)
@@ -117,10 +121,10 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
         var testGenre = new Genre("test genre");
         var testAuthor = new Author("testName", "testSurname");
         var book = new Book("test").setGenre(testGenre);
-        authorRepository.save(testAuthor);
+        operations.save(testAuthor);
         book.setAuthor(testAuthor);
 
-        String id = bookRepository.save(book).getId();
+        String id = operations.save(book).getId();
         assertThat(bookRepository.findById(id)).get()
                 .hasFieldOrPropertyWithValue("id", id)
                 .hasFieldOrPropertyWithValue("title", book.getTitle())
@@ -131,7 +135,7 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
     @Test
     void deleteById() {
         bookRepository.deleteById(guideBook.getId());
-        assertThat(bookRepository.findById(guideBook.getId())).isEmpty();
+        assertThat(operations.findById(guideBook.getId(), Book.class)).isNull();
     }
 
     @Test
