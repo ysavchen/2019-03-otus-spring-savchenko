@@ -2,13 +2,11 @@ package com.mycompany.hw_l13_spring_data_nosql.service;
 
 import com.mycompany.hw_l13_spring_data_nosql.domain.Author;
 import com.mycompany.hw_l13_spring_data_nosql.domain.Book;
-import com.mycompany.hw_l13_spring_data_nosql.domain.Genre;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.AuthorRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.BookRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.CommentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -16,14 +14,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @Import(BookDbServiceImpl.class)
 @ExtendWith(SpringExtension.class)
 public class BookDbServiceImplTests {
 
-    private final Genre genre = new Genre("Computers & Technology").setId("1");
     private final Author author = new Author("Philip", "Pratt").setId("1");
     private final Book book = new Book("A Guide to SQL").setId("1");
 
@@ -59,13 +55,9 @@ public class BookDbServiceImplTests {
 
     @Test
     void updateTitle() {
-        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
-        var captor = ArgumentCaptor.forClass(Book.class);
-
-        var newTitle = "New title";
-        bookDbService.updateTitle(book.getId(), newTitle);
-        verify(bookRepository).save(captor.capture());
-        assertThat(captor.getValue().getTitle()).isEqualTo(newTitle);
+        var title = "new title";
+        bookDbService.updateTitle(book.getId(), title);
+        verify(bookRepository, times(1)).updateTitle(book.getId(), title);
     }
 
     @Test
@@ -79,7 +71,7 @@ public class BookDbServiceImplTests {
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
         bookDbService.deleteById(book.getId());
-        verify(bookRepository, atLeastOnce()).deleteById(book.getId());
-        verify(commentRepository, atLeastOnce()).deleteAllByBookId(book.getId());
+        verify(bookRepository, times(1)).deleteById(book.getId());
+        verify(commentRepository, times(1)).deleteAllByBookId(book.getId());
     }
 }

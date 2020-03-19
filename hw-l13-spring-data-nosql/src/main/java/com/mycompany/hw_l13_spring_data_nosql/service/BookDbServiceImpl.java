@@ -44,14 +44,7 @@ public class BookDbServiceImpl implements BookDbService {
     @Override
     public void updateTitle(String id, String title) {
         if (title != null) {
-            Optional<Book> optBook = bookRepository.findById(id);
-            if (optBook.isEmpty()) {
-                return;
-            }
-            var book = optBook.get();
-
-            book.setTitle(title);
-            bookRepository.save(book);
+            bookRepository.updateTitle(id, title);
         }
     }
 
