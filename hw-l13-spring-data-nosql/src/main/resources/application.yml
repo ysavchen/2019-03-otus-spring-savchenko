@@ -6,7 +6,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost
-      port: 27017
+      port: 0
       database: app_db
       changelogs: com.mycompany.hw_l13_spring_data_nosql.changelogs
 
