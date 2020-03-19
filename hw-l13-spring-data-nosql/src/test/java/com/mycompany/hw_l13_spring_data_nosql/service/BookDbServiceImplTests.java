@@ -6,7 +6,6 @@ import com.mycompany.hw_l13_spring_data_nosql.domain.Genre;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.AuthorRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.BookRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.CommentRepository;
-import com.mycompany.hw_l13_spring_data_nosql.repositories.GenreRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,9 +32,6 @@ public class BookDbServiceImplTests {
 
     @MockBean
     private CommentRepository commentRepository;
-
-    @MockBean
-    private GenreRepository genreRepository;
 
     @MockBean
     private AuthorRepository authorRepository;
