@@ -79,33 +79,11 @@ public class BookDbServiceImplTests {
     }
 
     @Test
-    void deleteBookById_NoRelations() {
+    void deleteBookById() {
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
         bookDbService.deleteById(book.getId());
-        verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(authorRepository, never()).deleteById(anyString());
-        verify(genreRepository, never()).deleteById(anyString());
-        verify(commentRepository, atMostOnce()).deleteAllByBookId(book.getId());
-    }
-
-    @Test
-    void deleteBookById_AuthorRelation() {
-        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
-
-        book.setAuthor(author);
-        bookDbService.deleteById(book.getId());
-        verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(authorRepository, atMostOnce()).deleteById(author.getId());
-    }
-
-    @Test
-    void deleteBookById_GenreRelation() {
-        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
-
-        book.setGenre(genre);
-        bookDbService.deleteById(book.getId());
-        verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(genreRepository, atMostOnce()).deleteById(genre.getId());
+        verify(bookRepository, atLeastOnce()).deleteById(book.getId());
+        verify(commentRepository, atLeastOnce()).deleteAllByBookId(book.getId());
     }
 }

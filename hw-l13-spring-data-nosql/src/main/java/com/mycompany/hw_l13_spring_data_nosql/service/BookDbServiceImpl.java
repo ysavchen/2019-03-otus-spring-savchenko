@@ -5,7 +5,6 @@ import com.mycompany.hw_l13_spring_data_nosql.repositories.AuthorRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.BookRepository;
 import com.mycompany.hw_l13_spring_data_nosql.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,21 +57,7 @@ public class BookDbServiceImpl implements BookDbService {
 
     @Override
     public void deleteById(String id) {
-        Optional<Book> optBook = bookRepository.findById(id);
-        if (optBook.isEmpty()) {
-            return;
-        }
-        var book = optBook.get();
-        var author = book.getAuthor();
-
         bookRepository.deleteById(id);
         commentRepository.deleteAllByBookId(id);
-
-        if (author != null) {
-            var books = bookRepository.findByAuthorId(author.getId());
-            if (books.isEmpty()) {
-                authorRepository.deleteById(author.getId());
-            }
-        }
     }
 }
