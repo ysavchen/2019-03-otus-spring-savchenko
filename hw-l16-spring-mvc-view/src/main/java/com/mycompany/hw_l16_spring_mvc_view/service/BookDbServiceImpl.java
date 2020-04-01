@@ -1,10 +1,8 @@
 package com.mycompany.hw_l16_spring_mvc_view.service;
 
 import com.mycompany.hw_l16_spring_mvc_view.domain.Book;
-import com.mycompany.hw_l16_spring_mvc_view.repositories.AuthorRepository;
 import com.mycompany.hw_l16_spring_mvc_view.repositories.BookRepository;
 import com.mycompany.hw_l16_spring_mvc_view.repositories.CommentRepository;
-import com.mycompany.hw_l16_spring_mvc_view.repositories.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookDbServiceImpl implements BookDbService {
 
-    private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-    private final GenreRepository genreRepository;
     private final CommentRepository commentRepository;
 
     @Override
@@ -54,30 +50,7 @@ public class BookDbServiceImpl implements BookDbService {
 
     @Override
     public void deleteById(long id) {
-        Optional<Book> optBook = bookRepository.findById(id);
-        if (optBook.isEmpty()) {
-            return;
-        }
-        var book = optBook.get();
-        var author = book.getAuthor();
-        var genre = book.getGenre();
-
         bookRepository.deleteById(id);
         commentRepository.deleteAllByBookId(id);
-
-        //remove relations as CascadeType.REMOVE deletes data used by other books
-        if (author != null) {
-            var books = bookRepository.findByAuthorId(author.getId());
-            if (books.isEmpty()) {
-                authorRepository.deleteById(author.getId());
-            }
-        }
-
-        if (genre != null) {
-            var books = bookRepository.findByGenreId(genre.getId());
-            if (books.isEmpty()) {
-                genreRepository.deleteById(genre.getId());
-            }
-        }
     }
 }
