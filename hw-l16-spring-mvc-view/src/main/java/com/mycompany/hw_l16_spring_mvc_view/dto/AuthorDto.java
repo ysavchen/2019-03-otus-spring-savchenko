@@ -2,7 +2,9 @@ package com.mycompany.hw_l16_spring_mvc_view.dto;
 
 import com.mycompany.hw_l16_spring_mvc_view.domain.Author;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
 @AllArgsConstructor
 public class AuthorDto {
 
