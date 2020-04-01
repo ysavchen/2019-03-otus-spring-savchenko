@@ -1,11 +1,11 @@
 package com.mycompany.hw_l16_spring_mvc_view.dto;
 
 import com.mycompany.hw_l16_spring_mvc_view.domain.Author;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthorDto {
 
     private final long id;

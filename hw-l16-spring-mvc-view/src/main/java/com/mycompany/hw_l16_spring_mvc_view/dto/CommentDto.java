@@ -1,9 +1,11 @@
 package com.mycompany.hw_l16_spring_mvc_view.dto;
 
 import com.mycompany.hw_l16_spring_mvc_view.domain.Comment;
-import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@Data
+@RequiredArgsConstructor
 public class CommentDto {
 
     private final long id;
