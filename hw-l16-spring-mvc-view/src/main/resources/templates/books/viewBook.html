@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>View author</title>
+    <title>View book</title>
     <style type="text/css">
          body {
             font-style: normal;
@@ -11,14 +11,14 @@
             background-color: #fafafa;
         }
 
-        #authorInfo th {
+        #bookInfo th {
             float: left;
             float: middle;
             margin-right: 10px;
         }
 
-        #authorInfo td {
-            width: 150px;
+        #bookInfo td {
+            width: 200px;
             border-bottom: solid 1px #cccccc;
             border-radius: 3px;
             text-align: center;
@@ -26,20 +26,27 @@
     </style>
 </head>
 <body>
-<h2>Author Info</h2>
-<div id="authorInfo">
-    <table th:object="${author}">
+<h2>Book Info</h2>
+<div id="bookInfo">
+    <table th:object="${book}">
         <tr>
             <th>ID</th>
             <td th:text="*{id}">1</td>
         </tr>
         <tr>
-            <th>Name</th>
-            <td th:text="*{name}">John</td>
+            <th>Title</th>
+            <td th:text="*{title}">Some book</td>
         </tr>
         <tr>
-            <th>Surname</th>
-            <td th:text="*{surname}">Doe</td>
+            <th>Author</th>
+            <td>
+                <a th:href="@{'/author/' + *{author.id}}" href="../authors/viewAuthor.html"
+                   th:text="*{author.name + ' ' + author.surname}">John Doe</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td th:text="*{genre.name}">Computers</td>
         </tr>
     </table>
 </div>

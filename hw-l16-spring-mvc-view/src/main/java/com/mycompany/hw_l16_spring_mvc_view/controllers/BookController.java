@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 @Controller
@@ -19,22 +17,27 @@ import static java.util.stream.Collectors.toList;
 public class BookController {
 
     private static final String BOOK_LIST_FORM = "books/bookList";
+    private static final String VIEW_BOOK_FORM = "books/viewBook";
 
     private final BookDbService dbService;
 
-    @PostMapping("/book")
+    @PostMapping("/book/new")
     public String addBook(@RequestBody BookDto bookDto, Model model) {
         return "";
     }
 
     @GetMapping("/book/{id}")
     public String getBookById(@PathVariable("id") long id, Model model) {
-        return "";
+        var optBook = dbService.getById(id);
+        //todo: optional
+        var book = optBook.get();
+        model.addAttribute("book", BookDto.toDto(book));
+        return VIEW_BOOK_FORM;
     }
 
-    @GetMapping("/book/all")
+    @GetMapping({"/book/all", "/"})
     public String getAllBooks(Model model) {
-        List<BookDto> books = dbService.getAllBooks()
+        var books = dbService.getAllBooks()
                 .stream()
                 .map(BookDto::toDto)
                 .collect(toList());
