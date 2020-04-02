@@ -4,25 +4,46 @@
     <meta charset="UTF-8"/>
     <title>View author</title>
     <style type="text/css">
+         body {
+            font-style: normal;
+            font-variant: normal;
+            font-size: 15px;
+            background-color: #fafafa;
+        }
+
+        #authorInfo th {
+            float: left;
+            float: middle;
+            margin-right: 10px;
+        }
+
+        #authorInfo td {
+            width: 150px;
+            border-bottom: solid 1px #cccccc;
+            border-radius: 3px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <h2>Author Info</h2>
-<table th:object="${author}">
-    <tr>
-        <th>ID</th>
-        <td th:text="*{id}"></td>
-    </tr>
-    <tr>
-        <th>Name</th>
-        <td th:text="*{name}"/>
-        </td>
-    </tr>
-    <tr>
-        <th>Surname</th>
-        <td th:text="*{surname}"/>
-        </td>
-    </tr>
-</table>
+<div id="authorInfo">
+    <table th:object="${author}">
+        <tr>
+            <th>ID</th>
+            <td th:text="*{id}">1</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td th:text="*{name}"/>
+            John</td>
+        </tr>
+        <tr>
+            <th>Surname</th>
+            <td th:text="*{surname}"/>
+            Doe</td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
