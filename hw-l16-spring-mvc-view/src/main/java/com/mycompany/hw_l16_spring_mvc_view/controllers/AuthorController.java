@@ -29,12 +29,18 @@ public class AuthorController {
 
     @GetMapping("/author/{id}")
     public String getAuthorById(@PathVariable("id") long id, Model model) {
-        var optAuthor = dbService.getById(id);
-        if (optAuthor.isEmpty()) {
-            return "Author with id = " + id + " is not found";
-        }
+        String message = "Author with id = " + id + " is not found";
+        dbService.getById(id).ifPresentOrElse(
+                author -> {
+                    model.addAttribute("message", "message");
+                    model.addAttribute("author", AuthorDto.toDto(author));
+                },
+                () -> {
+                    model.addAttribute("message", message);
+                    model.addAttribute("author", null);
+                }
+        );
 
-        model.addAttribute("author", AuthorDto.toDto(optAuthor.get()));
         return VIEW_AUTHOR_FORM;
     }
 }

@@ -1,0 +1,17 @@
+#books th {
+    width: 200px;
+    float: middle;
+    margin-right: 10px;
+    border-bottom: solid 1px #cccccc;
+}
+
+#books td.data {
+    width: 250px;
+    border-bottom: solid 1px #cccccc;
+    border-radius: 3px;
+    text-align: center;
+}
+
+#edit {
+    margin-left: 10px;
+}

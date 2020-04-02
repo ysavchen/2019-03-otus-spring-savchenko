@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <title>All books</title>
-    <style type="text/css">
-    </style>
+    <link th:href="@{/css/general.css}" rel="stylesheet">
+    <link th:href="@{/css/bookList.css}" rel="stylesheet">
 </head>
 <body>
 <h2>Books:</h2>
-<table class="books">
+<table id="books">
     <thead>
     <tr>
         <th>ID</th>
@@ -19,9 +19,11 @@
     </thead>
     <tbody>
     <tr th:each="book : ${books}">
-        <td th:text="${book.id}">1</td>
-        <td th:text="${book.author.name + ' ' + book.author.surname}">John Doe</td>
-        <td th:text="${book.genre}">Computers</td>
+        <td class="data" th:text="${book.id}">1</td>
+        <td class="data" th:text="${book.title}">Some title</td>
+        <td class="data" th:text="${book.author.name + ' ' + book.author.surname}">John Doe</td>
+        <td class="data" th:text="${book.genre.name}">Computers</td>
+        <td><a id="edit" th:href="@{'/book/' + ${book.id} + '?editable=true'}" href="viewBook.html">Edit</a></td>
     </tr>
     </tbody>
 </table>

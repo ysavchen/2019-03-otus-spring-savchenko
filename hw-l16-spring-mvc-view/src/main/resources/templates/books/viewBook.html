@@ -3,52 +3,16 @@
 <head>
     <meta charset="UTF-8"/>
     <title>View book</title>
-    <style type="text/css">
-         body {
-            font-style: normal;
-            font-variant: normal;
-            font-size: 15px;
-            background-color: #fafafa;
-        }
-
-        #bookInfo th {
-            float: left;
-            float: middle;
-            margin-right: 10px;
-        }
-
-        #bookInfo td {
-            width: 200px;
-            border-bottom: solid 1px #cccccc;
-            border-radius: 3px;
-            text-align: center;
-        }
-    </style>
+    <link th:href="@{/css/general.css}" rel="stylesheet">
+    <link th:href="@{/css/bookInfo.css}" rel="stylesheet">
 </head>
 <body>
 <h2>Book Info</h2>
-<div id="bookInfo">
-    <table th:object="${book}">
-        <tr>
-            <th>ID</th>
-            <td th:text="*{id}">1</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td th:text="*{title}">Some book</td>
-        </tr>
-        <tr>
-            <th>Author</th>
-            <td>
-                <a th:href="@{'/author/' + *{author.id}}" href="../authors/viewAuthor.html"
-                   th:text="*{author.name + ' ' + author.surname}">John Doe</a>
-            </td>
-        </tr>
-        <tr>
-            <th>Genre</th>
-            <td th:text="*{genre.name}">Computers</td>
-        </tr>
-    </table>
+<div th:if="${message != ''}">
+    <div th:replace="~{/fragments/message :: message}"></div>
+</div>
+<div th:if="${book != null}">
+    <div th:replace="~{/fragments/bookInfo :: bookInfo}"></div>
 </div>
 </body>
 </html>
