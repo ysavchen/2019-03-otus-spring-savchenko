@@ -1,17 +1,17 @@
 package com.mycompany.hw_l16_spring_mvc_view.dto;
 
 import com.mycompany.hw_l16_spring_mvc_view.domain.Book;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class BookDto {
 
-    private final long id;
-    private final String title;
-    private final AuthorDto author;
-    private final GenreDto genre;
+    private long id;
+    private String title;
+    private AuthorDto author;
+    private GenreDto genre;
 
     public static Book toDomainObject(BookDto dto) {
         return new Book(
