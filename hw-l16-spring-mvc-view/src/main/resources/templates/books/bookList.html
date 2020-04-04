@@ -23,9 +23,12 @@
         <td class="data" th:text="${book.title}">Some title</td>
         <td class="data" th:text="${book.author.name + ' ' + book.author.surname}">John Doe</td>
         <td class="data" th:text="${book.genre.name}">Computers</td>
-        <td><a id="edit" th:href="@{'/book/' + ${book.id} + '?editable=true'}" href="viewBook.html">Edit</a></td>
+        <td><a id="edit" th:href="@{'/book/' + ${book.id}}" href="viewBook.html">Edit</a></td>
     </tr>
     </tbody>
 </table>
+<div id="actionButtons">
+    <button type="submit" href="addBook.html">Add</button>
+</div>
 </body>
 </html>
