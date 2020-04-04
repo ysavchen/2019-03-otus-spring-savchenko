@@ -4,15 +4,40 @@
     <meta charset="UTF-8"/>
     <title>View book</title>
     <link th:href="@{/css/general.css}" rel="stylesheet">
-    <link th:href="@{/css/bookInfo.css}" rel="stylesheet">
+    <link th:href="@{/css/books/viewBook.css}" rel="stylesheet">
 </head>
 <body>
 <h2>Book Info</h2>
-<div th:if="${message != ''}">
-    <div th:replace="~{/fragments/message :: message}"></div>
-</div>
+<div th:text="${message}">Message block</div>
 <div th:if="${book != null}">
-    <div th:replace="~{/fragments/bookInfo :: bookInfo}"></div>
+    <div id="bookInfo">
+        <table th:object="${book}">
+            <tr>
+                <th>ID</th>
+                <td class="dataField" th:text="*{id}">1</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td><input class="dataField" type="text" th:value="*{title}"/></td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td class="dataField">
+                    <a th:href="@{'/author/' + *{author.id}}" href="../authors/viewAuthor.html"
+                       th:text="*{author.name + ' ' + author.surname}">John Doe</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td class="dataField" th:text="*{genre.name}">Computers</td>
+            </tr>
+        </table>
+
+        <div>
+            <button class="buttons" type="submit">Save</button>
+            <button class="buttons" type="submit">Delete</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>
