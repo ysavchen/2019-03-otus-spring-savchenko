@@ -11,3 +11,7 @@ body {
     border-radius: 3px;
     text-align: center;
 }
+
+.editableField {
+    contenteditable: true;
+}
