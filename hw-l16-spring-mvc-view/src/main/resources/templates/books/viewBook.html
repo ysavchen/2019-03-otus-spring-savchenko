@@ -7,7 +7,7 @@
     <link th:href="@{/css/books/viewBook.css}" href="../../static/css/books/viewBook.css" rel="stylesheet">
 </head>
 <body>
-<h2>Book Info</h2>
+<h2>Book:</h2>
 <div id="message" th:text="${message}">Message block</div>
 <div th:if="${book != null}">
     <form action="#" th:action="@{/book/update/__*{id}__}" method="post" th:object="${book}">
