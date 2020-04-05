@@ -5,6 +5,10 @@ body {
     background-color: #fafafa;
 }
 
+#message {
+    margin-bottom: 15px;
+}
+
 .dataField {
     width: 225px;
     border-bottom: solid 1px #cccccc;
