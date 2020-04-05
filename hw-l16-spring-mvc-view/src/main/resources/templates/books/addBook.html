@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>User Operations</title>
-    <link href="userOperations.css" type="text/css" rel="stylesheet"/>
+    <title>New book</title>
+    <link th:href="@{/css/general.css}" href="../../static/css/general.css" rel="stylesheet">
+    <link th:href="@{/css/books/viewBook.css}" href="../../static/css/viewBook.css" rel="stylesheet">
 </head>
 <body>
-<h1>User Operations</h1>
-<div id="workspace">
-    <div id="infoSection"></div>
-    <div id="leftSideSection">
-        <table id="addUser">
-            <thead>
-            <tr id="columns">
-                <td>Name</td>
-                <td>Surname</td>
-                <td>Age</td>
-            </tr>
-            <tr id="userInputFields">
-                <td><input id="name" type="text"/></td>
-                <td><input id="surname" type="text"/></td>
-                <td><input id="age" type="text"/></td>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <div id="dataHolder"></div>
+<h2>New book</h2>
+<form th:method="post">
+    <table th:object="${book}">
+        <tr>
+            <th>ID</th>
+            <td><input class="dataField" type="text" th:value="*{id}" value="1"/></td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td><input class="dataField" type="text" th:value="*{title}" value="Some title"/></td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>
+                <a th:href="@{/author/__*{author.id}__}" href="../authors/viewAuthor.html"
+                   th:text="*{author.name + ' ' + author.surname}">John Doe</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td th:text="*{genre.name}">Computers</td>
+            <td><input class="dataField" type="text" th:value="*{title}" value="Some title"/></td>
+        </tr>
+    </table>
+
+    <div>
+        <button class="buttons" type="submit">Save</button>
     </div>
-    <div id="rightSideSection">
-        <div id="actionButtons">
-            <input type="button" id="addUserButton" value="Add user">
-            <input type="button" id="userDataButton" value="User data">
-        </div>
-    </div>
-</div>
-<script type="application/javascript" src="userOperations.js"></script>
+</form>
 </body>
 </html>

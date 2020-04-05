@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <title>All books</title>
-    <link th:href="@{/css/general.css}" rel="stylesheet">
-    <link th:href="@{/css/books/bookList.css}" rel="stylesheet">
+    <link th:href="@{/css/general.css}" href="../../static/css/general.css" rel="stylesheet">
+    <link th:href="@{/css/books/bookList.css}" href="../../static/css/bookList.css" rel="stylesheet">
 </head>
 <body>
 <h2>Books:</h2>
+<div id="message" th:text="${message}">Message block</div>
 <table id="books">
     <thead>
     <tr>
@@ -23,11 +24,11 @@
         <td class="dataField" th:text="${book.title}">Some title</td>
         <td class="dataField" th:text="${book.author.name + ' ' + book.author.surname}">John Doe</td>
         <td class="dataField" th:text="${book.genre.name}">Computers</td>
-        <td><a id="edit" th:href="@{'/book/' + ${book.id}}" href="viewBook.html">Edit</a></td>
+        <td><a id="edit" th:href="@{/book/__${book.id}__}" href="viewBook.html">Edit</a></td>
     </tr>
     </tbody>
 </table>
-<div id="actionButtons">
+<div>
     <button class="buttons" type="submit" href="addBook.html">Add</button>
 </div>
 </body>
