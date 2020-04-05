@@ -10,15 +10,15 @@
 <h2>Book Info</h2>
 <div id="message" th:text="${message}">Message block</div>
 <div th:if="${book != null}">
-    <div id="bookInfo">
-        <table th:object="${book}">
+    <form action="#" th:action="@{/book/update/__*{id}__}" method="post" th:object="${book}">
+        <table>
             <tr>
                 <th>ID</th>
                 <td class="dataField" th:text="*{id}">1</td>
             </tr>
             <tr>
                 <th>Title</th>
-                <td><input class="dataField" type="text" th:value="*{title}" value="Some title"/></td>
+                <td><input class="dataField" type="text" th:field="*{title}" value="Some title"/></td>
             </tr>
             <tr>
                 <th>Author</th>
@@ -32,12 +32,13 @@
                 <td class="dataField" th:text="*{genre.name}">Computers</td>
             </tr>
         </table>
-
         <div>
-            <button class="buttons" type="submit">Save</button>
-            <button class="buttons" type="submit">Delete</button>
+            <input class="buttons" type="submit" th:value="Save" value="Save"/>
         </div>
-    </div>
+    </form>
+    <form action="#" th:action="@{/book/delete/__${book.id}__}" method="post">
+        <input class="buttons" type="submit" th:value="Delete" value="Delete"/>
+    </form>
 </div>
 </body>
 </html>

@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import static java.util.stream.Collectors.toList;
 
@@ -50,26 +49,35 @@ public class BookController {
 
     @PostMapping("/book/update/{id}")
     public String updateTitle(@PathVariable("id") long id,
-                              @RequestBody BookDto bookDto,
+                              BookDto bookDto,
                               Model model) {
         dbService.updateTitle(id, bookDto.getTitle());
-        model.addAttribute("message", "Title is updated!");
-        model.addAttribute("book", bookDto);
+
+        dbService.getById(id).ifPresentOrElse(
+                book -> {
+                    model.addAttribute("message", "Title is updated!");
+                    model.addAttribute("book", BookDto.toDto(book));
+                },
+                () -> {
+                    var message = "Book with id = " + id + " is not found";
+                    model.addAttribute("message", message);
+                    model.addAttribute("book", null);
+                }
+        );
+
         return VIEW_BOOK_FORM;
     }
 
     @GetMapping("/book/{id}")
-    public String getBookById(@PathVariable("id") long id,
-                              Model model) {
-
-        String notFoundMsg = "Book with id = " + id + " is not found";
+    public String getBookById(@PathVariable("id") long id, Model model) {
         dbService.getById(id).ifPresentOrElse(
                 book -> {
                     model.addAttribute("message", "");
                     model.addAttribute("book", BookDto.toDto(book));
                 },
                 () -> {
-                    model.addAttribute("message", notFoundMsg);
+                    var message = "Book with id = " + id + " is not found";
+                    model.addAttribute("message", message);
                     model.addAttribute("book", null);
                 }
         );
