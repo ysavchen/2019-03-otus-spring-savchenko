@@ -1,3 +1,7 @@
+th {
+    border-bottom: solid 1px #cccccc;
+}
+
 #edit {
     margin-left: 10px;
 }

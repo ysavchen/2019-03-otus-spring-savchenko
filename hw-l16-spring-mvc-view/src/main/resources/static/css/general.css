@@ -12,7 +12,6 @@ body {
 .dataField {
     width: 225px;
     border-bottom: solid 1px #cccccc;
-    border-radius: 3px;
     text-align: center;
 }
 
