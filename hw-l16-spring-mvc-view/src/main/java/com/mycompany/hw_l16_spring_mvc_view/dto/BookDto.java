@@ -3,9 +3,13 @@ package com.mycompany.hw_l16_spring_mvc_view.dto;
 import com.mycompany.hw_l16_spring_mvc_view.domain.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class BookDto {
 
     private long id;
