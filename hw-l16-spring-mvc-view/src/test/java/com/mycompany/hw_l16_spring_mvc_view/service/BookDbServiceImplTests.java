@@ -5,7 +5,6 @@ import com.mycompany.hw_l16_spring_mvc_view.domain.Book;
 import com.mycompany.hw_l16_spring_mvc_view.domain.Genre;
 import com.mycompany.hw_l16_spring_mvc_view.repositories.AuthorRepository;
 import com.mycompany.hw_l16_spring_mvc_view.repositories.BookRepository;
-import com.mycompany.hw_l16_spring_mvc_view.repositories.CommentRepository;
 import com.mycompany.hw_l16_spring_mvc_view.repositories.GenreRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,9 +27,6 @@ public class BookDbServiceImplTests {
 
     @MockBean
     private BookRepository bookRepository;
-
-    @MockBean
-    private CommentRepository commentRepository;
 
     @MockBean
     private GenreRepository genreRepository;
@@ -62,7 +58,6 @@ public class BookDbServiceImplTests {
         verify(bookRepository, atMostOnce()).deleteById(book.getId());
         verify(authorRepository, never()).deleteById(anyLong());
         verify(genreRepository, never()).deleteById(anyLong());
-        verify(commentRepository, atMostOnce()).deleteAllByBookId(book.getId());
     }
 
     @Test
