@@ -11,12 +11,6 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @EntityGraph("book-entity-graph")
-    List<Book> findByAuthorId(@Param("id") long id);
-
-    @EntityGraph("book-entity-graph")
-    List<Book> findByGenreId(@Param("id") long id);
-
     @Override
     @EntityGraph("book-entity-graph")
     List<Book> findAll();

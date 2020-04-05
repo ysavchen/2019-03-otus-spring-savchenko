@@ -142,30 +142,6 @@ public class BookRepositoryImplTests {
     }
 
     @Test
-    void findBooksByAuthorId() {
-        var books = bookRepository.findByAuthorId(prattAuthor.getId());
-        assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook);
-    }
-
-    @Test
-    void findBooksByNonExistingAuthorId() {
-        var books = bookRepository.findByAuthorId(NON_EXISTING_ID);
-        assertThat(books).isEmpty();
-    }
-
-    @Test
-    void findBooksByGenreId() {
-        var books = bookRepository.findByGenreId(genre.getId());
-        assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook, sqlCodingBook);
-    }
-
-    @Test
-    void findBooksByNonExistingGenreId() {
-        var books = bookRepository.findByGenreId(NON_EXISTING_ID);
-        assertThat(books).isEmpty();
-    }
-
-    @Test
     void findAllBooks() {
         var books = bookRepository.findAll();
         assertThat(books).containsExactlyInAnyOrder(guideBook, conceptsBook, sqlCodingBook);
