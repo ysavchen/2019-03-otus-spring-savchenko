@@ -29,7 +29,9 @@
     </tbody>
 </table>
 <div>
-    <button class="buttons" type="submit" href="addBook.html">Add</button>
+    <form action="#" th:action="@{/book/new}" th:method="get">
+        <input type="submit" class="buttons" th:value="Add" value="Add"/>
+    </form>
 </div>
 </body>
 </html>
