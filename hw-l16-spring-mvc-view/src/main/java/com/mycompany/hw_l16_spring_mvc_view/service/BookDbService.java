@@ -7,11 +7,9 @@ import java.util.Optional;
 
 public interface BookDbService {
 
-    long save(Book book);
+    Book save(Book book);
 
     Optional<Book> getById(long id);
-
-    List<Book> getBooksByAuthorId(long id);
 
     List<Book> getAllBooks();
 

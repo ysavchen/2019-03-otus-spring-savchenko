@@ -18,13 +18,13 @@ public class AuthorController {
 
     @GetMapping("/author/{id}")
     public String getAuthorById(@PathVariable("id") long id, Model model) {
-        String message = "Author with id = " + id + " is not found";
         dbService.getById(id).ifPresentOrElse(
                 author -> {
-                    model.addAttribute("message", "message");
+                    model.addAttribute("message", "");
                     model.addAttribute("author", AuthorDto.toDto(author));
                 },
                 () -> {
+                    var message = "Author with id = " + id + " is not found";
                     model.addAttribute("message", message);
                     model.addAttribute("author", null);
                 }

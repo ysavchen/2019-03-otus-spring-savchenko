@@ -17,20 +17,14 @@ public class BookDbServiceImpl implements BookDbService {
     private final BookRepository bookRepository;
 
     @Override
-    public long save(Book book) {
-        return bookRepository.save(book).getId();
+    public Book save(Book book) {
+        return bookRepository.save(book);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<Book> getById(long id) {
         return bookRepository.findById(id);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Book> getBooksByAuthorId(long id) {
-        return bookRepository.findByAuthorId(id);
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package com.mycompany.hw_l16_spring_mvc_view.controllers;
 
+import com.mycompany.hw_l16_spring_mvc_view.domain.Book;
 import com.mycompany.hw_l16_spring_mvc_view.dto.AuthorDto;
 import com.mycompany.hw_l16_spring_mvc_view.dto.BookDto;
 import com.mycompany.hw_l16_spring_mvc_view.dto.GenreDto;
@@ -34,11 +35,10 @@ public class BookController {
 
     @PostMapping(value = "/book/new")
     public String addBook(BookDto bookDto, Model model) {
-        long id = dbService.save(BookDto.toDomainObject(bookDto));
-        if (id != 0) {
-            bookDto.setId(id);
-            model.addAttribute("message", "Book is saved with id = " + id + "!");
-            model.addAttribute("book", bookDto);
+        Book book = dbService.save(BookDto.toDomainObject(bookDto));
+        if (book != null) {
+            model.addAttribute("message", "Book is successfully saved!");
+            model.addAttribute("book", BookDto.toDto(book));
         } else {
             model.addAttribute("message", "Book is not saved!");
             model.addAttribute("book", null);
