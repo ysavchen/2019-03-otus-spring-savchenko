@@ -16,10 +16,6 @@ body {
     text-align: center;
 }
 
-.editableField {
-    contenteditable: true;
-}
-
 .buttons {
     border: solid 1px #cccccc;
     border-radius: 3px;
