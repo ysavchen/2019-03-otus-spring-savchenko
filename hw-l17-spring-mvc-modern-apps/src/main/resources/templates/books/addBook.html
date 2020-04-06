@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>New book</title>
+    <link th:href="@{/css/general.css}" href="../../static/css/general.css" rel="stylesheet">
+    <link th:href="@{/css/books/viewBook.css}" href="../../static/css/books/viewBook.css" rel="stylesheet">
+</head>
+<body>
+<h2>New book</h2>
+<form action="#" th:action="@{/book/new}" th:object="${book}" th:method="post">
+    <table>
+        <tr>
+            <th>Title</th>
+            <td><input class="dataField" type="text" th:field="*{title}" placeholder="title" value="Some title"/></td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>
+                <input class="dataField" type="text" th:field="*{author.name}" placeholder="name" value="John"/>
+                <input class="dataField" type="text" th:field="*{author.surname}" placeholder="surname"
+                       value="Doe"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td><input class="dataField" type="text" th:field="*{genre.name}" placeholder="genre" value="Some genre"/>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <input class="buttons" type="submit" th:value="Save" value="Save"/>
+    </div>
+</form>
+</body>
+</html>
