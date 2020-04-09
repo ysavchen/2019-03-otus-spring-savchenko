@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static java.util.stream.Collectors.toList;
 
@@ -39,18 +38,15 @@ public class BookController {
     }
 
     @PostMapping(value = "/book/new")
-    public String addBook(BookDto bookDto, RedirectAttributes attributes) {
+    public String addBook(BookDto bookDto, Model model) {
         Book book = dbService.save(BookDto.toDomainObject(bookDto));
         if (book != null) {
-            attributes.addFlashAttribute("message", "Book is successfully saved!");
-            attributes.addFlashAttribute("book", BookDto.toDto(book));
+            model.addAttribute("message", "Book is successfully saved!");
+            model.addAttribute("book", BookDto.toDto(book));
             return VIEW_BOOK_REDIRECT + book.getId();
         } else {
-            var emptyBook = new BookDto()
-                    .setAuthor(new AuthorDto())
-                    .setGenre(new GenreDto());
-            attributes.addFlashAttribute("message", "Book is not saved!");
-            attributes.addFlashAttribute("book", emptyBook);
+            model.addAttribute("message", "Book is not saved!");
+            model.addAttribute("book", bookDto);
             return ADD_BOOK_REDIRECT;
         }
     }
@@ -58,17 +54,17 @@ public class BookController {
     @PostMapping("/book/update/{id}")
     public String updateTitle(@PathVariable("id") long id,
                               BookDto bookDto,
-                              RedirectAttributes attributes) {
+                              Model model) {
         dbService.updateTitle(id, bookDto.getTitle());
         Book book = dbService.getById(id).orElse(null);
 
         if (book != null) {
-            attributes.addFlashAttribute("message", "Title is updated!");
-            attributes.addFlashAttribute("book", BookDto.toDto(book));
+            model.addAttribute("message", "Title is updated!");
+            model.addAttribute("book", BookDto.toDto(book));
             return VIEW_BOOK_REDIRECT + book.getId();
         } else {
             var message = "Book with id = " + id + " is not found";
-            attributes.addFlashAttribute("message", message);
+            model.addAttribute("message", message);
             return BOOK_LIST_REDIRECT;
         }
     }
@@ -91,15 +87,15 @@ public class BookController {
     }
 
     @PostMapping("/book/delete/{id}")
-    public String deleteBook(@PathVariable("id") long id, RedirectAttributes attributes) {
+    public String deleteBook(@PathVariable("id") long id, Model model) {
         dbService.deleteById(id);
         var books = dbService.getAllBooks()
                 .stream()
                 .map(BookDto::toDto)
                 .collect(toList());
 
-        attributes.addFlashAttribute("message", "Book with id = " + id + " is deleted");
-        attributes.addFlashAttribute("books", books);
+        model.addAttribute("message", "Book with id = " + id + " is deleted");
+        model.addAttribute("books", books);
         return BOOK_LIST_REDIRECT;
     }
 
