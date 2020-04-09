@@ -22,6 +22,10 @@ public class BookController {
     private static final String VIEW_BOOK_FORM = "books/viewBook";
     private static final String ADD_BOOK_FORM = "books/addBook";
 
+    private static final String BOOK_LIST_REDIRECT = "redirect:/book/all";
+    private static final String ADD_BOOK_REDIRECT = "redirect:/book/new";
+    private static final String VIEW_BOOK_REDIRECT = "redirect:/book/";
+
     private final BookDbService dbService;
 
     @GetMapping("/book/new")
@@ -39,12 +43,12 @@ public class BookController {
         if (book != null) {
             model.addAttribute("message", "Book is successfully saved!");
             model.addAttribute("book", BookDto.toDto(book));
+            return VIEW_BOOK_REDIRECT + book.getId();
         } else {
             model.addAttribute("message", "Book is not saved!");
-            model.addAttribute("book", null);
+            model.addAttribute("book", bookDto);
+            return ADD_BOOK_REDIRECT;
         }
-
-        return VIEW_BOOK_FORM;
     }
 
     @PostMapping("/book/update/{id}")
@@ -52,20 +56,17 @@ public class BookController {
                               BookDto bookDto,
                               Model model) {
         dbService.updateTitle(id, bookDto.getTitle());
+        Book book = dbService.getById(id).orElse(null);
 
-        dbService.getById(id).ifPresentOrElse(
-                book -> {
-                    model.addAttribute("message", "Title is updated!");
-                    model.addAttribute("book", BookDto.toDto(book));
-                },
-                () -> {
-                    var message = "Book with id = " + id + " is not found";
-                    model.addAttribute("message", message);
-                    model.addAttribute("book", null);
-                }
-        );
-
-        return VIEW_BOOK_FORM;
+        if (book != null) {
+            model.addAttribute("message", "Title is updated!");
+            model.addAttribute("book", BookDto.toDto(book));
+            return VIEW_BOOK_REDIRECT + book.getId();
+        } else {
+            var message = "Book with id = " + id + " is not found";
+            model.addAttribute("message", message);
+            return BOOK_LIST_REDIRECT;
+        }
     }
 
     @GetMapping("/book/{id}")
@@ -95,7 +96,7 @@ public class BookController {
 
         model.addAttribute("message", "Book with id = " + id + " is deleted");
         model.addAttribute("books", books);
-        return BOOK_LIST_FORM;
+        return BOOK_LIST_REDIRECT;
     }
 
     @GetMapping({"/book/all", "/"})
