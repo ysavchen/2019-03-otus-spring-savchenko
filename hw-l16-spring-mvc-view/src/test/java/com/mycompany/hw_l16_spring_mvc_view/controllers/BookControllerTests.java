@@ -22,11 +22,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookController.class)
 public class BookControllerTests {
+
+    private static final String BOOK_LIST_URL = "/book/all";
+    private static final String VIEW_BOOK_URL = "/book/";
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author prattAuthor = new Author(1, "Philip", "Pratt");
@@ -85,10 +87,9 @@ public class BookControllerTests {
         long id = 5;
         when(dbService.getAllBooks()).thenReturn(books);
         mockMvc.perform(post("/book/delete/{id}", id))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", "Book with id = " + id + " is deleted"))
-                .andExpect(model().attribute("books", is(bookDtos)));
-        verify(dbService, atLeastOnce()).deleteById(id);
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(BOOK_LIST_URL));
+        verify(dbService, times(1)).deleteById(id);
     }
 
     @Test
@@ -98,9 +99,8 @@ public class BookControllerTests {
         mockMvc.perform(
                 post("/book/update/{id}", guideBookDto.getId())
                         .param("title", title))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", "Title is updated!"))
-                .andExpect(model().attribute("book", is(guideBookDto)));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(VIEW_BOOK_URL + guideBook.getId()));
         verify(dbService, atLeastOnce()).updateTitle(guideBook.getId(), title);
     }
 
@@ -111,9 +111,8 @@ public class BookControllerTests {
         mockMvc.perform(
                 post("/book/update/{id}", NON_EXISTING_ID)
                         .param("title", title))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", "Book with id = " + NON_EXISTING_ID + " is not found"))
-                .andExpect(model().attributeDoesNotExist("book"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(BOOK_LIST_URL));
     }
 
     @Test
@@ -131,22 +130,7 @@ public class BookControllerTests {
                         .param("author.name", guideBookDto.getAuthor().getName())
                         .param("author.surname", guideBookDto.getAuthor().getSurname())
                         .param("genre.name", guideBookDto.getGenre().getName()))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", "Book is successfully saved!"))
-                .andExpect(model().attribute("book", is(guideBookDto)));
-    }
-
-    @Test
-    public void addBookNegative() throws Exception {
-        when(dbService.save(any())).thenReturn(null);
-        mockMvc.perform(
-                post("/book/new")
-                        .param("title", guideBookDto.getTitle())
-                        .param("author.name", guideBookDto.getAuthor().getName())
-                        .param("author.surname", guideBookDto.getAuthor().getSurname())
-                        .param("genre.name", guideBookDto.getGenre().getName()))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", "Book is not saved!"))
-                .andExpect(model().attributeDoesNotExist("book"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(VIEW_BOOK_URL + guideBook.getId()));
     }
 }
