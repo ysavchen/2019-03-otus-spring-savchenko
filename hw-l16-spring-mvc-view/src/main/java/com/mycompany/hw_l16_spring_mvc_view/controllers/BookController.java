@@ -81,11 +81,6 @@ public class BookController {
     @PostMapping("/book/delete/{id}")
     public String deleteBook(@PathVariable("id") long id, RedirectAttributes attributes) {
         dbService.deleteById(id);
-        var books = dbService.getAllBooks()
-                .stream()
-                .map(BookDto::toDto)
-                .collect(toList());
-
         attributes.addFlashAttribute("message", "Book with id = " + id + " is deleted");
         return BOOK_LIST_REDIRECT;
     }
