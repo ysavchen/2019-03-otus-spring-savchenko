@@ -23,7 +23,7 @@ public class BookDbServiceImplTests {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author author = new Author(1, "Philip", "Pratt");
-    private final Book book = new Book(1, "A Guide to SQL");
+    private final Book book = new Book(1, "A Guide to SQL", author, genre);
 
     @MockBean
     private BookRepository bookRepository;
@@ -51,32 +51,12 @@ public class BookDbServiceImplTests {
     }
 
     @Test
-    void deleteBookById_NoRelations() {
+    void deleteBookById() {
         when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
 
         bookDbService.deleteById(book.getId());
-        verify(bookRepository, atMostOnce()).deleteById(book.getId());
+        verify(bookRepository, times(1)).deleteById(book.getId());
         verify(authorRepository, never()).deleteById(anyLong());
         verify(genreRepository, never()).deleteById(anyLong());
-    }
-
-    @Test
-    void deleteBookById_AuthorRelation() {
-        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
-
-        book.setAuthor(author);
-        bookDbService.deleteById(book.getId());
-        verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(authorRepository, atMostOnce()).deleteById(author.getId());
-    }
-
-    @Test
-    void deleteBookById_GenreRelation() {
-        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
-
-        book.setGenre(genre);
-        bookDbService.deleteById(book.getId());
-        verify(bookRepository, atMostOnce()).deleteById(book.getId());
-        verify(genreRepository, atMostOnce()).deleteById(genre.getId());
     }
 }
