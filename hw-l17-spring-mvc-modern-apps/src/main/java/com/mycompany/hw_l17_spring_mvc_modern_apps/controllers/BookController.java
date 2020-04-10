@@ -24,7 +24,6 @@ public class BookController {
     private static final String ADD_BOOK_FORM = "books/addBook";
 
     private static final String BOOK_LIST_REDIRECT = "redirect:/book/all";
-    private static final String ADD_BOOK_REDIRECT = "redirect:/book/new";
     private static final String VIEW_BOOK_REDIRECT = "redirect:/book/";
 
     private final BookDbService dbService;
