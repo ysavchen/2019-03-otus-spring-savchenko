@@ -8,3 +8,7 @@ input {
     border: none;
     background-color: #fafafa;
 }
+
+#delete {
+    margin-left: 5px;
+}

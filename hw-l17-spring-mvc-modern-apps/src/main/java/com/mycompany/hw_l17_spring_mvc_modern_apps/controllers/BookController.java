@@ -1,9 +1,8 @@
 package com.mycompany.hw_l17_spring_mvc_modern_apps.controllers;
 
 import com.mycompany.hw_l17_spring_mvc_modern_apps.domain.Book;
-import com.mycompany.hw_l17_spring_mvc_modern_apps.dto.AuthorDto;
 import com.mycompany.hw_l17_spring_mvc_modern_apps.dto.BookDto;
-import com.mycompany.hw_l17_spring_mvc_modern_apps.dto.GenreDto;
+import com.mycompany.hw_l17_spring_mvc_modern_apps.exceptions.EntityNotFoundException;
 import com.mycompany.hw_l17_spring_mvc_modern_apps.service.BookDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,15 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.EntityNotFoundException;
-
 @Controller
 @RequiredArgsConstructor
 public class BookController {
 
-    private static final String BOOK_LIST_FORM = "html/books/bookList.html";
-    private static final String VIEW_BOOK_FORM = "books/viewBook";
-    private static final String ADD_BOOK_FORM = "books/addBook";
+    private static final String BOOK_LIST_FORM = "/html/books/bookList.html";
+    private static final String VIEW_BOOK_FORM = "/html/books/viewBook";
+    private static final String ADD_BOOK_FORM = "/html/books/addBook.html";
 
     private static final String BOOK_LIST_REDIRECT = "redirect:/book/all";
     private static final String VIEW_BOOK_REDIRECT = "redirect:/book/";
@@ -29,20 +26,26 @@ public class BookController {
     private final BookDbService dbService;
 
     @GetMapping("/book/new")
-    public String showAddForm(Model model) {
-        var book = new BookDto()
-                .setAuthor(new AuthorDto())
-                .setGenre(new GenreDto());
-        model.addAttribute("book", book);
+    public String showAddForm() {
         return ADD_BOOK_FORM;
     }
 
-    @PostMapping(value = "/book/new")
-    public String addBook(BookDto bookDto) {
-        var book = dbService.save(BookDto.toDomainObject(bookDto));
-        return VIEW_BOOK_REDIRECT + book.getId();
+    @GetMapping({"/book/all", "/"})
+    public String getAllBooks() {
+        return BOOK_LIST_FORM;
     }
 
+    @GetMapping("/book/{id}")
+    public String getBookById(@PathVariable("id") long id,
+                              Model model) {
+        return dbService.getById(id).map(
+                book -> {
+                    model.addAttribute("book", BookDto.toDto(book));
+                    return VIEW_BOOK_FORM;
+                }).orElseThrow(() -> new EntityNotFoundException("Book with id = " + id + " is not found"));
+    }
+
+    //todo: change to jQuery via REST
     @PostMapping("/book/update/{id}")
     public String updateTitle(@PathVariable("id") long id,
                               BookDto bookDto,
@@ -59,17 +62,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/book/{id}")
-    public String getBookById(@PathVariable("id") long id,
-                              Model model) {
-        return dbService.getById(id).map(
-                book -> {
-                    model.addAttribute("message", "");
-                    model.addAttribute("book", BookDto.toDto(book));
-                    return VIEW_BOOK_FORM;
-                }).orElseThrow(() -> new EntityNotFoundException("Book with id = " + id + " is not found"));
-    }
-
+    //todo: change to jQuery via REST
     @PostMapping("/book/delete/{id}")
     public String deleteBook(@PathVariable("id") long id, RedirectAttributes attributes) {
         dbService.deleteById(id);
@@ -77,8 +70,5 @@ public class BookController {
         return BOOK_LIST_REDIRECT;
     }
 
-    @GetMapping({"/book/all", "/"})
-    public String getAllBooks() {
-        return BOOK_LIST_FORM;
-    }
+
 }

@@ -14,7 +14,7 @@ import javax.persistence.EntityNotFoundException;
 @RequiredArgsConstructor
 public class AuthorController {
 
-    private static final String VIEW_AUTHOR_FORM = "authors/viewAuthor";
+    private static final String VIEW_AUTHOR_FORM = "/html/authors/viewAuthor";
 
     private final AuthorDbService dbService;
 
@@ -22,7 +22,6 @@ public class AuthorController {
     public String getAuthorById(@PathVariable("id") long id, Model model) {
         return dbService.getById(id).map(
                 author -> {
-                    model.addAttribute("message", "");
                     model.addAttribute("author", AuthorDto.toDto(author));
                     return VIEW_AUTHOR_FORM;
                 }).orElseThrow(() -> new EntityNotFoundException("Author with id = " + id + " is not found"));

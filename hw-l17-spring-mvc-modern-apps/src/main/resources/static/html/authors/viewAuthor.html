@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <title>View author</title>
-    <link th:href="@{/css/general.css}" href="../../static/css/general.css" rel="stylesheet">
-    <link th:href="@{/css/authors/viewAuthor.css}" href="../../static/css/authors/viewAuthor.css" rel="stylesheet">
+    <link th:href="@{/css/general.css}" href="/css/general.css" rel="stylesheet">
+    <link th:href="@{/css/authors/viewAuthor.css}" href="/css/authors/viewAuthor.css" rel="stylesheet">
 </head>
 <body>
 <h2>Author:</h2>
-<div id="message" th:text="${message}">Message block</div>
 <div th:if="${author != null}">
     <table th:object="${author}">
         <tr>
