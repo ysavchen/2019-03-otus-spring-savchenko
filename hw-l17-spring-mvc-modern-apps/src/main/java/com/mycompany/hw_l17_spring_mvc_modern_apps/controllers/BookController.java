@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static java.util.stream.Collectors.toList;
+import javax.persistence.EntityNotFoundException;
 
 @Controller
 @RequiredArgsConstructor
 public class BookController {
 
-    private static final String BOOK_LIST_FORM = "books/bookList";
+    private static final String BOOK_LIST_FORM = "html/books/bookList.html";
     private static final String VIEW_BOOK_FORM = "books/viewBook";
     private static final String ADD_BOOK_FORM = "books/addBook";
 
@@ -62,19 +62,12 @@ public class BookController {
     @GetMapping("/book/{id}")
     public String getBookById(@PathVariable("id") long id,
                               Model model) {
-        dbService.getById(id).ifPresentOrElse(
+        return dbService.getById(id).map(
                 book -> {
                     model.addAttribute("message", "");
                     model.addAttribute("book", BookDto.toDto(book));
-                },
-                () -> {
-                    var message = "Book with id = " + id + " is not found";
-                    model.addAttribute("message", message);
-                    model.addAttribute("book", null);
-                }
-        );
-
-        return VIEW_BOOK_FORM;
+                    return VIEW_BOOK_FORM;
+                }).orElseThrow(() -> new EntityNotFoundException("Book with id = " + id + " is not found"));
     }
 
     @PostMapping("/book/delete/{id}")
@@ -85,13 +78,7 @@ public class BookController {
     }
 
     @GetMapping({"/book/all", "/"})
-    public String getAllBooks(Model model) {
-        var books = dbService.getAllBooks()
-                .stream()
-                .map(BookDto::toDto)
-                .collect(toList());
-
-        model.addAttribute("books", books);
+    public String getAllBooks() {
         return BOOK_LIST_FORM;
     }
 }
