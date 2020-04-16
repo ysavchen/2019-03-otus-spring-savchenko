@@ -3,10 +3,8 @@ package com.mycompany.hw_l17_spring_mvc_modern_apps.controllers;
 import com.mycompany.hw_l17_spring_mvc_modern_apps.dto.BookDto;
 import com.mycompany.hw_l17_spring_mvc_modern_apps.service.BookDbService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +28,17 @@ public class BookRestController {
     public BookDto addBook(@RequestBody BookDto bookDto) {
         var book = dbService.save(BookDto.toDomainObject(bookDto));
         return BookDto.toDto(book);
+    }
+
+    @PatchMapping("/api/book/{id}")
+    public ResponseEntity<String> updateTitle(@RequestBody BookDto bookDto) {
+        dbService.updateTitle(bookDto.getId(), bookDto.getTitle());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/api/book/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable("id") long id) {
+        dbService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
