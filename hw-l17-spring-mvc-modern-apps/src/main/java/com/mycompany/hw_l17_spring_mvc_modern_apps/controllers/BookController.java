@@ -30,8 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public String getBookById(@PathVariable("id") long id,
-                              Model model) {
+    public String getBookById(@PathVariable("id") long id, Model model) {
         return dbService.getById(id).map(
                 book -> {
                     model.addAttribute("book", BookDto.toDto(book));
