@@ -15,6 +15,9 @@ $('#save').on('click', function() {
         data: book,
         success: function(book) {
             location.href = '/book/' + book.id;
+        },
+        error: function() {
+            $('#message').text('Book is not added!');
         }
     });
 });
