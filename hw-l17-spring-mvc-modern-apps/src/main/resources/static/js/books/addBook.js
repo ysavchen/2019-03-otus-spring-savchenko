@@ -1,14 +1,20 @@
 "use strict";
 
 $('#save').on('click', function() {
-    const book = {
+    const book = JSON.stringify({
         title: $('#title').val(),
         author: { name: $('#name').val(), surname: $('#surname').val() },
         genre: { name: $('#genre').val() }
-    };
+    });
 
-    $.post('/api/book', book, function(data) {
-        console.log(data);
-        //location.href = '/book/${book.id}';
+    $.ajax({
+        url: '/api/book',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: book,
+        success: function(book) {
+            location.href = '/book/' + book.id;
+        }
     });
 });
