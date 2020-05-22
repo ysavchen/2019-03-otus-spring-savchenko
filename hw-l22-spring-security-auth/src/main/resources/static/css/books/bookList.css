@@ -1,7 +1,10 @@
 th {
-    border-bottom: solid 1px #cccccc;
+    float: left;
+    float: middle;
+    margin-right: 10px;
 }
 
-#edit {
-    margin-left: 10px;
+input {
+    border: none;
+    background-color: #fafafa;
 }
