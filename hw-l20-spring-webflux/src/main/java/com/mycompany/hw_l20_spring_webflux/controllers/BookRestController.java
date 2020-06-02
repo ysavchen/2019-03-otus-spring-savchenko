@@ -27,7 +27,7 @@ public class BookRestController {
     @PatchMapping("/api/book/{id}")
     public Mono<ResponseEntity<String>> updateTitle(@RequestBody BookDto bookDto) {
         return bookRepository.updateTitle(bookDto.getId(), bookDto.getTitle())
-                .map(voidResult -> ResponseEntity.ok().build());
+                .map(result -> ResponseEntity.ok().build());
     }
 
     @DeleteMapping("/api/book/{id}")

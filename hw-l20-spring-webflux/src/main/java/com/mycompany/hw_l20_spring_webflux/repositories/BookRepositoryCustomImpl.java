@@ -1,5 +1,6 @@
 package com.mycompany.hw_l20_spring_webflux.repositories;
 
+import com.mongodb.client.result.UpdateResult;
 import com.mycompany.hw_l20_spring_webflux.domain.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -15,10 +16,9 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom {
     private final ReactiveMongoTemplate template;
 
     @Override
-    public Mono<Void> updateTitle(String id, String title) {
+    public Mono<UpdateResult> updateTitle(String id, String title) {
         var query = new Query(where("id").is(id));
         var update = new Update().set("title", title);
-        template.updateFirst(query, update, Book.class);
-        return Mono.empty();
+        return template.updateFirst(query, update, Book.class);
     }
 }
