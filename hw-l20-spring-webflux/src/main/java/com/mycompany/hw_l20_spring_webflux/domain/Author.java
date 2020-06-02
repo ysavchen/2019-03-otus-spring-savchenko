@@ -2,23 +2,17 @@ package com.mycompany.hw_l20_spring_webflux.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
-@Table(name = "authors")
+@Document(collection = "authors")
 @Accessors(chain = true)
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "name", nullable = false)
+    private String id;
     private String name;
-
-    @Column(name = "surname", nullable = false)
     private String surname;
 
     public Author() {
@@ -29,7 +23,7 @@ public class Author {
         this.surname = surname;
     }
 
-    public Author(long id, String name, String surname) {
+    public Author(String id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;

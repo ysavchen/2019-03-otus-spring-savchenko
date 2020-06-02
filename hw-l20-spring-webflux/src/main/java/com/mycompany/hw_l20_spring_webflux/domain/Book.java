@@ -2,34 +2,22 @@ package com.mycompany.hw_l20_spring_webflux.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
-@Table(name = "books")
-@NamedEntityGraph(name = "book-entity-graph",
-        attributeNodes = {
-                @NamedAttributeNode("author"),
-                @NamedAttributeNode("genre")
-        })
+@Document(collection = "books")
 @Accessors(chain = true)
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "title", nullable = false)
+    private String id;
     private String title;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "author_id")
-    private Author author;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "genre_id")
     private Genre genre;
+
+    @DBRef
+    private Author author;
 
     public Book() {
     }
@@ -38,12 +26,12 @@ public class Book {
         this.title = title;
     }
 
-    public Book(long id, String title) {
+    public Book(String id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public Book(long id, String title, Author author, Genre genre) {
+    public Book(String id, String title, Author author, Genre genre) {
         this.id = id;
         this.title = title;
         this.author = author;

@@ -1,44 +1,38 @@
 package com.mycompany.hw_l20_spring_webflux.controllers;
 
 import com.mycompany.hw_l20_spring_webflux.dto.BookDto;
-import com.mycompany.hw_l20_spring_webflux.service.BookDbService;
+import com.mycompany.hw_l20_spring_webflux.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
 public class BookRestController {
 
-    private final BookDbService dbService;
+    private final BookRepository bookRepository;
 
     @GetMapping("/api/book")
-    public List<BookDto> getAllBooks() {
-        return dbService.getAllBooks()
-                .stream()
-                .map(BookDto::toDto)
-                .collect(toList());
+    public Flux<BookDto> getAllBooks() {
+        return bookRepository.findAll().map(BookDto::toDto);
     }
 
     @PostMapping(value = "/api/book")
-    public BookDto addBook(@RequestBody BookDto bookDto) {
-        var book = dbService.save(BookDto.toDomainObject(bookDto));
-        return BookDto.toDto(book);
+    public Mono<BookDto> addBook(@RequestBody BookDto bookDto) {
+        return bookRepository.save(BookDto.toDomainObject(bookDto)).map(BookDto::toDto);
     }
 
     @PatchMapping("/api/book/{id}")
-    public ResponseEntity<String> updateTitle(@RequestBody BookDto bookDto) {
-        dbService.updateTitle(bookDto.getId(), bookDto.getTitle());
-        return ResponseEntity.ok().build();
+    public Mono<ResponseEntity<String>> updateTitle(@RequestBody BookDto bookDto) {
+        return bookRepository.updateTitle(bookDto.getId(), bookDto.getTitle())
+                .map(voidResult -> ResponseEntity.ok().build());
     }
 
     @DeleteMapping("/api/book/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable("id") long id) {
-        dbService.deleteById(id);
-        return ResponseEntity.ok().build();
+    public Mono<ResponseEntity<String>> deleteBook(@PathVariable("id") String id) {
+        return bookRepository.deleteById(id)
+                .map(voidResult -> ResponseEntity.ok().build());
     }
 }

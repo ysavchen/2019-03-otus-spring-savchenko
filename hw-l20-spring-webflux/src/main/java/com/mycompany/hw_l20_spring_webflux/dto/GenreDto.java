@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GenreDto {
 
-    private long id;
+    private String id;
     private String name;
 
     public static Genre toDomainObject(GenreDto dto) {
