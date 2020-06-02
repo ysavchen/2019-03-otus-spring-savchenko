@@ -7,7 +7,7 @@ spring:
       uri: mongodb://localhost
       port: 0
       database: app_db
-      changelogs: com.mycompany.hw_l13_spring_data_nosql.changelogs
+      changelogs: com.mycompany.hw_l20_spring_webflux.changelogs
 
   logging:
     level:

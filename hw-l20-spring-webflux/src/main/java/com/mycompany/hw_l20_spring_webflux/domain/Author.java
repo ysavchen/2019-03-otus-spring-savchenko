@@ -3,10 +3,8 @@ package com.mycompany.hw_l20_spring_webflux.domain;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "authors")
 @Accessors(chain = true)
 public class Author {
 
