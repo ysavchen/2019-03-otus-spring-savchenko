@@ -22,10 +22,7 @@
         </tr>
         <tr>
             <th>Author</th>
-            <td class="dataField">
-                <a th:href="@{/author/__*{author.id}__}" href="../authors/viewAuthor.html"
-                   th:text="*{author.name + ' ' + author.surname}"></a>
-            </td>
+            <td class="dataField" th:text="*{author.name + ' ' + author.surname}">John Doe</td>
         </tr>
         <tr>
             <th>Genre</th>
