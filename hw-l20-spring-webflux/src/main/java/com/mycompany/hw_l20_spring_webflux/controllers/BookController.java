@@ -1,7 +1,6 @@
 package com.mycompany.hw_l20_spring_webflux.controllers;
 
 import com.mycompany.hw_l20_spring_webflux.dto.BookDto;
-import com.mycompany.hw_l20_spring_webflux.exceptions.EntityNotFoundException;
 import com.mycompany.hw_l20_spring_webflux.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,10 +31,10 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     public Mono<String> getBookById(@PathVariable("id") String id, Model model) {
-        return bookRepository.findById(id).map(
-                book -> {
+        return bookRepository.findById(id)
+                .map(book -> {
                     model.addAttribute("book", BookDto.toDto(book));
                     return VIEW_BOOK_FORM;
-                }).onErrorMap(error -> new EntityNotFoundException("Book with id = " + id + " is not found"));
+                });
     }
 }
