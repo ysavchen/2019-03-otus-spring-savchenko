@@ -18,17 +18,18 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @WebFluxTest(BookController.class)
 public class BookControllerTests {
 
-    private final Genre genre = new Genre("Computers & Technology");
-    private final Author prattAuthor = new Author("Philip", "Pratt");
-    private final Author learnAuthor = new Author("Michael", "Learn");
-    private final Book guideBook = new Book("A Guide to SQL", prattAuthor, genre);
-    private final Book conceptsBook = new Book("Concepts of Database Management", prattAuthor, genre);
-    private final Book sqlCodingBook = new Book("SQL Programming and Coding", learnAuthor, genre);
+    private final Genre genre = new Genre("test-genre-1", "Computers & Technology");
+    private final Author prattAuthor = new Author("test-author-1", "Philip", "Pratt");
+    private final Author learnAuthor = new Author("test-author-1", "Michael", "Learn");
+    private final Book guideBook = new Book("test-book-1", "A Guide to SQL", prattAuthor, genre);
+    private final Book conceptsBook = new Book("test-book-2", "Concepts of Database Management", prattAuthor, genre);
+    private final Book sqlCodingBook = new Book("test-book-3", "SQL Programming and Coding", learnAuthor, genre);
     private final List<Book> books = List.of(guideBook, conceptsBook, sqlCodingBook);
 
     private final BookDto guideBookDto = BookDto.toDto(guideBook);
@@ -41,21 +42,25 @@ public class BookControllerTests {
 
     @Test
     public void getBookById() {
-        when(bookRepository.findById(guideBook.getId())).thenReturn(Mono.just(guideBook));
+        when(bookRepository.findById(anyString())).thenReturn(Mono.just(guideBook));
+
         webClient.get().uri("/book/{id}", guideBookDto.getId())
                 .accept(MediaType.TEXT_HTML)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.TEXT_HTML);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"/book/", "/"})
     public void getAllBooks(String uri) {
         when(bookRepository.findAll()).thenReturn(Flux.fromIterable(books));
+
         webClient.get().uri(uri)
                 .accept(MediaType.TEXT_HTML)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.TEXT_HTML);
     }
 
     @Test
@@ -63,6 +68,7 @@ public class BookControllerTests {
         webClient.get().uri("/book/new")
                 .accept(MediaType.TEXT_HTML)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.TEXT_HTML);
     }
 }
