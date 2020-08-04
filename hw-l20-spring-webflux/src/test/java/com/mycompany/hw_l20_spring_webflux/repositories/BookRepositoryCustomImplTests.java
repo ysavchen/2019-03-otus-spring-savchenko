@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -21,15 +22,15 @@ public class BookRepositoryCustomImplTests extends AbstractRepositoryTest {
     @Autowired
     private BookRepositoryCustomImpl bookRepositoryCustom;
 
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
     @Test
     void updateTitle() {
         var title = "new title";
         bookRepositoryCustom.updateTitle(guide.getId(), title).block();
-        Mono<Book> monoBook = operations.findById(guide.getId(), Book.class);
+        Mono<Book> bookMono = operations.findById(guide.getId(), Book.class);
 
         StepVerifier
-                .create(monoBook)
+                .create(bookMono)
                 .assertNext(book -> {
                     assertNotNull(book);
                     assertEquals(title, book.getTitle());
