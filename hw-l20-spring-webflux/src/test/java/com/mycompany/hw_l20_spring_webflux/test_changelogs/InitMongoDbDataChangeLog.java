@@ -14,7 +14,7 @@ public class InitMongoDbDataChangeLog {
     private final Genre computers = new Genre("test-genre-1", "Computers & Technology");
 
     private final Author pratt = new Author("test-author-1", "Philip", "Pratt");
-    private final Author learn = new Author("test-authro-2", "Michael", "Learn");
+    private final Author learn = new Author("test-author-2", "Michael", "Learn");
 
     private Book guideBook;
     private Book conceptsBook;

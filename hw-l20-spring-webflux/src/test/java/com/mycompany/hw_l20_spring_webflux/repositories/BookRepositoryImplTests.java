@@ -18,7 +18,7 @@ public class BookRepositoryImplTests extends AbstractRepositoryTest {
 
     private final Genre genre = new Genre("test-genre-1", "Computers & Technology");
     private final Author prattAuthor = new Author("test-author-1", "Philip", "Pratt");
-    private final Author learnAuthor = new Author("test-authro-2", "Michael", "Learn");
+    private final Author learnAuthor = new Author("test-author-2", "Michael", "Learn");
 
     private final Book guideBook = new Book("test-book-1", "A Guide to SQL", prattAuthor, genre);
     private final Book conceptsBook = new Book("test-book-2", "Concepts of Database Management", prattAuthor, genre);
