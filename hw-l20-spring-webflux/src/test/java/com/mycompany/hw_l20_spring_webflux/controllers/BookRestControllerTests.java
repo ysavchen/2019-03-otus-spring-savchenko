@@ -1,7 +1,6 @@
 package com.mycompany.hw_l20_spring_webflux.controllers;
 
 import com.google.gson.Gson;
-import com.mongodb.client.result.UpdateResult;
 import com.mycompany.hw_l20_spring_webflux.domain.Author;
 import com.mycompany.hw_l20_spring_webflux.domain.Book;
 import com.mycompany.hw_l20_spring_webflux.domain.Genre;
@@ -20,7 +19,6 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @WebFluxTest(BookRestController.class)
@@ -61,8 +59,7 @@ public class BookRestControllerTests {
 
     @Test
     public void updateTitle() {
-        UpdateResult result = mock(UpdateResult.class);
-        when(bookRepository.updateTitle(anyString(), anyString())).thenReturn(Mono.just(result));
+        when(bookRepository.updateTitle(anyString(), anyString())).thenReturn(Mono.empty());
 
         var title = "test title";
         webClient.patch().uri("/api/book/{id}", guideBookDto.getId())
