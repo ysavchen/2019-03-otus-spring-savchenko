@@ -20,18 +20,11 @@ public class AuthorController {
 
     @GetMapping("/author/{id}")
     public String getAuthorById(@PathVariable("id") long id, Model model) {
-        dbService.getById(id).ifPresentOrElse(
+        return dbService.getById(id).map(
                 author -> {
                     model.addAttribute("message", "");
                     model.addAttribute("author", AuthorDto.toDto(author));
-                },
-                () -> {
-                    var message = "Author with id = " + id + " is not found";
-                    model.addAttribute("message", message);
-                    model.addAttribute("author", null);
-                }
-        );
-
-        return VIEW_AUTHOR_FORM;
+                    return VIEW_AUTHOR_FORM;
+                }).orElseThrow(() -> new EntityNotFoundException("Author with id = " + id + " is not found"));
     }
 }

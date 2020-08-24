@@ -4,6 +4,7 @@ import com.mycompany.hw_l22_spring_security_auth.domain.Book;
 import com.mycompany.hw_l22_spring_security_auth.dto.AuthorDto;
 import com.mycompany.hw_l22_spring_security_auth.dto.BookDto;
 import com.mycompany.hw_l22_spring_security_auth.dto.GenreDto;
+import com.mycompany.hw_l22_spring_security_auth.exceptions.EntityNotFoundException;
 import com.mycompany.hw_l22_spring_security_auth.service.BookDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -62,19 +63,11 @@ public class BookController {
     @GetMapping("/book/{id}")
     public String getBookById(@PathVariable("id") long id,
                               Model model) {
-        dbService.getById(id).ifPresentOrElse(
+        return dbService.getById(id).map(
                 book -> {
-                    model.addAttribute("message", "");
                     model.addAttribute("book", BookDto.toDto(book));
-                },
-                () -> {
-                    var message = "Book with id = " + id + " is not found";
-                    model.addAttribute("message", message);
-                    model.addAttribute("book", null);
-                }
-        );
-
-        return VIEW_BOOK_FORM;
+                    return VIEW_BOOK_FORM;
+                }).orElseThrow(() -> new EntityNotFoundException("Book with id = " + id + " is not found"));
     }
 
     @PostMapping("/book/delete/{id}")
