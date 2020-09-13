@@ -22,9 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         AppUser user = appUserDbService.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email = " + email + " is not found"));
 
-        return User.withUsername(email)
+        return User.withUsername(user.getEmail())
                 .password(user.getPassword())
-                .authorities(emptyList())
+                .authorities("ROLE_USER")
                 .build();
     }
 }
