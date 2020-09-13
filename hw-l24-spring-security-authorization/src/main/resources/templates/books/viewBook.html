@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>View book</title>
+    <link th:href="@{/css/general.css}" href="../../static/css/general.css" rel="stylesheet">
+    <link th:href="@{/css/books/viewBook.css}" href="../../static/css/books/viewBook.css" rel="stylesheet">
+</head>
+<body>
+<h2>Book:</h2>
+<div th:if="${book != null}">
+    <form action="#" th:action="@{/book/update/__*{id}__}" method="post" th:object="${book}">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td class="dataField" th:text="*{id}">1</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td><input class="dataField" type="text" th:field="*{title}" value="Some title"/></td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td class="dataField">
+                    <a th:href="@{/author/__*{author.id}__}" href="../authors/viewAuthor.html"
+                       th:text="*{author.name + ' ' + author.surname}">John Doe</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td class="dataField" th:text="*{genre.name}">Computers</td>
+            </tr>
+        </table>
+        <div>
+            <input class="buttons" type="submit" th:value="Save" value="Save"/>
+        </div>
+    </form>
+    <form action="#" th:action="@{/book/delete/__${book.id}__}" method="post">
+        <input class="buttons" type="submit" th:value="Delete" value="Delete"/>
+    </form>
+    <form action="#" th:action="@{/}" method="get">
+        <input class="buttons" type="submit" th:value="Back" value="Back">
+    </form>
+</div>
+</body>
+</html>
