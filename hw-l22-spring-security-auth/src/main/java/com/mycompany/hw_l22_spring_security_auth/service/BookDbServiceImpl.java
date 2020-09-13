@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class BookDbServiceImpl implements BookDbService {
 
     private final BookRepository bookRepository;
 
+    @Transactional
     @Override
     public Book save(Book book) {
         return bookRepository.save(book);
@@ -33,6 +33,7 @@ public class BookDbServiceImpl implements BookDbService {
         return bookRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void updateTitle(long id, String title) {
         if (title != null) {
@@ -40,6 +41,7 @@ public class BookDbServiceImpl implements BookDbService {
         }
     }
 
+    @Transactional
     @Override
     public void deleteById(long id) {
         bookRepository.deleteById(id);
