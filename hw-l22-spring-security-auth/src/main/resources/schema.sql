@@ -19,6 +19,15 @@ create table genres (
     name varchar(255) not null
 );
 
+drop table if exists users;
+create table users (
+    id bigint primary key auto_increment,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    email varchar(255) not null,
+    password varchar(255) not null
+);
+
 alter table books
 add foreign key (author_id) references authors(id) on delete cascade;
 
