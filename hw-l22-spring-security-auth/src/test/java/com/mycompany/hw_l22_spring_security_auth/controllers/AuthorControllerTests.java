@@ -25,7 +25,6 @@ public class AuthorControllerTests {
 
     private final Author author = new Author(1, "Philip", "Pratt");
     private final AuthorDto authorDto = AuthorDto.toDto(author);
-    private static final long NON_EXISTING_ID = 50;
 
     @Autowired
     private MockMvc mockMvc;
