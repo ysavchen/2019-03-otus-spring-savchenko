@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -23,6 +25,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@WithMockUser(
+        username = "john.doe@test.com",
+        authorities = {"ROLE_USER"}
+)
 @WebMvcTest(BookController.class)
 public class BookControllerTests {
 
@@ -51,25 +57,18 @@ public class BookControllerTests {
     @MockBean
     private BookDbService dbService;
 
+    @MockBean
+    private UserDetailsService userDetailsService;
+
     @Test
     public void getBookById_Found() throws Exception {
         when(dbService.getById(guideBook.getId())).thenReturn(Optional.of(guideBook));
         mockMvc.perform(get("/book/{id}", guideBookDto.getId()))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("message", ""))
                 .andExpect(model().attribute("book", hasProperty("id", is(guideBookDto.getId()))))
                 .andExpect(model().attribute("book", hasProperty("title", is(guideBookDto.getTitle()))))
                 .andExpect(model().attribute("book", hasProperty("author", is(guideBookDto.getAuthor()))))
                 .andExpect(model().attribute("book", hasProperty("genre", is(guideBookDto.getGenre()))));
-    }
-
-    @Test
-    public void getBookById_NotFound() throws Exception {
-        when(dbService.getById(NON_EXISTING_ID)).thenReturn(Optional.empty());
-        mockMvc.perform(get("/book/{id}", NON_EXISTING_ID))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", is("Book with id = " + NON_EXISTING_ID + " is not found")))
-                .andExpect(model().attributeDoesNotExist("book"));
     }
 
     @ParameterizedTest

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -31,6 +33,13 @@ public class AuthorControllerTests {
     @MockBean
     private AuthorDbService dbService;
 
+    @MockBean
+    private UserDetailsService userDetailsService;
+
+    @WithMockUser(
+            username = "john.doe@test.com",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     public void getAuthorById_Found() throws Exception {
         when(dbService.getById(author.getId())).thenReturn(Optional.of(author));
@@ -40,14 +49,5 @@ public class AuthorControllerTests {
                 .andExpect(model().attribute("author", hasProperty("id", is(authorDto.getId()))))
                 .andExpect(model().attribute("author", hasProperty("name", is(authorDto.getName()))))
                 .andExpect(model().attribute("author", hasProperty("surname", is(authorDto.getSurname()))));
-    }
-
-    @Test
-    public void getAuthorById_NotFound() throws Exception {
-        when(dbService.getById(NON_EXISTING_ID)).thenReturn(Optional.empty());
-        mockMvc.perform(get("/author/{id}", NON_EXISTING_ID))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", is("Author with id = " + NON_EXISTING_ID + " is not found")))
-                .andExpect(model().attributeDoesNotExist("author"));
     }
 }
