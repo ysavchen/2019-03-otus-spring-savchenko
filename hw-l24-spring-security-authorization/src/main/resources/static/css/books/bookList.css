@@ -1,7 +1,9 @@
+thead {
+    text-align: center;
+}
+
 th {
-    float: left;
-    float: middle;
-    margin-right: 10px;
+    border-bottom: solid 1px #cccccc;
 }
 
 input {
