@@ -28,8 +28,18 @@ create table users (
     password varchar(255) not null
 );
 
+drop table if exists authorities;
+create table authorities (
+    id bigint primary key auto_increment,
+    role varchar(255) not null,
+    user_id bigint
+);
+
 alter table books
 add foreign key (author_id) references authors(id) on delete cascade;
 
 alter table books
 add foreign key (genre_id) references genres(id) on delete cascade;
+
+alter table authorities
+add foreign key (user_id) references users(id) on delete cascade;
