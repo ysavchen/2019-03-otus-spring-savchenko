@@ -155,4 +155,30 @@ public class BookControllerTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(VIEW_BOOK_URL + guideBook.getId()));
     }
+
+    @WithMockUser(
+            username = "john.doe@test.com",
+            authorities = {"ROLE_USER"}
+    )
+    @Test
+    public void testUserForbiddenUrls() throws Exception {
+        mockMvc.perform(get("/book/new"))
+                .andExpect(status().isForbidden());
+
+        mockMvc.perform(
+                post("/book/new")
+                        .param("title", guideBookDto.getTitle())
+                        .param("author.name", guideBookDto.getAuthor().getName())
+                        .param("author.surname", guideBookDto.getAuthor().getSurname())
+                        .param("genre.name", guideBookDto.getGenre().getName()))
+                .andExpect(status().isForbidden());
+
+        mockMvc.perform(post("/book/delete/{id}", 5))
+                .andExpect(status().isForbidden());
+
+        mockMvc.perform(
+                post("/book/update/{id}", guideBookDto.getId())
+                        .param("title", "test title"))
+                .andExpect(status().isForbidden());
+    }
 }
