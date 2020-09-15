@@ -23,7 +23,7 @@ public class Authority implements GrantedAuthority {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id")
-    private AppUser user;
+    private User user;
 
     public Authority() {
     }
