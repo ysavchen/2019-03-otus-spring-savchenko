@@ -1,0 +1,13 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/static/
+
+  data:
+    mongodb:
+      port: 0
+      database: test_db
+      changelogs: com.mycompany.hw_l20_spring_webflux.test_changelogs
+
+    logging:
+      level:
+        root: ERROR

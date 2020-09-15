@@ -1,0 +1,22 @@
+th {
+    float: left;
+    float: middle;
+    margin-right: 10px;
+}
+
+input {
+    border: none;
+    background-color: #fafafa;
+}
+
+#delete {
+    margin-left: 5px;
+}
+
+#allBooks {
+    margin-left: 5px;
+}
+
+#back {
+    margin-left: 5px;
+}
