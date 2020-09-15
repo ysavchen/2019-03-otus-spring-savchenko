@@ -25,10 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WithMockUser(
-        username = "john.doe@test.com",
-        authorities = {"ROLE_USER"}
-)
 @WebMvcTest(BookController.class)
 public class BookControllerTests {
 
@@ -60,6 +56,10 @@ public class BookControllerTests {
     @MockBean
     private UserDetailsService userDetailsService;
 
+    @WithMockUser(
+            username = "john.doe@test.com",
+            authorities = {"ROLE_USER"}
+    )
     @Test
     public void getBookById_Found() throws Exception {
         when(dbService.getById(guideBook.getId())).thenReturn(Optional.of(guideBook));
@@ -71,6 +71,10 @@ public class BookControllerTests {
                 .andExpect(model().attribute("book", hasProperty("genre", is(guideBookDto.getGenre()))));
     }
 
+    @WithMockUser(
+            username = "john.doe@test.com",
+            authorities = {"ROLE_USER"}
+    )
     @ParameterizedTest
     @ValueSource(strings = {"/book/all", "/"})
     public void getAllBooks(String url) throws Exception {
@@ -80,6 +84,10 @@ public class BookControllerTests {
                 .andExpect(model().attribute("books", is(bookDtos)));
     }
 
+    @WithMockUser(
+            username = "admin@test.com",
+            authorities = {"ROLE_ADMIN"}
+    )
     @Test
     public void deleteBook() throws Exception {
         long id = 5;
@@ -90,6 +98,10 @@ public class BookControllerTests {
         verify(dbService, times(1)).deleteById(id);
     }
 
+    @WithMockUser(
+            username = "admin@test.com",
+            authorities = {"ROLE_ADMIN"}
+    )
     @Test
     public void updateTitle() throws Exception {
         var title = "test title";
@@ -102,6 +114,10 @@ public class BookControllerTests {
         verify(dbService, atLeastOnce()).updateTitle(guideBook.getId(), title);
     }
 
+    @WithMockUser(
+            username = "admin@test.com",
+            authorities = {"ROLE_ADMIN"}
+    )
     @Test
     public void updateTitle_nonExistingBook() throws Exception {
         var title = "test title";
@@ -113,12 +129,20 @@ public class BookControllerTests {
                 .andExpect(redirectedUrl(BOOK_LIST_URL));
     }
 
+    @WithMockUser(
+            username = "admin@test.com",
+            authorities = {"ROLE_ADMIN"}
+    )
     @Test
     public void showAddForm() throws Exception {
         mockMvc.perform(get("/book/new"))
                 .andExpect(status().isOk());
     }
 
+    @WithMockUser(
+            username = "admin@test.com",
+            authorities = {"ROLE_ADMIN"}
+    )
     @Test
     public void addBook() throws Exception {
         when(dbService.save(any())).thenReturn(guideBook);
