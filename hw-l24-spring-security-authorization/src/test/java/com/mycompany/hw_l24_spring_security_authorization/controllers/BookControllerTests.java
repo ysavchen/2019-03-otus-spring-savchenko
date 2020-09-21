@@ -161,7 +161,7 @@ public class BookControllerTests {
             authorities = {"ROLE_USER"}
     )
     @Test
-    public void testUserForbiddenUrls() throws Exception {
+    public void testNewBookForbiddenForUser() throws Exception {
         mockMvc.perform(get("/book/new"))
                 .andExpect(status().isForbidden());
 
@@ -172,10 +172,24 @@ public class BookControllerTests {
                         .param("author.surname", guideBookDto.getAuthor().getSurname())
                         .param("genre.name", guideBookDto.getGenre().getName()))
                 .andExpect(status().isForbidden());
+    }
 
+    @WithMockUser(
+            username = "john.doe@test.com",
+            authorities = {"ROLE_USER"}
+    )
+    @Test
+    public void testDeleteBookForbiddenForUser() throws Exception {
         mockMvc.perform(post("/book/delete/{id}", 5))
                 .andExpect(status().isForbidden());
+    }
 
+    @WithMockUser(
+            username = "john.doe@test.com",
+            authorities = {"ROLE_USER"}
+    )
+    @Test
+    public void testUpdateBookForbiddenForUser() throws Exception {
         mockMvc.perform(
                 post("/book/update/{id}", guideBookDto.getId())
                         .param("title", "test title"))
