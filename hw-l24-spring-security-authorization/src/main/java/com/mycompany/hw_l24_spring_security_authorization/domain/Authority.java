@@ -8,10 +8,6 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "authorities")
-@NamedEntityGraph(name = "authority-entity-graph",
-        attributeNodes = {
-                @NamedAttributeNode("user")
-        })
 public class Authority implements GrantedAuthority {
 
     @Id
@@ -20,10 +16,6 @@ public class Authority implements GrantedAuthority {
 
     @Column(name = "role", nullable = false)
     private String role;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public Authority() {
     }

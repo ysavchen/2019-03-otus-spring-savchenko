@@ -16,5 +16,8 @@ insert into users (id, first_name, last_name, email, password) values (1, 'name'
 /* john.doe@test.com , #Start01 */
 insert into users (id, first_name, last_name, email, password) values (2, 'John', 'Doe', 'john.doe@test.com', '$2a$10$gfoYoDKAUG5qO8obPlvPlOe8F08HEszg.H0uVeam9ObC9eTeV46uy');
 
-insert into authorities (id, role, user_id) values (1, 'ROLE_ADMIN', 1);
-insert into authorities (id, role, user_id) values (2, 'ROLE_USER', 2);
+insert into authorities (id, role) values (1, 'ROLE_ADMIN');
+insert into authorities (id, role) values (2, 'ROLE_USER');
+
+insert into user_authorities (user_id, authority_id) values (1, 1);
+insert into user_authorities (user_id, authority_id) values (2, 2);

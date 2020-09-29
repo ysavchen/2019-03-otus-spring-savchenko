@@ -31,15 +31,24 @@ create table users (
 drop table if exists authorities;
 create table authorities (
     id bigint primary key auto_increment,
-    role varchar(255) not null,
-    user_id bigint
+    role varchar(255) not null
+);
+
+drop table if exists user_authorities;
+create table user_authorities (
+    primary key (user_id, authority_id),
+    user_id bigint not null,
+    authority_id bigint not null
 );
 
 alter table books
-add foreign key (author_id) references authors(id) on delete cascade;
+add foreign key (author_id) references authors(id);
 
 alter table books
-add foreign key (genre_id) references genres(id) on delete cascade;
+add foreign key (genre_id) references genres(id);
 
-alter table authorities
-add foreign key (user_id) references users(id) on delete cascade;
+alter table user_authorities
+add foreign key (user_id) references users(id);
+
+alter table user_authorities
+add foreign key (authority_id) references authorities(id);
