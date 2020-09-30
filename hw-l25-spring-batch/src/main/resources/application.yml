@@ -1,0 +1,27 @@
+spring:
+  batch:
+    job:
+      enabled: false
+
+  shell:
+    interactive:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  data:
+    mongodb:
+      uri: mongodb://localhost
+      port: 0
+      database: app_db
+      changelogs: com.mycompany.hw_l13_spring_data_nosql.changelogs
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - com.mycompany.hw_l13_spring_data_nosql.changelogs
+

@@ -1,0 +1,23 @@
+spring:
+  batch:
+    job:
+      enabled: false
+
+  shell:
+    interactive:
+      enabled: false
+
+  data:
+    mongodb:
+      port: 0
+      database: test_db
+      changelogs: com.mycompany.hw_l13_spring_data_nosql.test_changelogs
+
+    logging:
+      level:
+        root: ERROR
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - com.mycompany.hw_l13_spring_data_nosql.test_changelogs
