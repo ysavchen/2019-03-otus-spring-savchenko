@@ -8,6 +8,10 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
+@NamedEntityGraph(name = "user-with-authorities",
+        attributeNodes = {
+                @NamedAttributeNode("authorities")
+        })
 public class User {
 
     @Id
@@ -26,7 +30,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "user_authorities",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
