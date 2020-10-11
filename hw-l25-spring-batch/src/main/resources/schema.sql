@@ -8,7 +8,7 @@ create table airports (
 drop table if exists flights;
 create table flights (
     id bigint primary key auto_increment,
-    flight_no varchar(255) not null,
+    flight_no UUID not null,
     departure_airport_id bigint,
     arrival_airport_id bigint
 );
@@ -16,7 +16,7 @@ create table flights (
 drop table if exists tickets;
 create table tickets (
     id bigint primary key auto_increment,
-    ticket_no varchar(255) not null,
+    ticket_no UUID not null,
     passenger_name varchar(255),
     flight_id bigint
 );
