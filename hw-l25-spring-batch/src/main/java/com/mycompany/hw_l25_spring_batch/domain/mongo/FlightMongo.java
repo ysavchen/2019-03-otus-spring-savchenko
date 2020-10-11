@@ -13,9 +13,17 @@ import java.util.UUID;
 public class FlightMongo {
 
     @Id
-    private long id;
-    private UUID flightNo = UUID.randomUUID();
+    private String id;
+    private UUID flightNo;
     private AirportMongo departureAirport;
     private AirportMongo arrivalAirport;
 
+    public FlightMongo() {
+    }
+
+    public FlightMongo(UUID flightNo, AirportMongo departureAirport, AirportMongo arrivalAirport) {
+        this.flightNo = flightNo;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+    }
 }

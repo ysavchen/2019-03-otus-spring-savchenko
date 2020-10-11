@@ -1,6 +1,5 @@
 package com.mycompany.hw_l25_spring_batch.domain.rdb;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "airports")
 @NoArgsConstructor
-@AllArgsConstructor
 public class AirportRdb {
 
     @Id

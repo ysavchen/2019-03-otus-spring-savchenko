@@ -7,8 +7,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AirportMongo {
 
-    private long id;
     private String name;
     private String city;
 
+    public AirportMongo(String name, String city) {
+        this.name = name;
+        this.city = city;
+    }
 }

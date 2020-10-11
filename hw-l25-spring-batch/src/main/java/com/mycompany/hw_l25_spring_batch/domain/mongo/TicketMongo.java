@@ -14,11 +14,19 @@ import java.util.UUID;
 public class TicketMongo {
 
     @Id
-    private long id;
-    private UUID ticketNo = UUID.randomUUID();
+    private String id;
+    private UUID ticketNo;
     private String passengerName;
 
     @DBRef
     private FlightMongo flight;
 
+    public TicketMongo() {
+    }
+
+    public TicketMongo(UUID ticketNo, String passengerName, FlightMongo flight) {
+        this.ticketNo = ticketNo;
+        this.passengerName = passengerName;
+        this.flight = flight;
+    }
 }

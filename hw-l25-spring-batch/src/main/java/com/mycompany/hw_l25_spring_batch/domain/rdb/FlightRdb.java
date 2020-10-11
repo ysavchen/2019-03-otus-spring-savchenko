@@ -1,6 +1,5 @@
 package com.mycompany.hw_l25_spring_batch.domain.rdb;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "flights")
 @NoArgsConstructor
-@AllArgsConstructor
+@NamedEntityGraph(name = "flight-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("departureAirport"),
+                @NamedAttributeNode("arrivalAirport")
+        })
 public class FlightRdb {
 
     @Id

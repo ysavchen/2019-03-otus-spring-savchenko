@@ -7,17 +7,19 @@ spring:
     interactive:
       enabled: false
 
+  datasource:
+    url: jdbc:h2:mem:app_test_rdb
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+    data: classpath:/test-data.sql
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+
   data:
     mongodb:
+      uri: mongodb://localhost
       port: 0
-      database: test_db
-      changelogs: com.mycompany.hw_l13_spring_data_nosql.test_changelogs
-
-    logging:
-      level:
-        root: ERROR
-
-mongock:
-  runner-type: InitializingBean
-  change-logs-scan-package:
-    - com.mycompany.hw_l13_spring_data_nosql.test_changelogs
+      database: app_test_mongo
