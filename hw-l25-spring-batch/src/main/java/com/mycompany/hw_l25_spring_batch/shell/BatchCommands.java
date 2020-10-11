@@ -15,7 +15,7 @@ public class BatchCommands {
     private final Job loadDataToMongo;
     private final JobLauncher jobLauncher;
 
-    @ShellMethod(value = "startLoadDataToMongoJob", key = "sld")
+    @ShellMethod(value = "startLoadDataToMongoJob", key = "sj")
     public void startLoadDataToMongoJob() throws Exception {
         JobExecution execution = jobLauncher.run(loadDataToMongo, new JobParameters());
         System.out.println(execution);

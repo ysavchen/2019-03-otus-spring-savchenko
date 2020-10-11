@@ -2,7 +2,7 @@ drop table if exists airports;
 create table airports (
     id bigint primary key auto_increment,
     airport_name varchar(255) not null,
-    city varchar(255),
+    city varchar(255)
 );
 
 drop table if exists flights;
