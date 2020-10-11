@@ -18,7 +18,9 @@ import org.springframework.batch.item.data.MongoItemWriter;
 import org.springframework.batch.item.database.HibernatePagingItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoOperations;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import java.util.UUID;
 
@@ -32,7 +34,8 @@ public class JobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final FlightMongoRepository flightMongoRepository;
-    private final SessionFactory sessionFactory;
+    private final EntityManagerFactory entityManagerFactory;
+    private final MongoOperations mongoOperations;
 
     @Bean
     public Job loadDataToMongo() {
@@ -66,7 +69,7 @@ public class JobConfig {
     @Bean
     public HibernatePagingItemReader<FlightRdb> flightRdbReader() {
         var reader = new HibernatePagingItemReader<FlightRdb>();
-        reader.setSessionFactory(sessionFactory);
+        reader.setSessionFactory(entityManagerFactory.unwrap(SessionFactory.class));
         reader.setFetchSize(5);
         reader.setQueryString("select flightRdb.* from FlightRdb flightRdb");
         return reader;
@@ -91,13 +94,14 @@ public class JobConfig {
     public MongoItemWriter<FlightMongo> flightMongoWriter() {
         var writer = new MongoItemWriter<FlightMongo>();
         writer.setCollection("flights");
+        writer.setTemplate(mongoOperations);
         return writer;
     }
 
     @Bean
     public HibernatePagingItemReader<TicketRdb> ticketRdbReader() {
         var reader = new HibernatePagingItemReader<TicketRdb>();
-        reader.setSessionFactory(sessionFactory);
+        reader.setSessionFactory(entityManagerFactory.unwrap(SessionFactory.class));
         reader.setFetchSize(5);
         reader.setQueryString("select ticketRdb.* from TicketRdb ticketRdb");
         return reader;
@@ -117,6 +121,7 @@ public class JobConfig {
     public MongoItemWriter<TicketMongo> ticketMongoWriter() {
         var writer = new MongoItemWriter<TicketMongo>();
         writer.setCollection("tickets");
+        writer.setTemplate(mongoOperations);
         return writer;
     }
 }
