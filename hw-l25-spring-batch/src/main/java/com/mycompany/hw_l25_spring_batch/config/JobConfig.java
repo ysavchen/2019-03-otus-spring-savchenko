@@ -71,7 +71,12 @@ public class JobConfig {
         var reader = new HibernatePagingItemReader<FlightRdb>();
         reader.setSessionFactory(entityManagerFactory.unwrap(SessionFactory.class));
         reader.setFetchSize(5);
-        reader.setQueryString("select flightRdb.* from FlightRdb flightRdb");
+        reader.setQueryString(
+                "select flightRdb " +
+                        "from FlightRdb flightRdb " +
+                        "left join fetch flightRdb.departureAirport " +
+                        "left join fetch flightRdb.arrivalAirport"
+        );
         return reader;
     }
 
@@ -103,7 +108,11 @@ public class JobConfig {
         var reader = new HibernatePagingItemReader<TicketRdb>();
         reader.setSessionFactory(entityManagerFactory.unwrap(SessionFactory.class));
         reader.setFetchSize(5);
-        reader.setQueryString("select ticketRdb.* from TicketRdb ticketRdb");
+        reader.setQueryString(
+                "select ticketRdb " +
+                        "from TicketRdb ticketRdb " +
+                        "left join fetch ticketRdb.flight"
+        );
         return reader;
     }
 

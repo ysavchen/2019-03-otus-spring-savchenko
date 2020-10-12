@@ -10,11 +10,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "flights")
 @NoArgsConstructor
-@NamedEntityGraph(name = "flight-entity-graph",
-        attributeNodes = {
-                @NamedAttributeNode("departureAirport"),
-                @NamedAttributeNode("arrivalAirport")
-        })
 public class FlightRdb {
 
     @Id
