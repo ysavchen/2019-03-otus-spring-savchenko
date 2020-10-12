@@ -20,7 +20,9 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost
+      host: localhost
       port: 0
       database: app_mongo
 
+mongock:
+  runner-type: InitializingBean
