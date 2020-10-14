@@ -1,0 +1,28 @@
+spring:
+  batch:
+    job:
+      enabled: false
+
+  shell:
+    interactive:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:app_rdb
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+    data: classpath:/data.sql
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: app_mongo
+
+mongock:
+  runner-type: InitializingBean
