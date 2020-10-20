@@ -1,4 +1,4 @@
-package com.mycompany.hw_l28_spring_integration.domain.rdb;
+package com.mycompany.hw_l28_spring_integration.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "airports")
 @NoArgsConstructor
-public class AirportRdb {
+public class Airport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,4 @@
 spring:
-  batch:
-    job:
-      enabled: false
-
   shell:
     interactive:
       enabled: true
@@ -17,12 +13,3 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: validate
-
-  data:
-    mongodb:
-      host: localhost
-      port: 0
-      database: app_mongo
-
-mongock:
-  runner-type: InitializingBean

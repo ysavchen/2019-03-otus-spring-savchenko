@@ -9,6 +9,7 @@ drop table if exists flights;
 create table flights (
     id bigint primary key auto_increment,
     flight_no UUID not null,
+    type varchar(20) not null,
     departure_airport_id bigint,
     arrival_airport_id bigint
 );

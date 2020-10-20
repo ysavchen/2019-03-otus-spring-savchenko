@@ -1,7 +1,6 @@
-package com.mycompany.hw_l28_spring_integration.domain.rdb;
+package com.mycompany.hw_l28_spring_integration.domain;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -9,8 +8,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "tickets")
-@NoArgsConstructor
-public class TicketRdb {
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +20,15 @@ public class TicketRdb {
     @Column(name = "passenger_name")
     private String passengerName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "flight_id")
-    private FlightRdb flight;
+    private Flight flight;
 
+    public Ticket() {
+    }
+
+    public Ticket(String passengerName, Flight flight) {
+        this.passengerName = passengerName;
+        this.flight = flight;
+    }
 }
