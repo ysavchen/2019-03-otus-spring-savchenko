@@ -17,7 +17,7 @@ public class TicketInfoService {
 
     public TicketRequest ticketAvailable(TicketRequest ticketRequest) {
         List<Ticket> tickets = ticketRepository.findTicketsByFlightId(ticketRequest.getFlight().getId());
-        if (tickets.size() < 5) {
+        if (tickets.size() <= 3) {
             return ticketRequest;
         } else {
             throw new NoTicketsLeftException("No tickets left");
