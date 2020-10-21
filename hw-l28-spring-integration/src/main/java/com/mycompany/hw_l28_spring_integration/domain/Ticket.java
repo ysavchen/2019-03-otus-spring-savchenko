@@ -8,6 +8,10 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "tickets")
+@NamedEntityGraph(name = "ticket-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("flight")
+        })
 public class Ticket {
 
     @Id

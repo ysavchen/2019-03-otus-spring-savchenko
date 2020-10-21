@@ -15,4 +15,5 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
             "where f.departureAirport.city = :departureCity " +
             "  and f.arrivalAirport.city = :arrivalCity")
     Optional<Flight> findFlight(String departureCity, String arrivalCity);
+
 }

@@ -1,5 +1,6 @@
-package com.mycompany.hw_l28_spring_integration.domain;
+package com.mycompany.hw_l28_spring_integration.integration;
 
+import com.mycompany.hw_l28_spring_integration.domain.Ticket;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
