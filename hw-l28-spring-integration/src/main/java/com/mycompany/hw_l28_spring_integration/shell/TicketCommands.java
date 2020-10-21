@@ -40,7 +40,8 @@ public class TicketCommands {
 
         Flight flight = flightRepository.findFlight(departureCity, arrivalCity)
                 .orElseThrow(() -> new EntityNotFoundException("Flight is not found"));
-        Ticket ticket = ticketRepository.findTicketByPassengerNameAndFlight(passengerName, flight)
+        Ticket ticket = ticketRepository.findTicketsByPassengerNameAndFlight(passengerName, flight)
+                .stream().findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Ticket is not found"));
 
         boolean isCancelled = ticketIntegration.cancelTicket(ticket);

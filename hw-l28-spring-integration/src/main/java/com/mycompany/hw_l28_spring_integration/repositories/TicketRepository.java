@@ -13,5 +13,5 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
     List<Ticket> findTicketsByFlightId(Long id);
 
     @EntityGraph("ticket-entity-graph")
-    Optional<Ticket> findTicketByPassengerNameAndFlight(String passengerName, Flight flight);
+    List<Ticket> findTicketsByPassengerNameAndFlight(String passengerName, Flight flight);
 }
