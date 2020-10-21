@@ -1,0 +1,12 @@
+thead {
+    text-align: center;
+}
+
+th {
+    border-bottom: solid 1px #cccccc;
+}
+
+input {
+    border: none;
+    background-color: #fafafa;
+}
