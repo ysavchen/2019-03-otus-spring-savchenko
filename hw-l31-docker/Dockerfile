@@ -13,8 +13,8 @@ RUN mvn package
 FROM bellsoft/liberica-openjdk-alpine:11.0.9
 
 WORKDIR /home/app
-COPY --from=build /home/app/target/*.jar ./app.jar
+COPY --from=build /home/app/target/web-app.jar .
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "web-app.jar"]
