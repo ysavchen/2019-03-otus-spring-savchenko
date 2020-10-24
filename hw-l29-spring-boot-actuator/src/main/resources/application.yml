@@ -17,3 +17,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+management:
+  endpoint.health.show-details: always
+  endpoints.web.exposure.include: metrics, health, logfile
+
+logging:
+  file: ./logs/app.log
