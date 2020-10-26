@@ -7,7 +7,7 @@ WORKDIR $BUILD_DIR
 
 COPY pom.xml $BUILD_DIR/
 COPY src $BUILD_DIR/src
-RUN mvn package
+RUN mvn package -DskipTests
 
 
 FROM bellsoft/liberica-openjdk-alpine:11.0.9

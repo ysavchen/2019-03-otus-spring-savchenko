@@ -24,10 +24,5 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=app_db
-    volumes:
-      - app_db_data:/var/lib/postgresql/data
-
-  volumes:
-    app_db_data:
 
 
