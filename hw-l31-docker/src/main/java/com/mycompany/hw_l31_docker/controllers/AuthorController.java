@@ -14,7 +14,7 @@ import javax.persistence.EntityNotFoundException;
 @RequiredArgsConstructor
 public class AuthorController {
 
-    private static final String VIEW_AUTHOR_FORM = "/html/authors/viewAuthor";
+    private static final String VIEW_AUTHOR_FORM = "html/authors/viewAuthor";
 
     private final AuthorDbService dbService;
 

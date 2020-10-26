@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequiredArgsConstructor
 public class BookController {
 
-    private static final String BOOK_LIST_FORM = "/html/books/bookList.html";
-    private static final String ADD_BOOK_FORM = "/html/books/addBook.html";
-    private static final String VIEW_BOOK_FORM = "/html/books/viewBook";
+    private static final String BOOK_LIST_FORM = "html/books/bookList.html";
+    private static final String ADD_BOOK_FORM = "html/books/addBook.html";
+    private static final String VIEW_BOOK_FORM = "html/books/viewBook";
 
     private final BookDbService dbService;
 
