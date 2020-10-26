@@ -17,3 +17,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+hystrix:
+  command:
+    library:
+      circuitBreaker.requestVolumeThreshold: 10
+      execution.isolation.thread.timeoutInMilliseconds: 5000
