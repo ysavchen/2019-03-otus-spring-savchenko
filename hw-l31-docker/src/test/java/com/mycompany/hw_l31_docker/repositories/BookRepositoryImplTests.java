@@ -1,5 +1,6 @@
 package com.mycompany.hw_l31_docker.repositories;
 
+import com.mycompany.hw_l31_docker.AbstractRepositoryTest;
 import com.mycompany.hw_l31_docker.domain.Author;
 import com.mycompany.hw_l31_docker.domain.Book;
 import com.mycompany.hw_l31_docker.domain.Genre;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-public class BookRepositoryImplTests {
+public class BookRepositoryImplTests extends AbstractRepositoryTest {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author prattAuthor = new Author(1, "Philip", "Pratt");

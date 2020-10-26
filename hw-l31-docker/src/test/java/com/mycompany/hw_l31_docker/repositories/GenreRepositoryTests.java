@@ -1,5 +1,6 @@
 package com.mycompany.hw_l31_docker.repositories;
 
+import com.mycompany.hw_l31_docker.AbstractRepositoryTest;
 import com.mycompany.hw_l31_docker.domain.Genre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-public class GenreRepositoryTests {
+public class GenreRepositoryTests extends AbstractRepositoryTest {
 
     private final Genre genre = new Genre(1, "Computers & Technology");
     private static final long NON_EXISTING_ID = 50;

@@ -1,5 +1,6 @@
 package com.mycompany.hw_l31_docker.repositories;
 
+import com.mycompany.hw_l31_docker.AbstractRepositoryTest;
 import com.mycompany.hw_l31_docker.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-public class AuthorRepositoryTests {
+public class AuthorRepositoryTests extends AbstractRepositoryTest {
 
     private final Author author = new Author(1, "Philip", "Pratt");
     private static final long NON_EXISTING_ID = 50;
