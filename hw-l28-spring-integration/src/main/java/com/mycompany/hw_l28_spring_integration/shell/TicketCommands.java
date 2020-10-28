@@ -2,8 +2,7 @@ package com.mycompany.hw_l28_spring_integration.shell;
 
 import com.mycompany.hw_l28_spring_integration.domain.Flight;
 import com.mycompany.hw_l28_spring_integration.domain.Ticket;
-import com.mycompany.hw_l28_spring_integration.integration.TicketIntegration;
-import com.mycompany.hw_l28_spring_integration.integration.TicketRequest;
+import com.mycompany.hw_l28_spring_integration.integration.TicketGateway;
 import com.mycompany.hw_l28_spring_integration.repositories.FlightRepository;
 import com.mycompany.hw_l28_spring_integration.repositories.TicketRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 @RequiredArgsConstructor
 public class TicketCommands {
 
-    private final TicketIntegration ticketIntegration;
+    private final TicketGateway ticketGateway;
     private final FlightRepository flightRepository;
     private final TicketRepository ticketRepository;
 
@@ -29,7 +28,7 @@ public class TicketCommands {
         Flight flight = flightRepository.findFlight(departureCity, arrivalCity)
                 .orElseThrow(() -> new EntityNotFoundException("Flight is not found"));
 
-        var ticketResponse = ticketIntegration.buyTicket(new TicketRequest(passengerName, flight));
+        var ticketResponse = ticketGateway.buyTicket(new Ticket(passengerName, flight));
         return ticketResponse.toString();
     }
 
@@ -44,7 +43,7 @@ public class TicketCommands {
                 .stream().findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Ticket is not found"));
 
-        boolean isCancelled = ticketIntegration.cancelTicket(ticket);
-        return "Ticket (id = " + ticket.getTicketNo() + ") is cancelled: " + isCancelled;
+        boolean isCancelled = ticketGateway.cancelTicket(ticket);
+        return "Ticket (ticketNo = " + ticket.getTicketNo() + ") is cancelled: " + isCancelled;
     }
 }

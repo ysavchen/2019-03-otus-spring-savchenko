@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class TicketResponse {
+public class TicketConfirmation {
 
     private final String welcomeMessage;
     private final Ticket ticket;

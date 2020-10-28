@@ -5,10 +5,10 @@ import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;
 
 @MessagingGateway
-public interface TicketIntegration {
+public interface TicketGateway {
 
     @Gateway(requestChannel = "buyTicketChannel", replyChannel = "responseTicketChannel")
-    TicketResponse buyTicket(TicketRequest ticketsRequest);
+    TicketConfirmation buyTicket(Ticket ticket);
 
     @Gateway(requestChannel = "cancelTicketChannel", replyChannel = "responseTicketChannel")
     boolean cancelTicket(Ticket ticket);
