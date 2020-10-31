@@ -56,7 +56,7 @@ public class BookRestControllerTests {
 
     @Test
     public void updateTitle() throws Exception {
-        when(dbService.getById(guideBook.getId())).thenReturn(Optional.of(guideBook));
+        when(dbService.getById(anyLong())).thenReturn(Optional.of(guideBook));
 
         var title = "test title";
         mockMvc.perform(

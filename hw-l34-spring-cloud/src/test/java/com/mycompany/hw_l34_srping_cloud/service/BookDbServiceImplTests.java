@@ -3,7 +3,6 @@ package com.mycompany.hw_l34_srping_cloud.service;
 import com.mycompany.hw_l34_srping_cloud.domain.Author;
 import com.mycompany.hw_l34_srping_cloud.domain.Book;
 import com.mycompany.hw_l34_srping_cloud.domain.Genre;
-import com.mycompany.hw_l34_srping_cloud.repositories.AuthorRepository;
 import com.mycompany.hw_l34_srping_cloud.repositories.BookRepository;
 import com.mycompany.hw_l34_srping_cloud.repositories.GenreRepository;
 import org.junit.jupiter.api.Test;
@@ -31,9 +30,6 @@ public class BookDbServiceImplTests {
     @MockBean
     private GenreRepository genreRepository;
 
-    @MockBean
-    private AuthorRepository authorRepository;
-
     @Autowired
     private BookDbServiceImpl bookDbService;
 
@@ -52,11 +48,10 @@ public class BookDbServiceImplTests {
 
     @Test
     void deleteBookById() {
-        when(bookRepository.findById(book.getId())).thenReturn(Optional.of(book));
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.of(book));
 
         bookDbService.deleteById(book.getId());
         verify(bookRepository, times(1)).deleteById(book.getId());
-        verify(authorRepository, never()).deleteById(anyLong());
         verify(genreRepository, never()).deleteById(anyLong());
     }
 }

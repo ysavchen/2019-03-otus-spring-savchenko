@@ -20,7 +20,7 @@ create table genres (
 );
 
 alter table books
-add foreign key (author_id) references authors(id) on delete cascade;
+add foreign key (author_id) references authors(id);
 
 alter table books
-add foreign key (genre_id) references genres(id) on delete cascade;
+add foreign key (genre_id) references genres(id);

@@ -35,3 +35,7 @@ $('#delete').on('click', function() {
         }
     });
 });
+
+$('#allBooks').on('click', function() {
+    location.href = '/';
+});

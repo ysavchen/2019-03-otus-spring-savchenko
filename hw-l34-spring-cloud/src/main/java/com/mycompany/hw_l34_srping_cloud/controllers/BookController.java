@@ -1,7 +1,6 @@
 package com.mycompany.hw_l34_srping_cloud.controllers;
 
 import com.mycompany.hw_l34_srping_cloud.dto.BookDto;
-import com.mycompany.hw_l34_srping_cloud.exceptions.EntityNotFoundException;
 import com.mycompany.hw_l34_srping_cloud.service.BookDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,13 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.persistence.EntityNotFoundException;
+
 @Controller
 @RequiredArgsConstructor
 public class BookController {
 
-    private static final String BOOK_LIST_FORM = "/html/books/bookList.html";
-    private static final String ADD_BOOK_FORM = "/html/books/addBook.html";
-    private static final String VIEW_BOOK_FORM = "/html/books/viewBook";
+    private static final String BOOK_LIST_FORM = "html/books/bookList.html";
+    private static final String ADD_BOOK_FORM = "html/books/addBook.html";
+    private static final String VIEW_BOOK_FORM = "html/books/viewBook";
 
     private final BookDbService dbService;
 

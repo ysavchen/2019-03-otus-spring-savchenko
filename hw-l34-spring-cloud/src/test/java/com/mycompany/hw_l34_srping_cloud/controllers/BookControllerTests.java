@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -44,7 +45,7 @@ public class BookControllerTests {
 
     @Test
     public void getBookById() throws Exception {
-        when(dbService.getById(guideBook.getId())).thenReturn(Optional.of(guideBook));
+        when(dbService.getById(anyLong())).thenReturn(Optional.of(guideBook));
         mockMvc.perform(get("/book/{id}", guideBookDto.getId()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("book", hasProperty("id", is(guideBookDto.getId()))))

@@ -16,4 +16,5 @@ public interface BookDbService {
     void updateTitle(long id, String title);
 
     void deleteById(long id);
+
 }
