@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>View book</title>
+    <link th:href="@{/css/general.css}" href="/css/general.css" rel="stylesheet">
+    <link th:href="@{/css/books/viewBook.css}" href="/css/books/viewBook.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<h2>Book:</h2>
+<div id="message"></div>
+<div id="content" th:object="${book}">
+    <table>
+        <tr>
+            <th>ID</th>
+            <td class="dataField" th:text="*{id}" id="bookId">1</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td><input class="dataField" id="title" th:field="*{title}" type="text" value="Some title"/></td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td class="dataField">
+                <a th:href="@{/author/__*{author.id}__}" href="../authors/viewAuthor.html"
+                   th:text="*{author.name + ' ' + author.surname}"></a>
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td class="dataField" th:text="*{genre.name}"></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <input type="button" class="buttons" id="save" value="Save">
+    <input type="button" class="buttons" id="delete" value="Delete">
+</div>
+<script src="/js/books/viewBook.js"></script>
+</body>
+</html>
