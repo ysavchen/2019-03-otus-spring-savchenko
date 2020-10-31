@@ -3,6 +3,7 @@ package com.mycompany.hw_l34_srping_cloud.dto;
 import com.mycompany.hw_l34_srping_cloud.domain.Author;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -12,6 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AuthorDto {
 
+    @EqualsAndHashCode.Exclude
     private long id;
     private String name;
     private String surname;

@@ -1,6 +1,7 @@
 package com.mycompany.hw_l34_srping_cloud.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 public class Genre {
 
     @Id
+    @EqualsAndHashCode.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
