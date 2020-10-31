@@ -13,7 +13,26 @@ spring:
     hibernate:
       ddl-auto: validate
 
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      bookService:
+        #if 2 out of 5 last requests throw an exception, the CircuitBreaker go open
+        slidingWindowSize: 5
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 2
+        waitDurationInOpenState: 10s #time to wait before transitioning from open to half-open
+
+  ratelimiter:
+    instances:
+      bookService:
+        limitForPeriod: 10 #how many calls
+        limitRefreshPeriod: 20s #within which time window
+        timeoutDuration: 10s #how long wait for permission
+
+  retry:
+    instances:
+      bookService:
+        maxRetryAttempts: 3
+        retryExceptions:
+          - com.mycompany.hw_l34_srping_cloud.exception.SaveBookException
