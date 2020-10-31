@@ -1,0 +1,26 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/static/
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+    data: classpath:/data.sql
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+  endpoint.health.show-details: always
+  endpoints.web.exposure.include: metrics, health, logfile
+
+logging:
+  file: ./logs/app.log

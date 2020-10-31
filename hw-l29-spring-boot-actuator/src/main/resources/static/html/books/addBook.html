@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>New book</title>
+    <link href="/css/general.css" rel="stylesheet">
+    <link href="/css/books/viewBook.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<h2>New book</h2>
+<div id="message"></div>
+<div>
+    <table>
+        <tr>
+            <th>Title</th>
+            <td><input class="dataField" type="text" id="title" placeholder="title"/></td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>
+                <input class="dataField" type="text" id="name" placeholder="name"/>
+                <input class="dataField" type="text" id="surname" placeholder="surname"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Genre</th>
+            <td><input class="dataField" type="text" id="genre" placeholder="genre"/>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <input class="buttons" type="button" id="save" value="Save"/>
+    </div>
+</div>
+<script src="/js/books/addBook.js"></script>
+</body>
+</html>
