@@ -9,7 +9,6 @@ spring:
     data: classpath:/test-data.sql
 
   jpa:
-    generate-ddl: false
     hibernate:
       ddl-auto: validate
 
