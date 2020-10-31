@@ -1,7 +1,6 @@
 package com.mycompany.hw_l34_srping_cloud.controllers;
 
-import com.mycompany.hw_l34_srping_cloud.dto.BookDto;
-import com.mycompany.hw_l34_srping_cloud.service.BookDbService;
+import com.mycompany.hw_l34_srping_cloud.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,7 @@ public class BookController {
     private static final String ADD_BOOK_FORM = "html/books/addBook.html";
     private static final String VIEW_BOOK_FORM = "html/books/viewBook";
 
-    private final BookDbService dbService;
+    private final BookService bookService;
 
     @GetMapping("/book/new")
     public String showAddForm() {
@@ -32,9 +31,9 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     public String getBookById(@PathVariable("id") long id, Model model) {
-        return dbService.getById(id).map(
-                book -> {
-                    model.addAttribute("book", BookDto.toDto(book));
+        return bookService.getById(id).map(
+                bookDto -> {
+                    model.addAttribute("book", bookDto);
                     return VIEW_BOOK_FORM;
                 }).orElseThrow(() -> new EntityNotFoundException("Book with id = " + id + " is not found"));
     }

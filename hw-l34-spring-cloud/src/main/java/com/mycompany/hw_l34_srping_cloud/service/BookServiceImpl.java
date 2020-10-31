@@ -1,6 +1,7 @@
 package com.mycompany.hw_l34_srping_cloud.service;
 
 import com.mycompany.hw_l34_srping_cloud.domain.Book;
+import com.mycompany.hw_l34_srping_cloud.dto.BookDto;
 import com.mycompany.hw_l34_srping_cloud.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,28 +10,35 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
-public class BookDbServiceImpl implements BookDbService {
+public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
 
     @Transactional
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public BookDto save(BookDto bookDto) {
+        Book book = bookRepository.save(BookDto.toDomainObject(bookDto));
+        return BookDto.toDto(book);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<Book> getById(long id) {
-        return bookRepository.findById(id);
+    public Optional<BookDto> getById(long id) {
+        return bookRepository.findById(id)
+                .map(BookDto::toDto);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookDto> getAllBooks() {
+        return bookRepository.findAll()
+                .stream()
+                .map(BookDto::toDto)
+                .collect(toList());
     }
 
     @Transactional
@@ -46,5 +54,4 @@ public class BookDbServiceImpl implements BookDbService {
     public void deleteById(long id) {
         bookRepository.deleteById(id);
     }
-
 }

@@ -4,7 +4,7 @@ import com.mycompany.hw_l34_srping_cloud.domain.Author;
 import com.mycompany.hw_l34_srping_cloud.domain.Book;
 import com.mycompany.hw_l34_srping_cloud.domain.Genre;
 import com.mycompany.hw_l34_srping_cloud.dto.BookDto;
-import com.mycompany.hw_l34_srping_cloud.service.BookDbService;
+import com.mycompany.hw_l34_srping_cloud.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -30,22 +30,20 @@ public class BookControllerTests {
     private final Genre genre = new Genre(1, "Computers & Technology");
     private final Author prattAuthor = new Author(1, "Philip", "Pratt");
     private final Author learnAuthor = new Author(2, "Michael", "Learn");
-    private final Book guideBook = new Book(1, "A Guide to SQL", prattAuthor, genre);
-    private final Book conceptsBook = new Book(2, "Concepts of Database Management", prattAuthor, genre);
-    private final Book sqlCodingBook = new Book(3, "SQL Programming and Coding", learnAuthor, genre);
-    private final List<Book> books = List.of(guideBook, conceptsBook, sqlCodingBook);
-
-    private final BookDto guideBookDto = BookDto.toDto(guideBook);
+    private final BookDto guideBookDto = BookDto.toDto(new Book(1, "A Guide to SQL", prattAuthor, genre));
+    private final BookDto conceptsBookDto = BookDto.toDto(new Book(2, "Concepts of Database Management", prattAuthor, genre));
+    private final BookDto sqlCodingBookDto = BookDto.toDto(new Book(3, "SQL Programming and Coding", learnAuthor, genre));
+    private final List<BookDto> booksDto = List.of(guideBookDto, conceptsBookDto, sqlCodingBookDto);
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private BookDbService dbService;
+    private BookService bookService;
 
     @Test
     public void getBookById() throws Exception {
-        when(dbService.getById(anyLong())).thenReturn(Optional.of(guideBook));
+        when(bookService.getById(anyLong())).thenReturn(Optional.of(guideBookDto));
         mockMvc.perform(get("/book/{id}", guideBookDto.getId()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("book", hasProperty("id", is(guideBookDto.getId()))))
@@ -57,7 +55,7 @@ public class BookControllerTests {
     @ParameterizedTest
     @ValueSource(strings = {"/book/", "/"})
     public void getAllBooks(String url) throws Exception {
-        when(dbService.getAllBooks()).thenReturn(books);
+        when(bookService.getAllBooks()).thenReturn(booksDto);
         mockMvc.perform(get(url))
                 .andExpect(status().isOk());
     }
