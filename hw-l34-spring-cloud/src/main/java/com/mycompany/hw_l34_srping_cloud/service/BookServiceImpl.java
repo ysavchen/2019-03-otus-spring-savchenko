@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<BookDto> getById(long id) {
         getBookCounter++;
-        System.out.println("Start executing getById(). getBookCounter: " + getBookCounter);
+        System.out.println("Executing getById(). getBookCounter: " + getBookCounter);
         if (getBookCounter > 10 && getBookCounter < 16) {
             System.out.println("getById() is not successful. getBookCounter: " + getBookCounter);
             throw new GetBookException();
@@ -85,7 +85,7 @@ public class BookServiceImpl implements BookService {
     }
 
     public Optional<BookDto> getBookForNonAvailable(long id, Throwable ex) {
-        System.out.println("Start executing getBookForNonAvailable()");
+        System.out.println("Executing getBookForNonAvailable()");
         return Optional.of(
                 new BookDto(id, "N/A",
                         new AuthorDto(0L, "N/A", "N/A"),
