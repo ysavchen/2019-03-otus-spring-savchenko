@@ -66,7 +66,6 @@ public class BookRestControllerTests {
     @Test
     public void deleteBook() throws Exception {
         long id = 5;
-        when(bookService.getAllBooks()).thenReturn(booksDto);
         mockMvc.perform(delete("/api/book/{id}", id))
                 .andExpect(status().isOk());
         verify(bookService, times(1)).deleteById(id);
