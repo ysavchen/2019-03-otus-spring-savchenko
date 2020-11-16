@@ -18,7 +18,7 @@ public class TicketInfoServiceImpl implements TicketInfoService {
 
     public Ticket ticketAvailable(Ticket ticket) {
         List<Ticket> tickets = ticketRepository.findTicketsByFlightId(ticket.getFlight().getId());
-        if (tickets.size() <= NUM_AVAILABLE_TICKETS) {
+        if (tickets.size() < NUM_AVAILABLE_TICKETS) {
             return ticket;
         } else {
             throw new NoTicketsLeftException("No tickets left");
