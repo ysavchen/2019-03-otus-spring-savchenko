@@ -12,11 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketInfoServiceImpl implements TicketInfoService {
 
+    private static final int NUM_AVAILABLE_TICKETS = 3;
+
     private final TicketRepository ticketRepository;
 
     public Ticket ticketAvailable(Ticket ticket) {
         List<Ticket> tickets = ticketRepository.findTicketsByFlightId(ticket.getFlight().getId());
-        if (tickets.size() < 3) {
+        if (tickets.size() <= NUM_AVAILABLE_TICKETS) {
             return ticket;
         } else {
             throw new NoTicketsLeftException("No tickets left");
